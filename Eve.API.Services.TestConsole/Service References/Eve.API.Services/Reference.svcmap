@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="820bb73d-2f90-45ae-94c5-af3573a8a880" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:41250/API/Speech/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SpeechService.wsdl" MetadataType="Wsdl" ID="123183ea-c8da-4f86-96d3-944b87fbea50" SourceId="1" SourceUrl="http://localhost:41250/API/Speech/?wsdl" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="651760f2-4522-45de-9ba0-990228137a7a" SourceId="1" SourceUrl="http://localhost:41250/API/Speech/?xsd=xsd2" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="b29f3c29-fc9a-47d7-ace6-c7e0a7d95af0" SourceId="1" SourceUrl="http://localhost:41250/API/Speech/?xsd=xsd1" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="a6fc89b5-59ab-46ea-8bb3-9f7a19e3f591" SourceId="1" SourceUrl="http://localhost:41250/API/Speech/?disco" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="e2bf279f-f827-4818-9118-6147e0868051" SourceId="1" SourceUrl="http://localhost:41250/API/Speech/?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

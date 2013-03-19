@@ -1,0 +1,86 @@
+﻿!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<title>Eve - Device Communication Protocol</title>
+	</head>
+	<body>
+		<h1>Eve - Device Communication Protocol</h1>
+		<a href="http://maniacbug.github.com/RF24/">RF24</a><br />
+		<a href="http://maniacbug.github.com/RF24Network/index.html">RF24Network</a>
+		<h2>Connection Diagram</h2>
+		<p>
+			Each device can communicate to up to 5 node devices and one parent device.<br />
+			Up to 5^5 (3,125) node devices per communication channel.
+		</p>
+		<ul>
+			<li>
+				<b>00 Base Device</b>
+				<ul>
+					<li>01 Node Device
+						<ul>
+							<li>011 Node Device
+								<ul>
+									<li>0111 Node Device
+										<ul>
+											<li>01111 Node Device</li>
+											<li>02111 Node Device</li>
+											<li>03111 Node Device</li>
+											<li>04111 Node Device</li>
+											<li>05111 Node Device</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>02 Node Device</li>
+					<li>03 Node Device</li>
+					<li>04 Node Device</li>
+					<li>05 Node Device
+						<ul>
+							<li>...</li>
+							<li>055 Node Device
+								<ul>
+									<li>...</li>
+									<li>0555 Node Device
+										<ul>
+											<li>...</li>
+											<li>05555 Node Device</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<h2>Communication Messages</h2>
+		<h3>CommandMessage</h3>
+		<table>
+			<tbody>
+				<tr><td><i>[ unsigned long ]</i></td><td><b>command</b></td><td>One of predefined commands</td></tr>
+				<tr><td><i>[ unsigned long ]</i></td><td><b>localTime</b></td><td>Local time (time since device initiated) of device sending message</td></tr>
+				<tr><td><i>[ unsigned int ]</i></td><td><b>dataPackets</b></td><td>Number of data packets required before given command can be executed</td></tr>
+			</tbody>
+		</table>
+		<h4>Predefined Commands</h4>
+		<table>
+			<tbody>
+				<tr><td>0x0000</td><td>No Command</td></tr>
+			</tbody>
+		</table>
+		<p>Connection Commands</p>
+		<table>
+			<tbody>
+				<tr><td>0x0001</td><td>Connection request</td></tr>
+				<tr><td>0x0002</td><td>Connection accepted</td></tr>
+				<tr><td>0x0003</td><td>Connection declined</td></tr>
+				<tr><td>0x0004</td><td>Connection check request</td></tr>
+				<tr><td>0x0005</td><td>Connection check confirm</td></tr>
+			</tbody>
+		</table>
+	</body>
+</html>

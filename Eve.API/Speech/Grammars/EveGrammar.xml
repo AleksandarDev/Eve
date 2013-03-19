@@ -1,0 +1,132 @@
+﻿<grammar version="1.0" xml:lang="en-US" root="Root" tag-format="semantics/1.0-literals" xmlns="http://www.w3.org/2001/06/grammar">
+
+	<!-- Command to start listening -->
+	<rule id="Root">
+		<one-of>
+			<item>
+				<tag>Computer</tag>
+				<one-of>
+					<item> computer</item>
+				</one-of>
+			</item>
+			<item> computer <ruleref uri="#Commands"/> </item>
+		</one-of>
+	</rule>
+
+	<!-- Root commands -->
+	<rule id="Commands">
+		<one-of>
+			
+			<item>
+				<tag>NextSong</tag>
+				<one-of>
+					<item> play next song </item>
+					<item> next song </item>
+				</one-of>
+			</item>
+
+			<item>
+				<tag>PreviousSong</tag>
+				<one-of>
+					<item> play previous song </item>
+					<item> previous song </item>
+					<item> song before </item>
+					<item> last song </item>
+					<item> last played song </item>
+				</one-of>
+			</item>
+
+			<item>
+				<tag>PauseSong</tag>
+				<one-of>
+					<item> pause </item>
+					<item> pause song </item>
+				</one-of>
+			</item>
+
+			<item>
+				<tag>ResumeSong</tag>
+				<one-of>
+					<item> resume song </item>
+					<item> resume </item>
+					<item> play </item>
+					<item> play song </item>
+				</one-of>
+			</item>
+
+			<item>
+				<tag>TurnOnAmbientalLights</tag>
+				<one-of>
+					<item> ambiental lights on </item>
+				</one-of>
+			</item>
+
+			<item>
+				<tag>TurnOffAmbientalLights</tag>
+				<one-of>
+					<item> ambiental lights off </item>
+				</one-of>
+			</item>
+			
+			<!-- Search command -->
+			<item>
+				<one-of>
+					<item> search </item>
+					<item> search for </item>
+					<item> do search </item>
+					<item> do search on </item>
+				</one-of>
+			</item>
+
+			<!-- Question command -->
+			<item>
+				<one-of>
+					<item> what <ruleref uri="#QuestionCommands"/> </item>
+					<item> what's <ruleref uri="#QuestionCommands"/> </item>
+					<item> what do <ruleref uri="#QuestionCommands"/> </item>
+					<item> what is <ruleref uri="#QuestionCommands"/> </item>
+				</one-of>
+			</item>
+			
+			<!-- Toggle command -->
+			<item> toggle <ruleref uri="#ToggleCommands"/> </item>
+			
+		</one-of>
+	</rule>
+
+	<!-- Question commands -->
+	<rule id="QuestionCommands" scope="public">
+		<one-of>
+
+			<!-- Question:Time command -->
+			<item>
+				<tag>QuestionTime</tag>
+				<one-of>
+					<item> current time </item>
+					<item> the time </item>
+					<item> time now </item>
+					<item> now time </item>
+					<item> time it is </item>
+				</one-of>
+			</item>
+			
+		</one-of>
+	</rule>
+	
+	<!-- Toggle commands -->
+	<rule id="ToggleCommands" scope="public">
+		<one-of>
+			
+			<!-- Toggle:Light command-->
+			<item>
+				<tag>ToggleLight</tag>
+				<one-of>
+					<item> light </item>
+					<item> lights </item>
+				</one-of>
+			</item>
+			
+		</one-of>
+	</rule>
+	
+</grammar>

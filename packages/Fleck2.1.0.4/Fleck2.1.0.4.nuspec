@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Fleck2</id>
+    <version>1.0.4</version>
+    <title>Fleck2</title>
+    <authors>Peter Sunde</authors>
+    <owners>Peter Sunde</owners>
+    <licenseUrl>https://github.com/peters/Fleck2/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/peters/Fleck2</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C# Websocket implemation with NET 2.0 support.</description>
+    <summary>C# Websocket implemation with NET 2.0 support.</summary>
+    <releaseNotes />
+    <copyright>Peter Sunde</copyright>
+    <language>en-US</language>
+    <tags>Websocket</tags>
+    <references>
+      <reference file="Fleck2.dll" />
+    </references>
+  </metadata>
+</package>

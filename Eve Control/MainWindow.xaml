@@ -1,0 +1,23 @@
+﻿<Window x:Class="Eve_Control.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:EveUIControlsDiagramDesigner="clr-namespace:Eve.UI.Controls.DiagramDesigner;assembly=Eve.UI"
+		Style="{DynamicResource NewUIWindowStyle}"
+		Title="Eve Control" Height="400" Width="700"
+		Loaded="MainWindowOnLoaded" Icon="Eve256.ico">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		
+		<TextBox x:Name="EveVoiceRecognition" Background="Black" Foreground="{StaticResource ContentForegroundBrush}" IsReadOnly="True" FontSize="16" Padding="3"></TextBox>
+		
+		<ContentControl Grid.Row="1">
+			<EveUIControlsDiagramDesigner:DiagramDesignerView Margin="10,5,10,10" />
+		</ContentControl>
+	</Grid>
+</Window>
