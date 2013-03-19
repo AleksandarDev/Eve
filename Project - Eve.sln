@@ -18,36 +18,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.Core", "Eve.Core\Eve.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.Modules", "Eve.Modules\Eve.Modules.csproj", "{F3765869-0059-4B36-BDAA-D85AFD87D0C9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaseDevice", "..\..\..\..\..\Documents\Arduino\BaseDevice\BaseDevice.vcxproj", "{6D212EFD-E93A-49E3-9949-19F65E007F3A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C784F483-1AF9-4066-B925-3F47784D64C0}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Eve/EveHome", "http://localhost:24446/EveHome", "{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}"
-	ProjectSection(WebsiteProperties) = preProject
-		UseIISExpress = "true"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		Debug.AspNetCompiler.VirtualPath = "/EveHome"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\Documents\My Web Sites\Eve\EveHome\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\EveHome\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/EveHome"
-		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\Documents\My Web Sites\Eve\EveHome\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\EveHome\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\..\..\..\..\Documents\My Web Sites\Eve\EveHome\"
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{A7B49DEA-FF08-4079-A7BD-CB473C4E4A70}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{12D2C33F-CED3-47FF-A5BE-983A1E0C8B1C}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NodeDevice", "..\..\..\..\..\Documents\Arduino\NodeDevice\NodeDevice.vcxproj", "{AC713C21-2FB3-49B0-B763-97FBB075BA31}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome", "http://localhost:48311", "{342E4E5D-C834-4257-8C84-64B4ABD6C693}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -78,25 +53,51 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Eve/EveMobile", "http://loc
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/EveMobile"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\Documents\My Web Sites\Eve\EveMobile\"
+		Debug.AspNetCompiler.PhysicalPath = "Web\EveMobile\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\EveMobile\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/EveMobile"
-		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\Documents\My Web Sites\Eve\EveMobile\"
+		Release.AspNetCompiler.PhysicalPath = "Web\EveMobile\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\EveMobile\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\..\..\..\..\Documents\My Web Sites\Eve\EveMobile\"
+		SlnRelativePath = "Web\EveMobile\"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.API.Services", "Eve.API.Services\Eve.API.Services.csproj", "{15B3E0D2-6217-493A-A690-158C497F5318}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.API.Services.TestConsole", "Eve.API.Services.TestConsole\Eve.API.Services.TestConsole.csproj", "{C4A6BD55-4CA0-41C7-A98F-F41A4974E2F9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaseDevice", "Devices\Arduino\BaseDevice\BaseDevice.vcxproj", "{6D212EFD-E93A-49E3-9949-19F65E007F3A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NodeDevice", "Devices\Arduino\NodeDevice\NodeDevice.vcxproj", "{AC713C21-2FB3-49B0-B763-97FBB075BA31}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveHome", "http://localhost:29193", "{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_29193"
+		Debug.AspNetCompiler.PhysicalPath = "Web\EveHome\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_29193\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_29193"
+		Release.AspNetCompiler.PhysicalPath = "Web\EveHome\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_29193\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "Web\EveHome\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -182,52 +183,6 @@ Global
 		{F3765869-0059-4B36-BDAA-D85AFD87D0C9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F3765869-0059-4B36-BDAA-D85AFD87D0C9}.Release|Win32.ActiveCfg = Release|Any CPU
 		{F3765869-0059-4B36-BDAA-D85AFD87D0C9}.Release|x86.ActiveCfg = Release|Any CPU
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|ARM.ActiveCfg = Debug|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Win32.Build.0 = Debug|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|x86.ActiveCfg = Debug|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|x86.Build.0 = Debug|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Any CPU.ActiveCfg = Release|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|ARM.ActiveCfg = Release|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Win32.ActiveCfg = Release|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Win32.Build.0 = Release|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|x86.ActiveCfg = Release|Win32
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|x86.Build.0 = Release|Win32
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Release|ARM.ActiveCfg = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Release|Win32.ActiveCfg = Debug|Any CPU
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84}.Release|x86.ActiveCfg = Debug|Any CPU
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|ARM.ActiveCfg = Debug|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Win32.ActiveCfg = Debug|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Win32.Build.0 = Debug|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|x86.ActiveCfg = Debug|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|x86.Build.0 = Debug|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Any CPU.ActiveCfg = Release|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|ARM.ActiveCfg = Release|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Win32.ActiveCfg = Release|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Win32.Build.0 = Release|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|x86.ActiveCfg = Release|Win32
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|x86.Build.0 = Release|Win32
 		{342E4E5D-C834-4257-8C84-64B4ABD6C693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{342E4E5D-C834-4257-8C84-64B4ABD6C693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{342E4E5D-C834-4257-8C84-64B4ABD6C693}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -284,6 +239,52 @@ Global
 		{C4A6BD55-4CA0-41C7-A98F-F41A4974E2F9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C4A6BD55-4CA0-41C7-A98F-F41A4974E2F9}.Release|Win32.ActiveCfg = Release|Any CPU
 		{C4A6BD55-4CA0-41C7-A98F-F41A4974E2F9}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|ARM.ActiveCfg = Debug|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|Win32.Build.0 = Debug|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|x86.ActiveCfg = Debug|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Debug|x86.Build.0 = Debug|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Any CPU.ActiveCfg = Release|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|ARM.ActiveCfg = Release|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Win32.ActiveCfg = Release|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|Win32.Build.0 = Release|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|x86.ActiveCfg = Release|Win32
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A}.Release|x86.Build.0 = Release|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|ARM.ActiveCfg = Debug|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|Win32.Build.0 = Debug|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|x86.ActiveCfg = Debug|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Debug|x86.Build.0 = Debug|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Any CPU.ActiveCfg = Release|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|ARM.ActiveCfg = Release|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Win32.ActiveCfg = Release|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|Win32.Build.0 = Release|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|x86.ActiveCfg = Release|Win32
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31}.Release|x86.Build.0 = Release|Win32
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|ARM.ActiveCfg = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|Win32.ActiveCfg = Debug|Any CPU
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -300,8 +301,8 @@ Global
 		{4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F} = {1CBDAAC6-AC23-4A6E-8708-1A916A5BB944}
 		{6D212EFD-E93A-49E3-9949-19F65E007F3A} = {4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F}
 		{AC713C21-2FB3-49B0-B763-97FBB075BA31} = {4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F}
-		{583DD12A-9B46-4BBB-A4E5-E5040E8DBB84} = {C784F483-1AF9-4066-B925-3F47784D64C0}
 		{342E4E5D-C834-4257-8C84-64B4ABD6C693} = {C784F483-1AF9-4066-B925-3F47784D64C0}
+		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3} = {C784F483-1AF9-4066-B925-3F47784D64C0}
 		{FC8356AA-55B2-4B58-965E-23CACE796AF8} = {A81FF1CE-835F-4619-B4D8-305868B46662}
 	EndGlobalSection
 EndGlobal
