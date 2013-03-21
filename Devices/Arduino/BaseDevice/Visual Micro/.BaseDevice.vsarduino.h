@@ -40,5 +40,5 @@ void BlinkOnBoard(unsigned long t);
 
 #include "C:\Program Files\arduino-1.0.1\hardware\arduino\variants\mega\pins_arduino.h" 
 #include "C:\Program Files\arduino-1.0.1\hardware\arduino\cores\arduino\arduino.h"
-#include "C:\Users\Aleksandar\Documents\Arduino\BaseDevice\BaseDevice.ino"
-#include "C:\Users\Aleksandar\Documents\Arduino\BaseDevice\EveDevice.h"
+#include "C:\Users\Aleksandar\Dropbox\Documents\JustBuild Development\Projects - Software\Project - Eve\Devices\Arduino\BaseDevice\BaseDevice.ino"
+#include "C:\Users\Aleksandar\Dropbox\Documents\JustBuild Development\Projects - Software\Project - Eve\Devices\Arduino\BaseDevice\EveDevice.h"

@@ -7,7 +7,7 @@
 		<meta charset="utf-8"/>
 		<title>Eve</title>
 		<link href="DefaultStyle.css" type="text/css" rel="stylesheet" />
-		
+
 		<!-- Google Analytics -->
 		<script type="text/javascript">
 			var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-37224571-1']);_gaq.push(['_trackPageview']);(function () {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
@@ -21,13 +21,21 @@
 				<img src="Resources/Images/Eve256.png" alt="Eve" />
 			</div>	
 			<div class="EveCommand">
-				<strong>Eve:&gt;</strong> in development...<img src="Resources/Images/CursorBlink.gif" height="40" style="margin-bottom: -6px" />
+				<strong>Eve:&gt;</strong> in development...<img src="Resources/Images/CursorBlink.gif" height="40" width="24" style="margin-bottom: -6px" />
 			</div>
 		</div>
-		<!--<div class="HeaderShadow"></div>
+		<div class="HeaderShadow"></div>
 		<div class="Content">
-			In Development
-		</div>-->
+			<div class="Post">
+				<div class="PostText">
+					This simple diagram I made last night shows basic message exchange and layers currently in development.<br/>
+					<div class="PostFooter">Aleksandar Toplek, 20.3.2013.</div>
+				</div>
+				<a href="https://www.lucidchart.com/publicSegments/view/513e136c-5fa0-4580-8071-63d40a005798/image.png" target="_blank">
+					<img class="PostImage" src="Resources/Images/Post1Layers.png" title="Eve Messaging Layers" width="252" height="330" />
+				</a>
+			</div>
+		</div>
 		<div class="FooterShadow"></div>
 		<div class="Footer">
 			<div class="SponsorLinks">

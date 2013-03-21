@@ -42,6 +42,31 @@ a > img { border: 0; }
 	background-color: #EBEBEB;
 }
 
+.Post {
+	width: 520px;
+	margin: auto;
+	padding-top: 30px;
+	padding-bottom: 50px;
+}
+
+.PostText {
+	font-size: 1.1em;
+	max-width: 200px;
+	display: inline-block;
+}
+
+.PostImage {
+	display: inline-block;
+	border: 1px #666 solid;
+	-webkit-box-shadow: 3px 3px 20px #AAA;
+	box-shadow: 3px 3px 20px #AAA;
+}
+
+.PostFooter {
+	font-size: 0.8em;
+	color: #888;
+}
+
 .FooterShadow {
 	background: url(Resources/Images/HeaderShadow.png) 50% 0 no-repeat;
 	height: 21px;

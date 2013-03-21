@@ -99,6 +99,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveHome", "http://localhost
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve for Windows Phone", "Eve for Windows Phone\Eve for Windows Phone.csproj", "{071C4AB6-4343-472D-8BFE-5AB30562B428}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -285,6 +287,24 @@ Global
 		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|Win32.ActiveCfg = Debug|Any CPU
 		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3}.Release|x86.ActiveCfg = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Release|ARM.ActiveCfg = Release|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Release|Win32.ActiveCfg = Release|Any CPU
+		{071C4AB6-4343-472D-8BFE-5AB30562B428}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -304,5 +324,6 @@ Global
 		{342E4E5D-C834-4257-8C84-64B4ABD6C693} = {C784F483-1AF9-4066-B925-3F47784D64C0}
 		{D7DFB9D2-1FD0-400C-929D-C564CA39DAC3} = {C784F483-1AF9-4066-B925-3F47784D64C0}
 		{FC8356AA-55B2-4B58-965E-23CACE796AF8} = {A81FF1CE-835F-4619-B4D8-305868B46662}
+		{071C4AB6-4343-472D-8BFE-5AB30562B428} = {A81FF1CE-835F-4619-B4D8-305868B46662}
 	EndGlobalSection
 EndGlobal
