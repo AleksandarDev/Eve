@@ -35,6 +35,9 @@ namespace EveWindowsPhone {
 			// Phone-specific initialization
 			InitializePhoneApplication();
 
+			// Change phone color theme to dark
+			ThemeManager.ToDarkTheme();
+
 			// Show graphics profiling information while debugging.
 			if (System.Diagnostics.Debugger.IsAttached) {
 				// Display the current frame rate counters.

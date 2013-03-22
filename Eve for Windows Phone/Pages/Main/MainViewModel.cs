@@ -26,5 +26,11 @@ namespace EveWindowsPhone.Pages.Main {
 		public ObservableCollection<Module> AvailableModules { get; private set; }
 
 		#endregion
+
+		public void NavigateTo(Module module) {
+			// Navigate to module view
+			if (!this.navigationServiceFacade.Navigate(new Uri(module.View, UriKind.Relative)))
+				System.Diagnostics.Debug.WriteLine(String.Format("Couldn't navigate to \"{0}\" module's view", module.Name));
+		}
 	}
 }

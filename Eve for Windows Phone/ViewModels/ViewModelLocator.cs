@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EveWindowsPhone.Pages.Main;
+using EveWindowsPhone.Pages.Modules.Touch;
 using EveWindowsPhone.Services;
 
 namespace EveWindowsPhone.ViewModels {
@@ -19,6 +20,10 @@ namespace EveWindowsPhone.ViewModels {
 
 		public MainViewModel MainViewModel {
 			get { return this.viewModelContainerService.Container.Resolve<MainViewModel>(); }
+		}
+
+		public TouchViewModel TouchViewModel {
+			get { return this.viewModelContainerService.Container.Resolve<TouchViewModel>(); }
 		}
 
 		#endregion

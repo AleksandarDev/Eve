@@ -17,7 +17,14 @@ namespace EveWindowsPhone.Adapters {
 		}
 
 		public bool Navigate(Uri destination) {
-			return this.frame.Navigate(destination);
+			try {
+				return this.frame.Navigate(destination);
+			}
+			catch (InvalidOperationException) {
+				System.Diagnostics.Debug.WriteLine("Invalid navigation path!");
+			}
+
+			return false;
 		}
 
 		public void GoBack() {

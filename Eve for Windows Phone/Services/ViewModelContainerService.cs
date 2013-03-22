@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Pages.Main;
+using EveWindowsPhone.Pages.Modules.Touch;
 using Funq;
 
 namespace EveWindowsPhone.Services {
@@ -25,6 +26,10 @@ namespace EveWindowsPhone.Services {
 				c => new MainViewModel(
 					     c.Resolve<INavigationServiceFacade>()
 						 )).ReusedWithin(ReuseScope.None);
+			this.Container.Register(
+				c => new TouchViewModel(
+					     c.Resolve<INavigationServiceFacade>()
+					     )).ReusedWithin(ReuseScope.None);
 		}
 
 		#region Properties
