@@ -41,7 +41,6 @@ struct NodeConnection {
 	// state (byte)
 	// 0		connected state
 	// 1-7	reserved
-
 	uint16_t id;
 	byte state;
 	unsigned long lastChecked;

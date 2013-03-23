@@ -1,22 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Windows.Controls;
+using Eve.API.Services.Common;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Modules;
+using EveWindowsPhone.TouchServiceReference;
 using EveWindowsPhone.ViewModels;
 using Microsoft.Phone.Controls;
+using Orientation = Eve.API.Services.Common.Orientation;
 
 namespace EveWindowsPhone.Pages.Modules.Touch {
 	[Module("Touch", "/Resources/Images/Touch screens.png", "/Pages/Modules/Touch/TouchView.xaml")]
 	public class TouchViewModel : NotificationObject {
 		private INavigationServiceFacade navigationServiceFacade;
+		private TouchServiceClient serviceClient;
 
 
 		public TouchViewModel(INavigationServiceFacade navigationServiceFacade) {
 			if (navigationServiceFacade == null) throw new ArgumentNullException("navigationServiceFacade");
 			this.navigationServiceFacade = navigationServiceFacade;
+
+			this.serviceClient = new TouchServiceClient();
+			//this.serviceClient.Endpoint.Address = new EndpointAddress("");
+			//this.serviceClient.OpenCompleted += (s, es) => System.Diagnostics.Debug.WriteLine("Connection to service opened");
+			//this.serviceClient.OpenAsync();
+			
 		}
 
 
@@ -28,12 +39,16 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			}
 
 			System.Diagnostics.Debug.WriteLine(message.ToString());
+
+			this.serviceClient.ProcessTrackPadMessageAsync("TestToken", message);
 		}
 
-		public void OnButtonGesture(ButtonMessage.ButtonCommands command) {
-			var message = this.ConstructButtonMessage(command);
+		public void OnButtonGesture(ButtonMessage.Buttons button, ButtonMessage.ButtonCommands command) {
+			var message = this.ConstructButtonMessage(button, command);
 
 			System.Diagnostics.Debug.WriteLine(message.ToString());
+
+			this.serviceClient.ProcessButtonMessageAsync("TestToken", message);
 		}
 
 
@@ -78,22 +93,22 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 		private TrackPadMessage ConstructTrackPadMessage(DragCompletedGestureEventArgs args) {
 			return new TrackPadMessage(TrackPadMessage.TrackPadCommands.DragCompleted,
-			                           direction: args.Direction, x: args.HorizontalChange, y: args.VerticalChange);
+			                           direction: (Orientation) args.Direction, x: args.HorizontalChange, y: args.VerticalChange);
 		}
 
 		private TrackPadMessage ConstructTrackPadMessage(DragDeltaGestureEventArgs args) {
 			return new TrackPadMessage(TrackPadMessage.TrackPadCommands.DragDelta,
-			                           direction: args.Direction, x: args.HorizontalChange, y: args.VerticalChange);
+			                           direction: (Orientation) args.Direction, x: args.HorizontalChange, y: args.VerticalChange);
 		}
 
 		private TrackPadMessage ConstructTrackPadMessage(DragStartedGestureEventArgs args) {
 			return new TrackPadMessage(TrackPadMessage.TrackPadCommands.DragStarted,
-			                           direction: args.Direction);
+			                           direction: (Orientation) args.Direction);
 		}
 
 		private TrackPadMessage ConstructTrackPadMessage(FlickGestureEventArgs args) {
 			return new TrackPadMessage(TrackPadMessage.TrackPadCommands.Flick,
-			                           angle: args.Angle, direction: args.Direction, x: args.HorizontalVelocity,
+			                           angle: args.Angle, direction: (Orientation) args.Direction, x: args.HorizontalVelocity,
 			                           y: args.VerticalVelocity);
 		}
 
@@ -101,108 +116,8 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			return new TrackPadMessage(command);
 		}
 
-		private ButtonMessage ConstructButtonMessage(ButtonMessage.ButtonCommands command) {
-			return new ButtonMessage(command);
-		}
-
-
-		public class TrackPadMessage {
-			public TrackPadMessage(TrackPadCommands command,
-			                       double x = default(double), double y = default(double),
-			                       Orientation direction = default(Orientation),
-			                       double angle = default(double), double ratio = default(double)) {
-				this.Command = command;
-				this.X = x;
-				this.Y = y;
-				this.Direction = direction;
-				this.Angle = angle;
-				this.DistanceRatio = ratio;
-			}
-
-
-			public override string ToString() {
-				return String.Format("Command: {0}  |  (X,Y): ({1},{2})  |  Direction: {3}  |  Angle: {4}  |  Ratio: {5}",
-				                     this.Command.ToString(), this.X, this.Y, this.Direction.ToString(), this.Angle,
-				                     this.DistanceRatio);
-			}
-
-			#region Properties
-
-			public TrackPadCommands Command { get; set; }
-
-			/// <summary>
-			/// Gets and sets X axis of command
-			/// HorizontalChange for Drag
-			/// HorizontalVelocity for Flick
-			/// </summary>
-			public double X { get; set; }
-
-			/// <summary>
-			/// Gets and sets Y axis of command
-			/// VerticalChange for Drag
-			/// VerticalVelocity for Flick
-			/// </summary>
-			public double Y { get; set; }
-
-			/// <summary>
-			/// Gets and sets direction of command
-			/// </summary>
-			public Orientation Direction { get; set; }
-
-			/// <summary>
-			/// Gets or sets angle of command
-			/// Angle for Flick
-			/// TotalAngleDelta for Pinch
-			/// Angle for PinchStarted
-			/// </summary>
-			public double Angle { get; set; }
-
-			/// <summary>
-			/// Gets and sets distance ratio for command
-			/// DistanceRatio for Pinch
-			/// Distance for PichStarted
-			/// </summary>
-			public double DistanceRatio { get; set; }
-
-			#endregion
-
-
-			public enum TrackPadCommands {
-				Tap,
-				Hold,
-				DoubleTap,
-				Flick,
-				DragStarted,
-				DragDelta,
-				DragCompleted,
-				PinchStarted,
-				PinchDelta,
-				PinchCompleted
-			}
-		}
-
-		public class ButtonMessage {
-			public ButtonMessage(ButtonCommands command) {
-				this.Command = command;
-			}
-
-
-			public override string ToString() {
-				return String.Format("Command: {0}", this.Command);
-			}
-
-			#region Properties
-
-			public ButtonCommands Command { get; set; }
-
-			#endregion
-
-
-			public enum ButtonCommands {
-				Tap,
-				Hold,
-				DoubleTap
-			}
+		private ButtonMessage ConstructButtonMessage(ButtonMessage.Buttons button, ButtonMessage.ButtonCommands command) {
+			return new ButtonMessage(button, command);
 		}
 	}
 }

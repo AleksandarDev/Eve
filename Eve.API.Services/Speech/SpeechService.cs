@@ -1,22 +1,19 @@
 ﻿using System;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using Eve.API.Speech;
 using Eve.Core;
 
 namespace Eve.API.Services.Speech {
 	[ServiceBehavior(
-		InstanceContextMode = InstanceContextMode.PerSession, 
-		ConcurrencyMode = ConcurrencyMode.Reentrant)]
+		InstanceContextMode = InstanceContextMode.Single, 
+		ConcurrencyMode = ConcurrencyMode.Multiple)]
 	public sealed class SpeechService : ISpeechService {
-		private ServiceUser sessionUser;
-		private bool IsUserValidated { get { return this.sessionUser != null; } }
-
-
 		public SpeechService() {
 			System.Diagnostics.Debug.WriteLine(String.Format("Speech Service object created [{0}]", this.GetHashCode() ));
 
 			if (!SpeechProvider.IsRunning)
-				throw new EveException("Initialize SpeechProvider before starting service!");
+				Task.Run(async delegate { await SpeechProvider.Start(); });
 		}
 
 		~SpeechService() {
@@ -24,19 +21,16 @@ namespace Eve.API.Services.Speech {
 		}
 
 
-		public void Speak(string message) {
-			if (!IsUserValidated)
-				// TODO Return exception User not validated
-				return;
-			System.Diagnostics.Debug.WriteLine("Speek method called!");
-			SpeechProvider.Speak(new SpeechPrompt(message));
+		public void Speak(string token, string message) {
+			throw new NotImplementedException();
 		}
 
-		public void ValidateUser(ServiceUser user) {
-			System.Diagnostics.Debug.WriteLine("Validating user: " + user.Name);
+		public string SignIn(string userName, string passwordHash) {
+			throw new NotImplementedException();
+		}
 
-			// TODO Implement validating 
-			this.sessionUser = user;
+		public void SignOut(string token) {
+			throw new NotImplementedException();
 		}
 	}
 }

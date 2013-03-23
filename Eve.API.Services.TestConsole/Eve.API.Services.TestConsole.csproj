@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\Eve.API.Services\Reference.cs">
+    <Compile Include="Service References\TouchServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -53,34 +53,31 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Service References\Eve.API.Services\item.xsd">
+    <None Include="Service References\TouchServiceReference\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Eve.API.Services\item1.xsd">
+    <None Include="Service References\TouchServiceReference\item1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Eve.API.Services\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Eve.API.Services\SpeechService.wsdl" />
+    <None Include="Service References\TouchServiceReference\TouchService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\Eve.API.Services\" />
+    <WCFMetadataStorage Include="Service References\TouchServiceReference\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Eve.API.Services\item.disco" />
+    <None Include="Service References\TouchServiceReference\item.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Eve.API.Services\configuration91.svcinfo" />
+    <None Include="Service References\TouchServiceReference\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Eve.API.Services\configuration.svcinfo" />
+    <None Include="Service References\TouchServiceReference\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Eve.API.Services\Reference.svcmap">
+    <None Include="Service References\TouchServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

@@ -1,16 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-    <startup> 
-        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
-    </startup>
+﻿<configuration>
     <system.serviceModel>
         <bindings>
             <basicHttpBinding>
-                <binding name="BasicHttpBinding_ITouchService" />
+                <binding name="BasicHttpBinding_ITouchService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:41251/API/Touch/" binding="basicHttpBinding"
+            <endpoint address="http://aleksandarpc:41251/API/Touch/" binding="basicHttpBinding"
                 bindingConfiguration="BasicHttpBinding_ITouchService" contract="TouchServiceReference.ITouchService"
                 name="BasicHttpBinding_ITouchService" />
         </client>

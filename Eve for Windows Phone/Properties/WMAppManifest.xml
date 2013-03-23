@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
   <App xmlns="" ProductID="{071c4ab6-4343-472d-8bfe-5ab30562b428}" Title="SyncUp" RuntimeType="Silverlight" Version="0.1.0.0" Genre="apps.normal" Author="Aleksandar Toplek" Description="SyncUp - Eve for Windows Phone" Publisher="Aleksandar Toplek">
-    <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
+    <IconPath IsRelative="true" IsResource="false">Resources\Images\View.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />
       <Capability Name="ID_CAP_IDENTITY_DEVICE" />
@@ -24,7 +24,7 @@
     <Tokens>
       <PrimaryToken TokenID="Eve_for_Windows_PhoneToken" TaskName="_default">
         <TemplateType5>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Resources\Images\TileImage.png</BackgroundImageURI>
           <Count>0</Count>
           <Title>SyncUp</Title>
         </TemplateType5>

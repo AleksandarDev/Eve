@@ -3,20 +3,15 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace Eve.API.Services.Speech {
-	[ServiceContract(
-		SessionMode = SessionMode.Required,
-		CallbackContract = typeof(ISpeechServiceCallbackContract),
-		ProtectionLevel = ProtectionLevel.EncryptAndSign)]
+	[ServiceContract(SessionMode = SessionMode.Allowed)]
 	public interface ISpeechService {
-		[OperationContract(IsOneWay = true)]
-		void Speak(string message);
+		[OperationContract]
+		void Speak(string token, string message);
 
-		[OperationContract(IsOneWay = true)]
-		void ValidateUser(ServiceUser user);
-	}
+		[OperationContract]
+		string SignIn(string userName, string passwordHash);
 
-	[DataContract]
-	public class ServiceUser {
-		public string Name;
+		[OperationContract]
+		void SignOut(string token);
 	}
 }

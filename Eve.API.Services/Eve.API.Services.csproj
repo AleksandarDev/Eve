@@ -47,6 +47,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -60,6 +61,8 @@
     <Compile Include="Speech\ISpeechService.cs" />
     <Compile Include="Speech\ISpeechServiceCallbackContract.cs" />
     <Compile Include="Speech\SpeechService.cs" />
+    <Compile Include="Touch\ITouchService.cs" />
+    <Compile Include="Touch\TouchService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -67,6 +70,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Eve.API.Services.Common\Eve.API.Services.Common.csproj">
+      <Project>{95dc03e6-ac77-47ee-922f-76c44118716d}</Project>
+      <Name>Eve.API.Services.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eve.API\Eve.API.csproj">
       <Project>{09f82341-e1f6-42d0-8d98-a76ecd27bc89}</Project>
       <Name>Eve.API</Name>

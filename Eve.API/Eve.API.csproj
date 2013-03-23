@@ -97,6 +97,7 @@
     <Compile Include="Speech\SpeechProviderSynthesizerEventArgs.cs" />
     <Compile Include="Speech\SpeechProviderSynthesizerEventHandler.cs" />
     <Compile Include="Speech\SpeechPrompt.cs" />
+    <Compile Include="Touch\TouchProvider.cs" />
     <Compile Include="Vision\FaceDetectionProvider.cs" />
   </ItemGroup>
   <ItemGroup>

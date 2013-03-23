@@ -38,6 +38,9 @@
   <PropertyGroup>
     <ApplicationIcon>Eve256.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Eve_Control.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fleck2">
       <HintPath>..\packages\Fleck2.1.0.4\lib\net45\Fleck2.dll</HintPath>

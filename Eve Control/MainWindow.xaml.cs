@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Eve.API.Scripting;
 using Eve.API.Speech;
+using Eve.API.Touch;
 using Eve.API.Vision;
 using Eve.Core.Chrome;
 using Eve.Core.Kinect;
@@ -44,6 +45,7 @@ namespace Eve_Control {
 		private async void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
 			//await KinectService.Start();
 			await SpeechProvider.Start();
+			await TouchProvider.Start();
 			//await ScriptingProvider.Start();
 			this.Closing += async (s, es) => { await StopServices(); };
 
@@ -134,18 +136,26 @@ namespace Eve_Control {
 				new Uri("http://localhost:41250/"));
 			this.speechServiceHost.AddServiceEndpoint(
 				typeof (Eve.API.Services.Speech.ISpeechService),
-				new WSHttpBinding(), "/API/Speech/");
+				new BasicHttpBinding(), "/API/Speech/");
 			this.speechServiceHost.Open();
 			System.Diagnostics.Debug.WriteLine("SpeechService opened.", typeof (MainWindow).Name);
+
+			this.touchServiceHost = new ServiceHost(
+				typeof (Eve.API.Services.Touch.TouchService),
+				new Uri("http://localhost:41251/"));
+			this.touchServiceHost.AddServiceEndpoint(
+				typeof (Eve.API.Services.Touch.ITouchService),
+				new BasicHttpBinding(), "/API/Touch/");
+			this.touchServiceHost.Open();
+			System.Diagnostics.Debug.WriteLine("TouchService opened.", typeof (MainWindow).Name);
 
 			this.chromeServer = new ChromeServer();
 			System.Diagnostics.Debug.WriteLine(String.Format("WebSocket server started on \"{0}\"",
 			                                                 this.chromeServer.ServerLocation), typeof (MainWindow).Name);
-
-			var faceProvider = new FaceDetectionProvider();
 		}
 
-		private ServiceHost speechServiceHost; 
+		private ServiceHost speechServiceHost;
+		private ServiceHost touchServiceHost;
 
 		private async Task StopServices() {
 			await ScriptingProvider.Stop();
