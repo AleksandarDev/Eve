@@ -3,31 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
-using System.Windows.Controls;
-using Eve.API.Services.Common;
+using Eve.API.Services.Contracts;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Modules;
-using EveWindowsPhone.TouchServiceReference;
 using EveWindowsPhone.ViewModels;
 using Microsoft.Phone.Controls;
-using Orientation = Eve.API.Services.Common.Orientation;
 
 namespace EveWindowsPhone.Pages.Modules.Touch {
 	[Module("Touch", "/Resources/Images/Touch screens.png", "/Pages/Modules/Touch/TouchView.xaml")]
 	public class TouchViewModel : NotificationObject {
 		private INavigationServiceFacade navigationServiceFacade;
-		private TouchServiceClient serviceClient;
-
+		//private TouchServiceClient serviceClient;
+		
 
 		public TouchViewModel(INavigationServiceFacade navigationServiceFacade) {
 			if (navigationServiceFacade == null) throw new ArgumentNullException("navigationServiceFacade");
 			this.navigationServiceFacade = navigationServiceFacade;
 
-			this.serviceClient = new TouchServiceClient();
-			//this.serviceClient.Endpoint.Address = new EndpointAddress("");
-			//this.serviceClient.OpenCompleted += (s, es) => System.Diagnostics.Debug.WriteLine("Connection to service opened");
-			//this.serviceClient.OpenAsync();
-			
+			//this.serviceClient = new TouchServiceClient();
 		}
 
 
@@ -40,7 +33,7 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 			System.Diagnostics.Debug.WriteLine(message.ToString());
 
-			this.serviceClient.ProcessTrackPadMessageAsync("TestToken", message);
+			//this.serviceClient.ProcessTrackPadMessageAsync("TestToken", message);
 		}
 
 		public void OnButtonGesture(ButtonMessage.Buttons button, ButtonMessage.ButtonCommands command) {
@@ -48,7 +41,7 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 			System.Diagnostics.Debug.WriteLine(message.ToString());
 
-			this.serviceClient.ProcessButtonMessageAsync("TestToken", message);
+			//this.serviceClient.ProcessButtonMessageAsync("TestToken", message);
 		}
 
 

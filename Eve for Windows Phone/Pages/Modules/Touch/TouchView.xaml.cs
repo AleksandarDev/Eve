@@ -5,12 +5,16 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using Eve.API.Services.Common;
+using Eve.API.Services.Contracts;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
 namespace EveWindowsPhone.Pages.Modules.Touch {
 	public partial class TouchView : PhoneApplicationPage {
+		// TODO Implement multi touch 
+		// TODO Two finger scroll
+		// TODO Three finger swipe
+
 		public TouchView() {
 			InitializeComponent();
 

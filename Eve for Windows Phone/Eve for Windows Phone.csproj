@@ -84,11 +84,6 @@
       <DependentUpon>TouchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Modules\Touch\TouchViewModel.cs" />
-    <Compile Include="Service References\TouchServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\NotificationObject.cs" />
     <Compile Include="ViewModels\PropertySupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,24 +110,7 @@
     <None Include="Properties\WMAppManifest.xml" />
     <Content Include="Resources\Images\TileImage.png" />
     <Content Include="Resources\Images\View.png" />
-    <None Include="Service References\TouchServiceReference\item.disco" />
-    <None Include="Service References\TouchServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\TouchServiceReference\configuration.svcinfo" />
-    <None Include="Service References\TouchServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="ServiceReferences.ClientConfig" />
-    <None Include="Service References\TouchServiceReference\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TouchServiceReference\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TouchServiceReference\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TouchServiceReference\TouchService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
@@ -155,13 +133,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Eve.API.Services.Common\Eve.API.Services.Common.csproj">
-      <Project>{95DC03E6-AC77-47EE-922F-76C44118716D}</Project>
-      <Name>Eve.API.Services.Common</Name>
+    <ProjectReference Include="..\Eve.API.Services.Contracts\Eve.API.Services.Contracts.csproj">
+      <Project>{B472F1C3-1ED7-460A-B48F-325E89557EC9}</Project>
+      <Name>Eve.API.Services.Contracts</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\TouchServiceReference\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

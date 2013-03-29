@@ -28,11 +28,11 @@
 		<div class="Content">
 			<div class="Post">
 				<div class="PostText">
-					This simple diagram I made last night shows basic message exchange and layers currently in development.<br/>
-					<div class="PostFooter">Aleksandar Toplek, 20.3.2013.</div>
+					Schematic diagram showing basic message exchange mechanism and available application layers.<br/>
+					<div class="PostFooter">Aleksandar Toplek, 23.3.2013.</div>
 				</div>
-				<a href="https://www.lucidchart.com/publicSegments/view/513e136c-5fa0-4580-8071-63d40a005798/image.png" target="_blank">
-					<img class="PostImage" src="Resources/Images/Post1Layers.png" title="Eve Messaging Layers" width="252" height="330" />
+				<a href="https://www.lucidchart.com/publicSegments/view/514e214d-f628-48da-a098-46440a0043f7/image.png" target="_blank">
+					<img class="PostImage" src="Resources/Images/Post1Layers.png" title="Eve Messaging Layers" width="251" height="330" />
 				</a>
 			</div>
 		</div>

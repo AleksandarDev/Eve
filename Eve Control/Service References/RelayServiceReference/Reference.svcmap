@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="025a5389-86c6-4af3-b1dd-31dc6b3d3962" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d844be50-784d-4d38-84dd-b26b96ed3e39" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="7818b415-ca88-48d2-b68c-ef9859cd9fc5" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="594d6e06-9c57-47d8-8672-0c5cf6faf4e1" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
+    <MetadataFile FileName="Eve.API.Services.Contracts.Services.xsd" MetadataType="Schema" ID="695dfeed-7f51-472b-b8db-458332917d72" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
+    <MetadataFile FileName="Eve.API.Services.Contracts.xsd" MetadataType="Schema" ID="9ee2799e-b0d0-4631-8edc-9f17096344e1" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

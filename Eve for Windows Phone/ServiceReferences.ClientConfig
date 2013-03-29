@@ -1,17 +1,1 @@
-﻿<configuration>
-    <system.serviceModel>
-        <bindings>
-            <basicHttpBinding>
-                <binding name="BasicHttpBinding_ITouchService" maxBufferSize="2147483647"
-                    maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
-                </binding>
-            </basicHttpBinding>
-        </bindings>
-        <client>
-            <endpoint address="http://aleksandarpc:41251/API/Touch/" binding="basicHttpBinding"
-                bindingConfiguration="BasicHttpBinding_ITouchService" contract="TouchServiceReference.ITouchService"
-                name="BasicHttpBinding_ITouchService" />
-        </client>
-    </system.serviceModel>
-</configuration>
+﻿<configuration />

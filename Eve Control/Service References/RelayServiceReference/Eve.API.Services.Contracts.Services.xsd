@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Eve.API.Services.Contracts.Services" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Contracts.Services" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ServiceRequestDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Client" nillable="true" type="tns:ServiceClient" />
+      <xs:element minOccurs="0" name="User" nillable="true" type="tns:ServiceUser" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceRequestDetails" nillable="true" type="tns:ServiceRequestDetails" />
+  <xs:complexType name="ServiceClient">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Alias" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceClient" nillable="true" type="tns:ServiceClient" />
+  <xs:complexType name="ServiceUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsValid" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PasswordHash" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceUser" nillable="true" type="tns:ServiceUser" />
+  <xs:complexType name="ArrayOfServiceClient">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceClient" nillable="true" type="tns:ServiceClient" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceClient" nillable="true" type="tns:ArrayOfServiceClient" />
+</xs:schema>

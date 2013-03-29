@@ -25,6 +25,7 @@ using Eve.API.Touch;
 using Eve.API.Vision;
 using Eve.Core.Chrome;
 using Eve.Core.Kinect;
+using Eve_Control.RelayServiceReference;
 using Fleck2;
 using Fleck2.Interfaces;
 using Timer = System.Timers.Timer;
@@ -131,31 +132,49 @@ namespace Eve_Control {
 			//};
 
 			// Setup speech service
-			this.speechServiceHost = new ServiceHost(
-				typeof (Eve.API.Services.Speech.SpeechService), 
-				new Uri("http://localhost:41250/"));
-			this.speechServiceHost.AddServiceEndpoint(
-				typeof (Eve.API.Services.Speech.ISpeechService),
-				new BasicHttpBinding(), "/API/Speech/");
-			this.speechServiceHost.Open();
-			System.Diagnostics.Debug.WriteLine("SpeechService opened.", typeof (MainWindow).Name);
+			//this.speechServiceHost = new ServiceHost(
+			//	typeof (SpeechService), 
+			//	new Uri("http://AleksandarPC:41250/"));
+			//this.speechServiceHost.AddServiceEndpoint(
+			//	typeof (Eve.API.Services.Speech.ISpeechService),
+			//	new BasicHttpBinding(), "/API/Speech/");
+			//this.speechServiceHost.Open();
+			//System.Diagnostics.Debug.WriteLine("SpeechService opened.", typeof (MainWindow).Name);
 
-			this.touchServiceHost = new ServiceHost(
-				typeof (Eve.API.Services.Touch.TouchService),
-				new Uri("http://localhost:41251/"));
-			this.touchServiceHost.AddServiceEndpoint(
-				typeof (Eve.API.Services.Touch.ITouchService),
-				new BasicHttpBinding(), "/API/Touch/");
-			this.touchServiceHost.Open();
-			System.Diagnostics.Debug.WriteLine("TouchService opened.", typeof (MainWindow).Name);
+			//this.touchServiceHost = new ServiceHost(
+			//	typeof (TouchService),
+			//	new Uri("http://AleksandarPC:41251/"));
+			//this.touchServiceHost.AddServiceEndpoint(
+			//	typeof (Eve.API.Services.Touch.ITouchService),
+			//	new BasicHttpBinding(), "/API/Touch/");
+			//this.touchServiceHost.Open();
+			//System.Diagnostics.Debug.WriteLine("TouchService opened.", typeof (MainWindow).Name);
 
 			this.chromeServer = new ChromeServer();
 			System.Diagnostics.Debug.WriteLine(String.Format("WebSocket server started on \"{0}\"",
 			                                                 this.chromeServer.ServerLocation), typeof (MainWindow).Name);
+
+
+			this.callbackHandler = new RelayServiceCallbackHandler();
+			this.instanceContext = new InstanceContext(this.callbackHandler);
+			this.client = new RelayServiceClient(this.instanceContext);/*,
+												 new WSDualHttpBinding() {
+													 ClientBaseAddress = new Uri("http://localhost:8088/RelayService/"),
+													 Security = new WSDualHttpSecurity() { Mode = WSDualHttpSecurityMode.None }
+												 },
+												 new EndpointAddress("http://localhost:14004/RelayService.svc/Client/"));*/
+			await this.client.PingAsync("Aleksandar");
 		}
 
-		private ServiceHost speechServiceHost;
-		private ServiceHost touchServiceHost;
+		private InstanceContext instanceContext;
+		private RelayServiceCallbackHandler callbackHandler;
+		private RelayServiceReference.RelayServiceClient client;
+
+		public class RelayServiceCallbackHandler : IRelayServiceCallback {
+			public void PingOneWayResponse(string response) {
+				System.Diagnostics.Debug.WriteLine("Recieved ping response: " + response);
+			}
+		}
 
 		private async Task StopServices() {
 			await ScriptingProvider.Stop();
