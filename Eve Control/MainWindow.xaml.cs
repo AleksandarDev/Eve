@@ -28,6 +28,7 @@ using Eve.Core.Kinect;
 using Eve_Control.RelayServiceReference;
 using Fleck2;
 using Fleck2.Interfaces;
+using ManagedUPnP;
 using Timer = System.Timers.Timer;
 
 namespace Eve_Control {
@@ -154,16 +155,22 @@ namespace Eve_Control {
 			System.Diagnostics.Debug.WriteLine(String.Format("WebSocket server started on \"{0}\"",
 			                                                 this.chromeServer.ServerLocation), typeof (MainWindow).Name);
 
-
+			System.Diagnostics.Debug.WriteLine("=== Creating Proxy...");
 			this.callbackHandler = new RelayServiceCallbackHandler();
 			this.instanceContext = new InstanceContext(this.callbackHandler);
-			this.client = new RelayServiceClient(this.instanceContext);/*,
+			this.client = new RelayServiceClient(this.instanceContext,
 												 new WSDualHttpBinding() {
 													 ClientBaseAddress = new Uri("http://localhost:8088/RelayService/"),
 													 Security = new WSDualHttpSecurity() { Mode = WSDualHttpSecurityMode.None }
 												 },
-												 new EndpointAddress("http://localhost:14004/RelayService.svc/Client/"));*/
-			await this.client.PingAsync("Aleksandar");
+												 new EndpointAddress("http://localhost:14004/RelayService.svc/Client/"));
+			System.Diagnostics.Debug.WriteLine("=== Opening connection...");
+			this.client.Open();
+			System.Diagnostics.Debug.WriteLine("=== Sending request...");
+			System.Diagnostics.Debug.WriteLine("=== Got message: " + this.client.Ping("Aleksandar"));
+			System.Diagnostics.Debug.WriteLine("=== Closing connectiontion");
+			this.client.Close();
+			//await this.client.PingOneWayAsync("Aleksandar");
 		}
 
 		private InstanceContext instanceContext;

@@ -229,9 +229,9 @@
   </wsdl:binding>
   <wsdl:service name="RelayService">
     <wsdl:port name="WSDualHttpBinding_IRelayService" binding="tns:WSDualHttpBinding_IRelayService">
-      <soap12:address location="http://eve.toplek.net/apps/eve/service/RelayService.svc/Client/" />
+      <soap12:address location="http://localhost:14004/EveRelay/RelayService.svc/Client/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://eve.toplek.net/apps/eve/service/RelayService.svc/Client/</wsa10:Address>
+        <wsa10:Address>http://localhost:14004/EveRelay/RelayService.svc/Client/</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

@@ -48,6 +48,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Coding4Fun.Toolkit.Audio">
+      <HintPath>..\packages\Coding4Fun.Toolkit.Audio.2.0.5\lib\wp71\Coding4Fun.Toolkit.Audio.dll</HintPath>
+    </Reference>
+    <Reference Include="Coding4Fun.Toolkit.Controls">
+      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.5\lib\wp71\Coding4Fun.Toolkit.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Coding4Fun.Toolkit.Net">
+      <HintPath>..\packages\Coding4Fun.Toolkit.Net.2.0.5\lib\wp71\Coding4Fun.Toolkit.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Coding4Fun.Toolkit.Storage">
+      <HintPath>..\packages\Coding4Fun.Toolkit.Storage.2.0.5\lib\wp71\Coding4Fun.Toolkit.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="Funq">
       <HintPath>lib\Funq\Funq.dll</HintPath>
     </Reference>
@@ -55,10 +67,14 @@
       <HintPath>..\packages\PhoneThemeManager.1.3.3\lib\sl4-windowsphone71\JeffWilcox.PhoneThemeManager.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
       <HintPath>..\packages\WPtoolkit.4.2012.10.30\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
@@ -69,17 +85,34 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\FavoriteModule.cs" />
+    <Compile Include="Modules\FavoriteModules.cs" />
+    <Compile Include="Adapters\IIsolatedStorageServiceFacade.cs" />
     <Compile Include="Adapters\INavigationServiceFacade.cs" />
+    <Compile Include="Adapters\IsolatedStorageServiceFacade.cs" />
     <Compile Include="Adapters\NavigationServiceFacade.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\ApplicationBarController\ApplicationBarController.cs" />
+    <Compile Include="Controllers\ApplicationBarController\ApplicationBarPage.cs" />
+    <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageCollection.cs" />
+    <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageCollectionEnumerator.cs" />
+    <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageEventHandler.cs" />
     <Compile Include="Modules\Module.cs" />
     <Compile Include="Modules\ModulesLocator.cs" />
     <Compile Include="Pages\Main\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Main\MainViewModel.cs" />
+    <Compile Include="Pages\Modules\Lights\LightsView.xaml.cs">
+      <DependentUpon>LightsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Modules\Lights\LightsViewModel.cs" />
+    <Compile Include="Pages\Modules\Play\PlayView.xaml.cs">
+      <DependentUpon>PlayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Modules\Play\PlayViewModel.cs" />
     <Compile Include="Pages\Modules\Touch\TouchView.xaml.cs">
       <DependentUpon>TouchView.xaml</DependentUpon>
     </Compile>
@@ -99,6 +132,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Modules\Lights\LightsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Modules\Play\PlayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Modules\Touch\TouchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,9 +149,11 @@
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
+    <Content Include="ReadMe.Coding4Fun.Toolkit.txt" />
+    <Content Include="Resources\Images\Heart.png" />
+    <Content Include="Resources\Images\Shopping Bag.png" />
     <Content Include="Resources\Images\TileImage.png" />
     <Content Include="Resources\Images\View.png" />
-    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
@@ -119,7 +162,6 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="README_FIRST.txt" />
     <Content Include="Resources\Images\IPod.png" />
     <Content Include="Resources\Images\Light Bulb.png" />
     <Content Include="Resources\Images\Touch screens.png" />
@@ -138,6 +180,7 @@
       <Name>Eve.API.Services.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

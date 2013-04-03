@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="025a5389-86c6-4af3-b1dd-31dc6b3d3962" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e5286a7f-9f45-4029-bf2d-414037d19a87" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost:14004/EveRelay/RelayService.svc/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d844be50-784d-4d38-84dd-b26b96ed3e39" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="7818b415-ca88-48d2-b68c-ef9859cd9fc5" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="594d6e06-9c57-47d8-8672-0c5cf6faf4e1" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
-    <MetadataFile FileName="Eve.API.Services.Contracts.Services.xsd" MetadataType="Schema" ID="695dfeed-7f51-472b-b8db-458332917d72" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
-    <MetadataFile FileName="Eve.API.Services.Contracts.xsd" MetadataType="Schema" ID="9ee2799e-b0d0-4631-8edc-9f17096344e1" SourceId="1" SourceUrl="http://eve.toplek.net/apps/eve/service/RelayService.svc/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="80a23913-65e0-4af3-ae5b-f44c387ade1a" SourceId="1" SourceUrl="http://localhost:14004/EveRelay/RelayService.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="93a6f27c-7d5c-434c-97c3-b2aabbc247f5" SourceId="1" SourceUrl="http://localhost:14004/EveRelay/RelayService.svc/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="586ce280-6845-450a-95af-d9e51c7b7660" SourceId="1" SourceUrl="http://localhost:14004/EveRelay/RelayService.svc/mex" />
+    <MetadataFile FileName="Eve.API.Services.Contracts.Services.xsd" MetadataType="Schema" ID="41cc8434-5a0a-47b1-8cd1-241eae3b619c" SourceId="1" SourceUrl="http://localhost:14004/EveRelay/RelayService.svc/mex" />
+    <MetadataFile FileName="Eve.API.Services.Contracts.xsd" MetadataType="Schema" ID="4893fd64-c307-4820-ab4b-990a2683bb9b" SourceId="1" SourceUrl="http://localhost:14004/EveRelay/RelayService.svc/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

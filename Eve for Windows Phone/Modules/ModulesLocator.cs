@@ -9,7 +9,7 @@ using EveWindowsPhone.ViewModels;
 namespace EveWindowsPhone.Modules {
 	public class ModulesLocator : NotificationObject {
 		public ModulesLocator() {
-			this.AvailableModules = new ObservableCollection<Module>();
+			this.AvailableModules = new ObservableCollection<ModuleModel>();
 			this.LoadModules();
 		}
 
@@ -25,7 +25,7 @@ namespace EveWindowsPhone.Modules {
 				var attributes = Attribute.GetCustomAttributes(moduleType);
 				if (attributes.Any()) {
 					foreach (var attribute in attributes.OfType<Module>()) {
-						this.AvailableModules.Add(attribute);
+						this.AvailableModules.Add(new ModuleModel(attribute));
 					}
 				}
 			}
@@ -38,7 +38,7 @@ namespace EveWindowsPhone.Modules {
 
 		#region Properties
 
-		public ObservableCollection<Module> AvailableModules { get; private set; }
+		public ObservableCollection<ModuleModel> AvailableModules { get; private set; }
 
 		#endregion
 	}

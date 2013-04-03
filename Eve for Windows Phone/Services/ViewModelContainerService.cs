@@ -21,10 +21,13 @@ namespace EveWindowsPhone.Services {
 		private void InitializeContainer() {
 			this.Container.Register<INavigationServiceFacade>(
 				c => new NavigationServiceFacade(((App) Application.Current).RootFrame));
+			this.Container.Register<IIsolatedStorageServiceFacade>(
+				c => new IsolatedStorageServiceFacade());
 
 			this.Container.Register(
 				c => new MainViewModel(
-					     c.Resolve<INavigationServiceFacade>()
+					     c.Resolve<INavigationServiceFacade>(),
+						 c.Resolve<IIsolatedStorageServiceFacade>()
 						 )).ReusedWithin(ReuseScope.None);
 			this.Container.Register(
 				c => new TouchViewModel(
