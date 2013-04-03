@@ -1,9 +1,7 @@
-![Alt Eve](http://eve.toplek.net/Resources/Images/Eve64.png)
+![Alt Eve](http://eve.toplek.net/Resources/Images/Eve128.png) 
 # Eve
 
 An application suit made for **App Start Contest 2013.** (student competition in team mobile and web development) with an idea of all in one remote control.
-
-* * *
 
 ## Basics
 
