@@ -5,14 +5,11 @@
 	<Color x:Key="WindowBackgroundColor">#222222</Color>
 	<Color x:Key="HeaderForegroundColor">#FAFAFA</Color>
 	<Color x:Key="ContentForegroundColor">#EAEAEA</Color>
-	<Color x:Key="StatusBarColor">#00D000</Color>
-	<Color x:Key="StatusBarForegroundColor">#FAFAFA</Color>
 
 	<SolidColorBrush x:Key="ThemeBrush" Color="{DynamicResource ThemeColor}" />
 	<SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource WindowBackgroundColor}" />
 	<SolidColorBrush x:Key="HeaderForegroundBrush" Color="{DynamicResource HeaderForegroundColor}" />
 	<SolidColorBrush x:Key="ContentForegroundBrush" Color="{DynamicResource ContentForegroundColor}" />
-	<SolidColorBrush x:Key="StatusBarBrush" Color="{DynamicResource StatusBarColor}" />
-	<SolidColorBrush x:Key="StatusBarForegroundBrush" Color="{DynamicResource StatusBarForegroundColor}" />
+	<SolidColorBrush x:Key="StatusBarBrush" Color="{DynamicResource AccentColor}" />
 	
 </ResourceDictionary>

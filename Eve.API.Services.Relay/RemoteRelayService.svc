@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Eve.API.Services.Relay.RemoteRelayService" CodeBehind="RemoteRelayService.svc.cs" %>

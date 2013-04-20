@@ -14,18 +14,18 @@
       <FileName>TrackPadMessage.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Eve.API.Services.Contracts.Services.ClientState.ClientState" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="Eve.API.Services.Contracts.Services.ClientState" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="8" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Services\ClientState\ClientState.cs</FileName>
+      <FileName>Services\ClientState.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Eve.API.Services.Contracts.Services.ServiceClient" Collapsed="true">
     <Position X="9.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAIAgAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
       <FileName>Services\ServiceClient.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -43,24 +43,24 @@
       <FileName>Services\ServiceUser.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="Eve.API.Services.Contracts.Services.ClientState.IClientState" Collapsed="true">
+  <Interface Name="Eve.API.Services.Contracts.Services.Interfaces.IClientState" Collapsed="true">
     <Position X="3.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Services\ClientState\IClientState.cs</FileName>
+      <FileName>Services\Interfaces\IClientState.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Eve.API.Services.Contracts.Services.ClientState.IClientStateTouch" Collapsed="true">
+  <Interface Name="Eve.API.Services.Contracts.Services.Interfaces.IClientStateTouch" Collapsed="true">
     <Position X="3.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Services\ClientState\IClientStateTouch.cs</FileName>
+      <FileName>Services\Interfaces\IClientStateTouch.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Eve.API.Services.Contracts.Services.Interfaces.IEveService" Collapsed="true">
     <Position X="0.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAACCAAAAAAAAAAEAAgAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Services\Interfaces\IEveService.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -71,11 +71,11 @@
       <FileName>Services\Interfaces\IRelayCallbackContract.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Eve.API.Services.Contracts.Services.Interfaces.IRelayService" Collapsed="true">
+  <Interface Name="Eve.API.Services.Contracts.Services.Interfaces.IRelayClientService" Collapsed="true">
     <Position X="0.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAEAAAEAAgAAAAAAGAAQAAAAAAAAAAAA=</HashCode>
-      <FileName>Services\Interfaces\IRelayService.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAACAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IRelayClientService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Eve.API.Services.Contracts.Services.Interfaces.ITouchService" Collapsed="true">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
 using System.Media;
@@ -25,29 +26,37 @@ using Eve.API.Touch;
 using Eve.API.Vision;
 using Eve.Core.Chrome;
 using Eve.Core.Kinect;
+using Eve.Core.Loging;
 using Eve_Control.RelayServiceReference;
+using Eve_Control.Windows.Vision;
 using Fleck2;
 using Fleck2.Interfaces;
-using ManagedUPnP;
+using MahApps.Metro;
+using MahApps.Metro.Controls;
 using Timer = System.Timers.Timer;
 
 namespace Eve_Control {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window {
+	public partial class MainWindow : MetroWindow {
+		private Log.LogInstance log = new Log.LogInstance(typeof(MainWindow));
 		private ChromeServer chromeServer;
 
 
 		public MainWindow() {
-			this.DataContext = this;
+			ThemeManager.ChangeTheme(this,
+									 new Accent("EveGreen",
+												new Uri("/Eve.UI;component/Styles/Accents/EveGreen.xaml",
+														UriKind.RelativeOrAbsolute)), Theme.Dark);
+
 			InitializeComponent();
 		}
 
 		private async void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
 			//await KinectService.Start();
-			await SpeechProvider.Start();
-			await TouchProvider.Start();
+			//await SpeechProvider.Start();
+			//await TouchProvider.Start();
 			//await ScriptingProvider.Start();
 			this.Closing += async (s, es) => { await StopServices(); };
 
@@ -152,34 +161,174 @@ namespace Eve_Control {
 			//System.Diagnostics.Debug.WriteLine("TouchService opened.", typeof (MainWindow).Name);
 
 			this.chromeServer = new ChromeServer();
-			System.Diagnostics.Debug.WriteLine(String.Format("WebSocket server started on \"{0}\"",
-			                                                 this.chromeServer.ServerLocation), typeof (MainWindow).Name);
+			System.Diagnostics.Debug.WriteLine(
+				String.Format("WebSocket server started on \"{0}\"",
+							  this.chromeServer.ServerLocation), typeof(MainWindow).Name);
 
-			System.Diagnostics.Debug.WriteLine("=== Creating Proxy...");
-			this.callbackHandler = new RelayServiceCallbackHandler();
-			this.instanceContext = new InstanceContext(this.callbackHandler);
-			this.client = new RelayServiceClient(this.instanceContext,
-												 new WSDualHttpBinding() {
-													 ClientBaseAddress = new Uri("http://localhost:8088/RelayService/"),
-													 Security = new WSDualHttpSecurity() { Mode = WSDualHttpSecurityMode.None }
-												 },
-												 new EndpointAddress("http://localhost:14004/RelayService.svc/Client/"));
-			System.Diagnostics.Debug.WriteLine("=== Opening connection...");
-			this.client.Open();
-			System.Diagnostics.Debug.WriteLine("=== Sending request...");
-			System.Diagnostics.Debug.WriteLine("=== Got message: " + this.client.Ping("Aleksandar"));
-			System.Diagnostics.Debug.WriteLine("=== Closing connectiontion");
-			this.client.Close();
+			//System.Diagnostics.Debug.WriteLine("=== Creating Proxy...");
+
+			//this.client = new RelayServiceClient(this.instanceContext,
+			//									 new WSDualHttpBinding() {
+			//										 ClientBaseAddress = new Uri("http://localhost:8088/RelayService/"),
+			//										 Security = new WSDualHttpSecurity() { Mode = WSDualHttpSecurityMode.None }
+			//									 },
+			//									 new EndpointAddress("http://localhost:14004/RelayService.svc/Client/"));
+			//System.Diagnostics.Debug.WriteLine("=== Opening connection...");
+			//this.client.Open();
+			//System.Diagnostics.Debug.WriteLine("=== Sending request...");
+			//System.Diagnostics.Debug.WriteLine("=== Got message: " + this.client.Ping("Aleksandar"));
+			//System.Diagnostics.Debug.WriteLine("=== Closing connectiontion");
+			//this.client.Close();
 			//await this.client.PingOneWayAsync("Aleksandar");
+
+			var relay = new RelayClient();
+			relay.ConnectionChanged += client => this.StatusLabel.Dispatcher.InvokeAsync(
+				() => {
+					this.StatusLabel.Content = relay.IsConnected
+												   ? "Connected"
+												   : "Not connected";
+				});
+
+			relay.OnOpened += relayClient => {
+				relay.Proxy.Subscribe();
+				var clients = relay.Proxy.GetAvailableClients();
+				foreach (var client in clients)
+					System.Diagnostics.Debug.WriteLine(client.ID);
+				System.Diagnostics.Debug.WriteLine("Subscribed to relay service");
+			};
+			this.Closing += (s, se) => relay.Close();
 		}
 
-		private InstanceContext instanceContext;
-		private RelayServiceCallbackHandler callbackHandler;
-		private RelayServiceReference.RelayServiceClient client;
+		public delegate void RelayClientEventHandler(RelayClient client);
 
-		public class RelayServiceCallbackHandler : IRelayServiceCallback {
-			public void PingOneWayResponse(string response) {
-				System.Diagnostics.Debug.WriteLine("Recieved ping response: " + response);
+		public class RelayClient {
+			private Log.LogInstance log = new Log.LogInstance(typeof(RelayClient));
+
+			private InstanceContext instanceContext;
+			private RelayServiceCallbackHandler callbackHandler;
+			private Timer timer;
+			private const int ConnectionCheckInterval = 5000;
+
+			public event RelayClientEventHandler OnOpened;
+			public event RelayClientEventHandler OnClosed;
+			public event RelayClientEventHandler ConnectionChanged;
+
+
+			public RelayClient() {
+				this.callbackHandler = new RelayServiceCallbackHandler();
+				this.instanceContext = new InstanceContext(this.callbackHandler);
+				this.Proxy = new RelayServiceClient(this.instanceContext);
+
+				// Attach to open and close events
+				this.OnOpened +=
+					client => { if (this.ConnectionChanged != null) this.ConnectionChanged(client); };
+				this.OnClosed +=
+					client => { if (this.ConnectionChanged != null) this.ConnectionChanged(client); };
+
+				// Set periodic connection tests
+				this.timer = new Timer(ConnectionCheckInterval);
+				this.timer.Elapsed += CheckConnection;
+				this.timer.Start();
+
+				this.Open();
+			}
+
+
+			private async void Open() {
+				// Check if communication isn't opening already
+				if (this.Proxy.State == CommunicationState.Opening) {
+					System.Diagnostics.Debug.WriteLine("Already opening...",
+													   (typeof(RelayClient)).Name);
+					return;
+				}
+
+				// Check if connection is in faulted state so that we
+				// abort all operations on proxy and get it to closed state
+				if (this.Proxy.State == CommunicationState.Faulted) {
+					System.Diagnostics.Debug.WriteLine(
+						"Connection is faulted! Aborting and restarting.",
+						(typeof(RelayClient)).Name);
+					await Task.Run(() => this.Proxy.Abort());
+				}
+
+				// Open connection to relay
+				System.Diagnostics.Debug.WriteLine("Opening connection...",
+												   (typeof(RelayClient)).Name);
+				await Task.Run(() => {
+					try {
+						this.Proxy.Open();
+						log.Info("Connection opened");
+						if (this.OnOpened != null)
+							this.OnOpened(this);
+					}
+					catch (TimeoutException ex) {
+						log.Error<TimeoutException>(ex, "Connection to proxy timed out!");
+					} catch (Exception ex) {
+						log.Error<Exception>(ex, "Unknown error occurred while connecting to proxy");
+					}
+				});
+			}
+
+			public async Task<bool> Close() {
+				return await Task.Run(() => {
+					// Check if connection isn't already closed
+					if (this.Proxy.State != CommunicationState.Closed) {
+						try {
+							log.Info("Closing connection...");
+							this.Proxy.Close();
+							log.Info("Connection closed...");
+						}
+						catch (Exception ex) {
+							log.Error<Exception>(ex, "Can't close connection!");
+							return false;
+						}
+					}
+					else log.Info("Connection already closed");
+
+					return true;
+				});
+			}
+
+			private async void CheckConnection(object sender, ElapsedEventArgs e) {
+				System.Diagnostics.Debug.WriteLine("Checking connection...");
+
+				if (this.Proxy.State != CommunicationState.Opened) {
+					System.Diagnostics.Debug.WriteLine(
+						"Connection closed. Requesting to open...");
+					this.IsConnected = false;
+					this.Open();
+					return;
+				}
+
+				try {
+					await this.Proxy.PingAsync("ConnectionCheck");
+					System.Diagnostics.Debug.WriteLine("Connection confirmed");
+					this.IsConnected = true;
+
+					if (this.OnOpened != null)
+						this.OnOpened(this);
+				}
+				catch (Exception) {
+					System.Diagnostics.Debug.WriteLine("Connection to relay timed out",
+													   (typeof(RelayClient)).Name);
+					this.IsConnected = false;
+
+					if (this.OnClosed != null)
+						this.OnClosed(this);
+				}
+			}
+
+			#region Properties
+
+			public RelayServiceClient Proxy { get; private set; }
+			public bool IsConnected { get; private set; }
+
+			#endregion
+
+			public class RelayServiceCallbackHandler : IRelayServiceCallback {
+				public string PingRequest(string message) {
+					return "Control" + message;
+				}
 			}
 		}
 
@@ -189,142 +338,8 @@ namespace Eve_Control {
 			await KinectService.Stop();
 		}
 
-		#region Window handling
-
-		// Window handling variables
-		private bool isMaximized;
-		private double restoresHeight, restoredWidth, restoredTop, restoredLeft;
-
-		/// <summary>
-		/// Method called upon template apply on this object
-		/// </summary>
-		public override void OnApplyTemplate() {
-			// Attach event for window drag move
-			Rectangle windowMoveRect = this.GetObjectFromTemplate<Rectangle>("NewUIWindowHeaderMoveRectangle");
-			if (windowMoveRect != null)
-				windowMoveRect.PreviewMouseLeftButtonDown += WindowMove;
-			else throw new NullReferenceException("windowMoveRect");
-
-			// Attach event for window minimize button
-			Button minimizeButton = this.GetObjectFromTemplate<Button>("NewUIWindowHeaderMinimizeButton");
-			if (minimizeButton != null)
-				minimizeButton.Click += WindowMinimize;
-			else throw new NullReferenceException("minimizeButton");
-
-			// Disable window maximize/restore button
-			Button maximizeButton = this.GetObjectFromTemplate<Button>("NewUIWindowHeaderMaximizeButton");
-			if (maximizeButton != null)
-				maximizeButton.Click += WindowMaximize;
-			else throw new NullReferenceException("maximizeButton");
-
-			// Attach event for window close button
-			Button closeButton = this.GetObjectFromTemplate<Button>("NewUIWindowHeaderCloseButton");
-			if (closeButton != null)
-				closeButton.Click += WindowClose;
-			else throw new NullReferenceException("closeButton");
-
-
-			// Set Window icon image
-			var windowIcon = this.GetObjectFromTemplate<Image>("NewUIWindowHeaderIcon");
-			if (windowIcon != null)
-				windowIcon.Source =
-					new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/Images/Eve/Eve48.png",
-					                        UriKind.Absolute));
-			else throw new NullReferenceException("windowIcon");
-
-			base.OnApplyTemplate();
+		private void VisionViewOnClick(object sender, RoutedEventArgs e) {
+			(new VisionView()).Show();
 		}
-
-
-		/// <summary>
-		/// Closes window
-		/// </summary>
-		/// <param name="sender">Not used</param>
-		/// <param name="e">Not used</param>
-		private void WindowClose(object sender, RoutedEventArgs e) {
-			this.Close();
-		}
-
-		/// <summary>
-		/// Sets window state to minimized
-		/// </summary>
-		/// <param name="sender">Not used</param>
-		/// <param name="e">Not used</param>
-		private void WindowMinimize(object sender, RoutedEventArgs e) {
-			this.WindowState = WindowState.Minimized;
-		}
-
-		/// <summary>
-		/// Maximizes/Restores window
-		/// </summary>
-		/// <param name="sender">Not used</param>
-		/// <param name="e">Not used</param>
-		void WindowMaximize(object sender, RoutedEventArgs e) {
-			Button windowStateButton = this.GetObjectFromTemplate<Button>("NewUIWindowHeaderMaximizeButton");
-			if (windowStateButton == null)
-				throw new NullReferenceException("windowStateButton");
-
-			if (!this.isMaximized) {
-				windowStateButton.Content = "2";
-
-				this.restoredTop = this.Top;
-				this.restoredLeft = this.Left;
-				this.restoredWidth = this.Width;
-				this.restoresHeight = this.Height;
-
-				var border = this.GetObjectFromTemplate<Border>("NewUIWindowBorder");
-				if (border != null) {
-					border.BorderThickness = new Thickness(0);
-				}
-
-				this.Top = this.Left = 0;
-				this.Height = SystemParameters.PrimaryScreenHeight;
-				this.Width = SystemParameters.PrimaryScreenWidth;
-
-				this.isMaximized = true;
-			}
-			else {
-				windowStateButton.Content = "1";
-
-				this.Top = this.restoredTop;
-				this.Left = this.restoredLeft;
-				this.Height = this.restoresHeight;
-				this.Width = this.restoredWidth;
-
-				var border = this.GetObjectFromTemplate<Border>("NewUIWindowBorder");
-				if (border != null) {
-					border.BorderThickness = new Thickness(1);
-				}
-
-				this.isMaximized = false;
-			}
-		}
-
-		/// <summary>
-		/// Starts drag move action on window
-		/// </summary>
-		/// <param name="sender">Not used</param>
-		/// <param name="e">Event arguments for mouse clikc</param>
-		private void WindowMove(object sender, MouseButtonEventArgs e) {
-			if (e.ClickCount == 2)
-				this.WindowMaximize(null, null);
-			else this.DragMove();
-		}
-
-		/// <summary>
-		/// Finds dependency object of given name in template and casts it to requested type
-		/// </summary>
-		/// <typeparam name="T">Type to cast dependency object to</typeparam>
-		/// <param name="name">Name of object in template</param>
-		/// <returns>Returns matching object from template or null if object of requested type isn't found</returns>
-		/// <exception cref="ArgumentNullException">Argument "name" is null</exception>
-		private T GetObjectFromTemplate<T>(string name) where T : FrameworkElement {
-			if (String.IsNullOrEmpty(name))
-				throw new ArgumentNullException("name");
-
-			return this.GetTemplateChild(name) as T;
-		}
-
-		#endregion
 	}
 }

@@ -13,8 +13,12 @@ namespace EveWindowsPhone.Pages.Main {
 		private readonly INavigationServiceFacade navigationServiceFacade;
 		private readonly IIsolatedStorageServiceFacade isolatedStorageServiceFacade;
 
+		private bool isEditingFavorites;
+		private int tileRows;
 
-		public MainViewModel(INavigationServiceFacade navigationServiceFacade, IIsolatedStorageServiceFacade isolatedStorageServiceFacade) {
+
+		public MainViewModel(INavigationServiceFacade navigationServiceFacade,
+		                     IIsolatedStorageServiceFacade isolatedStorageServiceFacade) {
 			if (navigationServiceFacade == null) throw new ArgumentNullException("navigationServiceFacade");
 			this.navigationServiceFacade = navigationServiceFacade;
 			this.isolatedStorageServiceFacade = isolatedStorageServiceFacade;
@@ -22,11 +26,16 @@ namespace EveWindowsPhone.Pages.Main {
 			this.FavoriteModules = new ObservableCollection<ModuleModel>();
 			this.AvailableModules = new ObservableCollection<ModuleModel>();
 
+			this.LoadSettings();
 			this.LoadModules();
 		}
 
 
-		public void LoadModules() {
+		public void LoadSettings() {
+			this.tileRows = this.isolatedStorageServiceFacade.GetSetting<int>(IsolatedStorageServiceFacade.FavoriteRowsKey);
+		}
+
+		private void LoadModules() {
 			// Get modules locator object
 			var modulesLocator = Application.Current.Resources["ModulesLocator"] as ModulesLocator;
 			if (modulesLocator == null) throw new NullReferenceException("Can't find ModulesLocator");
@@ -73,12 +82,21 @@ namespace EveWindowsPhone.Pages.Main {
 			this.LoadFavoriteModules();
 		}
 
+		public void ChangeClient() {
+			this.navigationServiceFacade.Navigate(
+				new Uri("/Pages/ChangeClient/CreateClientView.xaml", UriKind.Relative));
+		}
+
+		public void AdvancedSettings() {
+			this.navigationServiceFacade.Navigate(
+				new Uri("/Pages/AdvancedSettings/AdvancedSettingsView.xaml", UriKind.Relative));
+		}
+
 		#region Properties
 
 		public ObservableCollection<ModuleModel> FavoriteModules { get; private set; } 
 		public ObservableCollection<ModuleModel> AvailableModules { get; private set; }
 
-		private bool isEditingFavorites;
 		public bool IsEditingFavorites {
 			get { return this.isEditingFavorites; }
 			set {
@@ -86,6 +104,8 @@ namespace EveWindowsPhone.Pages.Main {
 				RaisePropertyChanged("IsEditingFavorites");
 			}
 		}
+
+		public int TileRows { get { return this.tileRows; } }
 
 		#endregion
 

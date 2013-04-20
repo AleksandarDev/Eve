@@ -42,8 +42,30 @@
     <StartupObject>Eve_Control.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\packages\AForge.2.2.4\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Controls">
+      <HintPath>..\packages\AForge.Controls.2.2.4\lib\AForge.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AForge.Imaging">
+      <HintPath>..\packages\AForge.Imaging.2.2.4\lib\AForge.Imaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AForge.Math">
+      <HintPath>..\packages\AForge.Math.2.2.4\lib\AForge.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video">
+      <HintPath>..\packages\AForge.Video.2.2.4\lib\AForge.Video.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fleck2">
       <HintPath>..\packages\Fleck2.1.0.4\lib\net45\Fleck2.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=0.11.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MahApps.Metro.0.11.0.9-ALPHA\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="ManagedUPnP">
       <HintPath>..\Libs\Managed UPnP Library and Demo Source (2.0)\ManagedUPnP\bin\Release\ManagedUPnP.dll</HintPath>
@@ -54,9 +76,15 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Speech" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MahApps.Metro.0.11.0.9-ALPHA\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -68,17 +96,23 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Service References\RelayServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Vision\VisionView.xaml.cs">
+      <DependentUpon>VisionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Vision\VisionViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -91,6 +125,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\Vision\VisionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -116,22 +154,25 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\RelayServiceReference\Eve.API.Services.Contracts.Services.xsd">
+    <None Include="Service References\RelayServiceReference\ClientRelayService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RelayServiceReference\Eve.API.Services.Contracts.xsd">
+    <None Include="Service References\RelayServiceReference\ClientRelayService1.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RelayServiceReference\ClientRelayService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RelayServiceReference\ClientRelayService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RelayServiceReference\Eve_Control.RelayServiceReference.ClientState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\RelayServiceReference\Eve_Control.RelayServiceReference.ServiceClient.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\RelayServiceReference\service.wsdl" />
-    <None Include="Service References\RelayServiceReference\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Service References\RelayServiceReference\RelayService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -157,7 +198,13 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="ReadMe.Coding4Fun.Toolkit.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Service References\RelayServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RelayServiceReference\ClientRelayService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\RelayServiceReference\configuration91.svcinfo" />
@@ -170,9 +217,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ReadMe.Coding4Fun.Toolkit.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

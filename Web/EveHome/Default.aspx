@@ -29,9 +29,9 @@
 			<div class="Post">
 				<div class="PostText">
 					Schematic diagram showing basic message exchange mechanism and available application layers.<br/>
-					<div class="PostFooter">Aleksandar Toplek, 23.3.2013.</div>
+					<div class="PostFooter">Aleksandar Toplek, 29.3.2013.</div>
 				</div>
-				<a href="https://www.lucidchart.com/publicSegments/view/514e214d-f628-48da-a098-46440a0043f7/image.png" target="_blank">
+				<a href="https://www.lucidchart.com/publicSegments/view/5155a328-a718-4cd2-a71d-78c10a0045e5/image.png" target="_blank">
 					<img class="PostImage" src="Resources/Images/Post1Layers.png" title="Eve Messaging Layers" width="251" height="330" />
 				</a>
 			</div>

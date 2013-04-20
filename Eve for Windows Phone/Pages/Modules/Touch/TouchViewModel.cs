@@ -13,12 +13,15 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 	[Module("MTouch", "Touch", "/Resources/Images/Touch screens.png", "/Pages/Modules/Touch/TouchView.xaml")]
 	public class TouchViewModel : NotificationObject {
 		private readonly INavigationServiceFacade navigationServiceFacade;
+		private readonly IIsolatedStorageServiceFacade isolatedStorageServiceFacade;
 		//private TouchServiceClient serviceClient;
-		
 
-		public TouchViewModel(INavigationServiceFacade navigationServiceFacade) {
+
+		public TouchViewModel(INavigationServiceFacade navigationServiceFacade,
+		                      IIsolatedStorageServiceFacade isolatedStorageServiceFacade) {
 			if (navigationServiceFacade == null) throw new ArgumentNullException("navigationServiceFacade");
 			this.navigationServiceFacade = navigationServiceFacade;
+			this.isolatedStorageServiceFacade = isolatedStorageServiceFacade;
 
 			//this.serviceClient = new TouchServiceClient();
 		}

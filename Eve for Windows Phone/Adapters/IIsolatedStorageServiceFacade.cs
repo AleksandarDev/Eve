@@ -6,5 +6,9 @@ namespace EveWindowsPhone.Adapters {
 	public interface IIsolatedStorageServiceFacade {
 		FavoriteModules GetFavoriteModules();
 		void SaveFavoriteModules(FavoriteModules modules);
+
+		bool ContainsSetting(string settingKey);
+		T GetSetting<T>(string settingKey);
+		void SetSetting<T>(T value, string settingKey);
 	}
 }

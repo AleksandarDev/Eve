@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EveWindowsPhone.Pages.AdvancedSettings;
+using EveWindowsPhone.Pages.ChangeClient;
 using EveWindowsPhone.Pages.Main;
+using EveWindowsPhone.Pages.Modules.Lights;
+using EveWindowsPhone.Pages.Modules.Play;
 using EveWindowsPhone.Pages.Modules.Touch;
 using EveWindowsPhone.Services;
 
@@ -22,8 +26,24 @@ namespace EveWindowsPhone.ViewModels {
 			get { return this.viewModelContainerService.Container.Resolve<MainViewModel>(); }
 		}
 
+		public CreateClientViewModel CreateClientViewModel {
+			get { return this.viewModelContainerService.Container.Resolve<CreateClientViewModel>(); }
+		}
+
+		public AdvancedSettingsViewModel AdvancedSettingsViewModel {
+			get { return this.viewModelContainerService.Container.Resolve<AdvancedSettingsViewModel>(); }
+		}
+
 		public TouchViewModel TouchViewModel {
 			get { return this.viewModelContainerService.Container.Resolve<TouchViewModel>(); }
+		}
+
+		public LightsViewModel LightsViewModel {
+			get { return this.viewModelContainerService.Container.Resolve<LightsViewModel>(); }
+		}
+
+		public PlayViewModel PlayViewModel {
+			get { return this.viewModelContainerService.Container.Resolve<PlayViewModel>(); }
 		}
 
 		#endregion

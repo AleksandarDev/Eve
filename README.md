@@ -18,3 +18,7 @@ By hard work and a lot of Bing queries.
 ### We baked it and came out with this
 
 Still in oven...
+
+## Developed by
+ 
+- Aleksadnar Toplek ([AleksandarDev](https://github.com/AleksandarDev/))

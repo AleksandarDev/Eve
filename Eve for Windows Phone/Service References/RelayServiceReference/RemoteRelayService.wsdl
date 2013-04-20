@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RemoteRelayService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:64410/RemoteRelayService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:64410/RemoteRelayService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:64410/RemoteRelayService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Contracts.Services" />
+      <xsd:import schemaLocation="http://localhost:64410/RemoteRelayService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Contracts" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IEveAPIService_SendTrackPadMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendTrackPadMessage" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SendTrackPadMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendTrackPadMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SendButtonMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendButtonMessage" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SendButtonMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendButtonMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_Ping_InputMessage">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_Ping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SignIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignIn" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SignIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignInResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SignOut_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignOut" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SignOut_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_GetClientState_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientState" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_GetClientState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_GetAvailableClients_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableClients" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_GetAvailableClients_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableClientsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IEveAPIService">
+    <wsdl:operation name="SendTrackPadMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITouchService/SendTrackPadMessage" message="tns:IEveAPIService_SendTrackPadMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITouchService/SendTrackPadMessageResponse" message="tns:IEveAPIService_SendTrackPadMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendButtonMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITouchService/SendButtonMessage" message="tns:IEveAPIService_SendButtonMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITouchService/SendButtonMessageResponse" message="tns:IEveAPIService_SendButtonMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/Ping" message="tns:IEveAPIService_Ping_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/PingResponse" message="tns:IEveAPIService_Ping_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SignIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SignIn" message="tns:IEveAPIService_SignIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SignInResponse" message="tns:IEveAPIService_SignIn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SignOut">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SignOut" message="tns:IEveAPIService_SignOut_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SignOutResponse" message="tns:IEveAPIService_SignOut_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/GetClientState" message="tns:IEveAPIService_GetClientState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/GetClientStateResponse" message="tns:IEveAPIService_GetClientState_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableClients">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/GetAvailableClients" message="tns:IEveAPIService_GetAvailableClients_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/GetAvailableClientsResponse" message="tns:IEveAPIService_GetAvailableClients_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IEveAPIService" type="tns:IEveAPIService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendTrackPadMessage">
+      <soap:operation soapAction="http://tempuri.org/ITouchService/SendTrackPadMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendButtonMessage">
+      <soap:operation soapAction="http://tempuri.org/ITouchService/SendButtonMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/Ping" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignIn">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SignIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignOut">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SignOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientState">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/GetClientState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableClients">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/GetAvailableClients" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RemoteRelayService">
+    <wsdl:port name="BasicHttpBinding_IEveAPIService" binding="tns:BasicHttpBinding_IEveAPIService">
+      <soap:address location="http://localhost:64410/RemoteRelayService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

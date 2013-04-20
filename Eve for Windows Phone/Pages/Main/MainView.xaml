@@ -8,7 +8,8 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:c4fcontrols="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
     xmlns:modules="clr-namespace:EveWindowsPhone.Modules"
-    xmlns:Converters="clr-namespace:Coding4Fun.Toolkit.Controls.Converters;assembly=Coding4Fun.Toolkit.Controls" 
+    xmlns:Converters="clr-namespace:Coding4Fun.Toolkit.Controls.Converters;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     x:Class="EveWindowsPhone.Pages.Main.MainView"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     SupportedOrientations="Portrait" Orientation="Portrait"
@@ -51,10 +52,23 @@
 		<controls:PanoramaItem Header="options">
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
-				<Button Content="about"/>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				
+				<!-- Client selection -->
+				<!-- TODO Client connected indicator -->
+				<toolkit:ListPicker x:Name="ClientDevicesListPicker" Header="Client device" Grid.ColumnSpan="2" SelectionChanged="ClientDevicesListPickerOnSelectionChanged">
+					<toolkit:ListPickerItem Content="Add new client device..." />
+				</toolkit:ListPicker>
+				
+				<!-- Advanced settings -->
+				<Button Click="AdvancedSettingOnClick" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">advanced</Button>
 			</Grid>
 		</controls:PanoramaItem>
 	</controls:Panorama>

@@ -40,10 +40,10 @@
     <Compile Include="ButtonMessage.cs" />
     <Compile Include="Orientation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ClientState\ClientState.cs" />
-    <Compile Include="Services\ClientState\IClientState.cs" />
-    <Compile Include="Services\ClientState\IClientStateTouch.cs" />
-    <Compile Include="Services\Interfaces\IEveService.cs" />
+    <Compile Include="Services\ClientState.cs" />
+    <Compile Include="Services\Interfaces\IClientState.cs" />
+    <Compile Include="Services\Interfaces\IClientStateTouch.cs" />
+    <Compile Include="Services\Interfaces\IEveAPIService.cs" />
     <Compile Include="Services\Interfaces\IRelayCallbackContract.cs" />
     <Compile Include="Services\Interfaces\IRelayService.cs" />
     <Compile Include="Services\Interfaces\ITouchService.cs" />

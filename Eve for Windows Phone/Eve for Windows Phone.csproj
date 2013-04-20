@@ -36,6 +36,7 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -48,17 +49,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Coding4Fun.Toolkit.Audio">
-      <HintPath>..\packages\Coding4Fun.Toolkit.Audio.2.0.5\lib\wp71\Coding4Fun.Toolkit.Audio.dll</HintPath>
-    </Reference>
     <Reference Include="Coding4Fun.Toolkit.Controls">
-      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.5\lib\wp71\Coding4Fun.Toolkit.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="Coding4Fun.Toolkit.Net">
-      <HintPath>..\packages\Coding4Fun.Toolkit.Net.2.0.5\lib\wp71\Coding4Fun.Toolkit.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Coding4Fun.Toolkit.Storage">
-      <HintPath>..\packages\Coding4Fun.Toolkit.Storage.2.0.5\lib\wp71\Coding4Fun.Toolkit.Storage.dll</HintPath>
+      <HintPath>..\Libs\Coding4Fun.Toolkit\WP71\Coding4Fun.Toolkit.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Funq">
       <HintPath>lib\Funq\Funq.dll</HintPath>
@@ -100,7 +92,16 @@
     <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageCollectionEnumerator.cs" />
     <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageEventHandler.cs" />
     <Compile Include="Modules\Module.cs" />
+    <Compile Include="Modules\ModuleModel.cs" />
     <Compile Include="Modules\ModulesLocator.cs" />
+    <Compile Include="Pages\AdvancedSettings\AdvancedSettingsView.xaml.cs">
+      <DependentUpon>AdvancedSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdvancedSettings\AdvancedSettingsViewModel.cs" />
+    <Compile Include="Pages\CreateClient\CreateClientView.xaml.cs">
+      <DependentUpon>CreateClientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateClient\CreateClientViewModel.cs" />
     <Compile Include="Pages\Main\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -117,6 +118,11 @@
       <DependentUpon>TouchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Modules\Touch\TouchViewModel.cs" />
+    <Compile Include="Service References\RelayServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\NotificationObject.cs" />
     <Compile Include="ViewModels\PropertySupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,6 +134,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Pages\AdvancedSettings\AdvancedSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreateClient\CreateClientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Main\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -148,28 +162,41 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\DataSources\Eve.API.Services.Contracts.Services.ClientState.datasource" />
+    <None Include="Properties\DataSources\Eve.API.Services.Contracts.Services.ServiceClient.datasource" />
     <None Include="Properties\WMAppManifest.xml" />
-    <Content Include="ReadMe.Coding4Fun.Toolkit.txt" />
+    <Content Include="Resources\Images\About.png" />
     <Content Include="Resources\Images\Heart.png" />
     <Content Include="Resources\Images\Shopping Bag.png" />
     <Content Include="Resources\Images\TileImage.png" />
     <Content Include="Resources\Images\View.png" />
+    <None Include="Service References\RelayServiceReference\RemoteRelayService.disco" />
+    <None Include="Service References\RelayServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\RelayServiceReference\configuration.svcinfo" />
+    <None Include="Service References\RelayServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\RelayServiceReference\RemoteRelayService.wsdl" />
+    <None Include="Service References\RelayServiceReference\RemoteRelayService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RelayServiceReference\RemoteRelayService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RelayServiceReference\RemoteRelayService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RelayServiceReference\RemoteRelayService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ApplicationIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Background.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\Images\IPod.png" />
     <Content Include="Resources\Images\Light Bulb.png" />
     <Content Include="Resources\Images\Touch screens.png" />
     <Content Include="SplashScreenImage.jpg" />
-    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
-    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
-    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
-    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -180,7 +207,9 @@
       <Name>Eve.API.Services.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\RelayServiceReference\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

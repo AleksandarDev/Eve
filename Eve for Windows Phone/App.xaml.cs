@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -10,12 +11,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EveWindowsPhone.Adapters;
 using EveWindowsPhone.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
 namespace EveWindowsPhone {
 	public partial class App : Application {
+		protected const int DefaultFavoriteRows = 2;
+
 		/// <summary>
 		/// Provides easy access to the root frame of the Phone Application.
 		/// </summary>
@@ -62,6 +66,11 @@ namespace EveWindowsPhone {
 		// Code to execute when the application is launching (eg, from Start)
 		// This code will not execute when the application is reactivated
 		private void Application_Launching(object sender, LaunchingEventArgs e) {
+			var isolatedStorageServiceFacade = new IsolatedStorageServiceFacade();
+
+			// Set default application settings
+			if (!isolatedStorageServiceFacade.ContainsSetting(IsolatedStorageServiceFacade.FavoriteRowsKey))
+				isolatedStorageServiceFacade.SetSetting(DefaultFavoriteRows, IsolatedStorageServiceFacade.FavoriteRowsKey);
 		}
 
 		// Code to execute when the application is activated (brought to foreground)

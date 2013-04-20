@@ -15,12 +15,12 @@ using EveWindowsPhone.Controllers.ApplicationBarController;
 using EveWindowsPhone.Modules;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using EveWindowsPhone.RelayServiceReference;
 
 namespace EveWindowsPhone.Pages.Main {
 	public partial class MainView : PhoneApplicationPage {
 		private const double TileMargins = 5;
 		private const double TileImageMargins = 18;
-		private const int TileRows = 2;
 
 		private ApplicationBarController applicationBarController;
 
@@ -42,8 +42,21 @@ namespace EveWindowsPhone.Pages.Main {
 
 
 		private void MainViewLoaded(object sender, RoutedEventArgs e) {
+			// Update settings on reload
+			this.ViewModel.LoadSettings();
+
 			this.LoadApplicationBar();
 			this.LoadFavoriteModules();
+
+			// TODO Testing only Remove
+#if DEBUG
+
+			var client = new EveAPIServiceClient();
+			client.PingAsync("Windows Phone");
+			client.PingCompleted +=
+				(s, ea) => this.Title = ea.Result;
+
+#endif
 		}
 
 		private void PanoramaSelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -70,12 +83,19 @@ namespace EveWindowsPhone.Pages.Main {
 										() => { this.SetEditFavoriteModules(!this.isEditingFavoriteModules); });
 			allModuesPage.AddIconButton("get more", new Uri("/Resources/Images/Shopping Bag.png", UriKind.Relative), () => { });
 			this.applicationBarController.AddPage("all modules", allModuesPage);
+
+			// Options page
+			var optionsPage = new ApplicationBarPage(ApplicationBarMode.Default);
+			optionsPage.AddIconButton("about", new Uri("/Resources/Images/About.png", UriKind.Relative),
+									  () => { this.ShowAboutPrompt(); });
+			this.applicationBarController.AddPage("options", optionsPage);
 		}
 
 		private void UpdateApplicationBarPage() {
 			var selectedItem = this.LayoutRoot.SelectedItem as PanoramaItem;
 			if (selectedItem == null) return;
 
+			// Set current page as page header
 			this.applicationBarController.SetPageBar(selectedItem.Header.ToString());
 		}
 
@@ -85,7 +105,7 @@ namespace EveWindowsPhone.Pages.Main {
 
 		private void LoadFavoriteModules() {
 			// Initial variable values
-			this.tileHeight = this.FavoriteModulesGrid.ActualHeight/TileRows - 2*TileMargins;
+			this.tileHeight = this.FavoriteModulesGrid.ActualHeight/this.ViewModel.TileRows - 2*TileMargins;
 
 			// Attach on favorite modules collection changed
 			this.ViewModel.FavoriteModules.CollectionChanged += (sender, args) => { this.UpdateFavoriteModulesLayout(); };
@@ -101,10 +121,10 @@ namespace EveWindowsPhone.Pages.Main {
 			this.FavoriteModulesGrid.ColumnDefinitions.Clear();
 
 			// Build favorite modules grid (horizontal)
-			int numColumns = (int)Math.Ceiling((double)this.ViewModel.FavoriteModules.Count / TileRows);
+			int numColumns = (int)Math.Ceiling((double)this.ViewModel.FavoriteModules.Count / this.ViewModel.TileRows);
 
 			// Generate row and column definitions
-			for (int index = 0; index < TileRows; index++) {
+			for (int index = 0; index < this.ViewModel.TileRows; index++) {
 				this.FavoriteModulesGrid.RowDefinitions.Add(
 					new RowDefinition() { Height = new GridLength(tileHeight + 2 * TileMargins) });
 			}
@@ -116,26 +136,26 @@ namespace EveWindowsPhone.Pages.Main {
 			// Generate tiles
 			for (int index = 0; index < this.ViewModel.FavoriteModules.Count; index++) {
 				var module = this.ViewModel.FavoriteModules.ElementAt(index);
-				var tile = MainView.CreateTile(
-					module.Module.Name, module.Module.Image,
-					tileHeight, tileHeight, TileMargins);
-				Grid.SetRow(tile, index % TileRows); //http://www.youtube.com/watch?v=TiWFR1qxatc
-				Grid.SetColumn(tile, index / TileRows);
+				var tile = this.CreateTile(module, tileHeight, tileHeight, TileMargins);
+				Grid.SetRow(tile, index % this.ViewModel.TileRows);
+				Grid.SetColumn(tile, index / this.ViewModel.TileRows);
 				this.FavoriteModulesGrid.Children.Add(tile);
 			}
 		}
 
-		private static Tile CreateTile(string text, string image, double height, double width, double margins) {
-			return new Tile() {
-				Label = text,
+		private Tile CreateTile(ModuleModel module, double height, double width, double margins) {
+			var tile = new Tile() {
+				Label = module.Module.Name,
 				Content = new Image() {
-					Source = new BitmapImage(new Uri(image, UriKind.RelativeOrAbsolute)),
+					Source = new BitmapImage(new Uri(module.Module.Image, UriKind.RelativeOrAbsolute)),
 					Margin = new Thickness(TileImageMargins)
 				},
 				Width = width,
 				Height = height,
 				Margin = new Thickness(margins)
 			};
+			tile.Tap += (s, e) => this.ViewModel.NavigateTo(module.Module);
+			return tile;
 		}
 
 		public void SetEditFavoriteModules(bool mode) {
@@ -158,13 +178,31 @@ namespace EveWindowsPhone.Pages.Main {
 
 		#endregion
 
+		#region Options page
 
+		private void ClientDevicesListPickerOnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+			//throw new NotImplementedException();
+		}
 
+		private void ShowAboutPrompt() {
+			var aboutPrompt = new AboutPrompt() {
+				Title = "SyncUp for Eve",
+				VersionNumber = "Version 0.1 Alpha",
+				Footer = "Visit us at http://eve.toplek.net"
+			};
+			aboutPrompt.Show();
+		}
+
+		#endregion
 
 		#region Properties
 
 		public MainViewModel ViewModel { get; private set; }
 
 		#endregion
+
+		private void AdvancedSettingOnClick(object sender, RoutedEventArgs e) {
+			this.ViewModel.AdvancedSettings();
+		}
 	}
 }

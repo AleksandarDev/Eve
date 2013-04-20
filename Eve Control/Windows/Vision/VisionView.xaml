@@ -1,0 +1,30 @@
+﻿<controls:MetroWindow x:Class="Eve_Control.Windows.Vision.VisionView"
+					  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+					  Title="Eve - Vision" Height="400" Width="340"
+					  SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}"
+					  Loaded="VisionViewOnLoaded" Closing="VisionViewClosing">
+	<Grid x:Name="LayoutRoot">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<Grid>
+			<WindowsFormsHost x:Name="VideoSourcePlayerWindowsFormsHost" 
+							  VerticalAlignment="Center" HorizontalAlignment="Center" />
+		</Grid>
+
+		<!-- Status bar -->
+		<StackPanel x:Name="StatusBar" Grid.Row="1">
+			<StackPanel.Style>
+				<Style TargetType="{x:Type StackPanel}">
+					<Setter Property="Background" Value="{DynamicResource StatusBarBrush}" />
+				</Style>
+			</StackPanel.Style>
+
+			<Label x:Name="StatusLabel" Content="Loading..." />
+		</StackPanel>
+	</Grid>
+</controls:MetroWindow>

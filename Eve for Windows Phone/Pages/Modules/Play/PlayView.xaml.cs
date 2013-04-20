@@ -12,6 +12,18 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 	public partial class PlayView : PhoneApplicationPage {
 		public PlayView() {
 			InitializeComponent();
+
+			// Assign ViewModel
+			if (this.ViewModel == null)
+				if ((this.ViewModel = this.DataContext as PlayViewModel) == null)
+					throw new NullReferenceException("Invalid ViewModel");
 		}
+
+
+		#region Properties
+
+		public PlayViewModel ViewModel { get; private set; }
+
+		#endregion
 	}
 }

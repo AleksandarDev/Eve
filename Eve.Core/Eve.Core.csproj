@@ -54,9 +54,12 @@
     <Compile Include="Chrome\ChromeServer.cs" />
     <Compile Include="Exceptions\EveException.cs" />
     <Compile Include="Kinect\KinectService.cs" />
+    <Compile Include="Loging\Log.cs" />
     <Compile Include="ModulesManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\EncryptionHelper.cs" />
+    <Compile Include="ViewModels\NotificationObject.cs" />
+    <Compile Include="ViewModels\PropertySupport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
