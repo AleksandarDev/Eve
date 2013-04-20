@@ -42,7 +42,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.API.Services.Remote.Sil
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9B0632F8-AE5C-4EB6-8330-645867F075C3}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveForChrome", "http://localhost:14004/EveForChrome", "{947D3030-BF9D-49B9-A5C6-CE42480CA963}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveForChrome", "http://localhost:8001/EveForChrome", "{947D3030-BF9D-49B9-A5C6-CE42480CA963}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
@@ -63,7 +63,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveForChr
 		SlnRelativePath = "Web\EveForChrome\"
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveHome", "http://localhost:14004/EveHome", "{9A2C715B-BE52-438B-B2A4-1E16EE3651C2}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveHome", "http://localhost:8001/EveHome", "{9A2C715B-BE52-438B-B2A4-1E16EE3651C2}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
