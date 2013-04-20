@@ -104,11 +104,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Service References\RelayServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Vision\VisionView.xaml.cs">
       <DependentUpon>VisionView.xaml</DependentUpon>
     </Compile>
@@ -154,25 +149,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\RelayServiceReference\ClientRelayService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\ClientRelayService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\ClientRelayService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\ClientRelayService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\Eve_Control.RelayServiceReference.ClientState.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\RelayServiceReference\Eve_Control.RelayServiceReference.ServiceClient.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\RelayServiceReference\RelayService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -199,24 +175,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ReadMe.Coding4Fun.Toolkit.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\RelayServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\RelayServiceReference\ClientRelayService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\RelayServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\RelayServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\RelayServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
