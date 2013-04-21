@@ -2,14 +2,14 @@
 
 namespace Eve.API.Services.Contracts.Services.Interfaces {
 	[ServiceContract(CallbackContract = typeof(IRelayCallbackContract))]
-	public interface IRelayService : IEveAPIService {
+	public interface IRelayService {
 		[OperationContract(IsOneWay = true)]
 		void Subscribe();
 
 		[OperationContract(IsOneWay = true)]
 		void Unsibscribe();
 
-		[OperationContract]
-		bool UpdateClientState(ClientState state);
+		[OperationContract(IsOneWay = true)]
+		void UpdateClientState(ClientState state);
 	}
 }

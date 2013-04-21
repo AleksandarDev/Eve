@@ -31,42 +31,8 @@ namespace Eve.API.Services.Relay {
 			throw new NotImplementedException();
 		}
 
-		public bool UpdateClientState(ClientState state) {
+		public void UpdateClientState(ClientState state) {
 			throw new NotImplementedException();
-		}
-
-		#endregion
-
-		#region IEveAPIService
-
-		public bool SendTrackPadMessage(ServiceRequestDetails details,
-										TrackPadMessage message) {
-			throw new NotImplementedException();
-		}
-
-		public bool SendButtonMessage(ServiceRequestDetails details,
-									  ButtonMessage message) {
-			throw new NotImplementedException();
-		}
-
-		public string Ping(string yourName) {
-			return "Hello " + yourName;
-		}
-
-		public bool SignIn(ServiceUser user) {
-			throw new NotImplementedException();
-		}
-
-		public bool SignOut(ServiceUser user) {
-			throw new NotImplementedException();
-		}
-
-		public ClientState GetClientState() {
-			throw new NotImplementedException();
-		}
-
-		public ServiceClient[] GetAvailableClients() {
-			return RelayManager.GetClients().ToArray();
 		}
 
 		#endregion

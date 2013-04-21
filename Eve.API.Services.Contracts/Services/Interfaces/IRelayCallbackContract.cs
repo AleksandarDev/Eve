@@ -2,7 +2,7 @@
 
 namespace Eve.API.Services.Contracts.Services.Interfaces {
 	public interface IRelayCallbackContract {
-		[OperationContract]
-		string PingRequest(string message);
+		[OperationContract(IsOneWay = true)]
+		void PingRequest(string message);
 	}
 }
