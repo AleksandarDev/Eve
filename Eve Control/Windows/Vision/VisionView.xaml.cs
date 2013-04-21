@@ -67,7 +67,9 @@ namespace Eve_Control.Windows.Vision {
 			var unmanagedImage = UnmanagedImage.FromManagedImage(image);
 
 			// TODO: Check if this can cause lag
+			// ReSharper disable CSharpWarnings::CS4014
 			this.faceDetectionProvider.ProcessFrameAsync(unmanagedImage);
+			// ReSharper restore CSharpWarnings::CS4014
 
 			foreach (var tracker in this.faceDetectionProvider.Trackers) {
 				tracker.DrawMarker(ref unmanagedImage, true);

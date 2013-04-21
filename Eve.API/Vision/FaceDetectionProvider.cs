@@ -29,18 +29,19 @@ namespace Eve.API.Vision {
 			new Log.LogInstance(typeof(FaceDetectionProvider));
 
 		// Video Source variables
-		public int VideoSourceWidth = 320;
-		public int VideoSourceHeight = 240;
-		public int VideoSourceStopWaitTime = 2000;
+		public int VideoSourceWidthDefault = 320;
+		public int VideoSourceHeightDefault = 240;
+		public int VideoSourceStopWaitTimeDefault = 2000;
+		public int VideoSourceStopCheckTimeDefault = 20;
 		public const int FramesToSkip = 10;
 		private VideoCaptureDevice videoSource;
 		private int framesSkipped;
 
 		// Face Tracking variables
-		public double DetectingFrameWidth = 160.0;
-		public double DetectingFrameHeight = 120.0;
-		public float DetectingAreaStep = 1.2f;
-		public int DetectingAreaMin = 25;
+		public double DetectingFrameWidthDefault = 160.0;
+		public double DetectingFrameHeightDefault = 120.0;
+		public float DetectingAreaStepDefault = 1.2f;
+		public int DetectingAreaMinDefault = 25;
 		private HaarObjectDetector detector;
 		private List<FaceTracker> trackers;
 		private bool isDetectingInProgress;
@@ -66,8 +67,9 @@ namespace Eve.API.Vision {
 		/// <summary>
 		/// Initializes video source and detection components
 		/// </summary>
+		/// <param name="videoSourceMonkier">Name of video source to initialize</param>
 		/// <returns>Returns asynchronous void Task</returns>
-		public async Task InitializeAsync() {
+		public async Task InitializeAsync(string videoSourceMonkier = null) {
 			this.log.Info("Initialization started...");
 			var sw = new System.Diagnostics.Stopwatch();
 			sw.Start();
@@ -76,7 +78,7 @@ namespace Eve.API.Vision {
 			this.trackers.Clear();
 
 			// Initialize components
-			await this.InitializeVideoSourceAsync();
+			await this.InitializeVideoSourceAsync(videoSourceMonkier);
 			await this.InitializeDetectorsAsync();
 
 			sw.Stop();
@@ -86,6 +88,7 @@ namespace Eve.API.Vision {
 		/// <summary>
 		/// Looks for available video sources 
 		/// </summary>
+		/// <param name="monkierString">Name of video source to initialize</param>
 		/// <returns>Returns asynchronous void Task</returns>
 		private async Task InitializeVideoSourceAsync(string monkierString = null) {
 			// Get available video sources
@@ -96,12 +99,13 @@ namespace Eve.API.Vision {
 
 			// Create video source object from first found or of given name
 			try {
+				string sourceName = monkierString ??
+									availableVideoSources[0].MonikerString;
 				this.videoSource =
-					new VideoCaptureDevice(monkierString ??
-										   availableVideoSources[0].MonikerString) {
-											   DesiredFrameSize =
-												   new Size(this.VideoSourceWidth, this.VideoSourceHeight)
-										   };
+					new VideoCaptureDevice(sourceName) {
+						DesiredFrameSize =
+							new Size(this.VideoSourceWidthDefault, this.VideoSourceHeightDefault)
+					};
 			}
 			catch (Exception ex) {
 				this.log.Error<Exception>(ex, "Couldn't create video capture device");
@@ -117,21 +121,19 @@ namespace Eve.API.Vision {
 		/// </summary>
 		/// <returns>Returns asynchronous void Task</returns>
 		private async Task StopVideoSource() {
-			if (this.videoSource == null) {
+			if (this.videoSource == null)
 				throw new NullReferenceException(
 					"Can't stop video source if null. videoSource is null");
-			}
 
 			// Signal camera to stop recording
 			this.videoSource.SignalToStop();
 
-			// Wait for max. 2 seconds for camera to stop recording
+			// Wait for few seconds for camera to stop recording
 			await Task.Run(() => {
-				const int waitTime = 20;
 				for (int time = 0;
-					 time < this.VideoSourceStopWaitTime && this.videoSource.IsRunning;
-					 time += waitTime) {
-					System.Threading.Thread.Sleep(waitTime);
+					 time < this.VideoSourceStopWaitTimeDefault && this.videoSource.IsRunning;
+					 time += this.VideoSourceStopCheckTimeDefault) {
+					System.Threading.Thread.Sleep(this.VideoSourceStopCheckTimeDefault);
 				}
 			});
 
@@ -151,8 +153,8 @@ namespace Eve.API.Vision {
 				// InitializeAsync face detector for multiple objects
 				this.detector = new HaarObjectDetector(
 					new FaceHaarCascade(),
-					this.DetectingAreaMin, ObjectDetectorSearchMode.NoOverlap,
-					this.DetectingAreaStep, ObjectDetectorScalingMode.GreaterToSmaller) {
+					this.DetectingAreaMinDefault, ObjectDetectorSearchMode.NoOverlap,
+					this.DetectingAreaStepDefault, ObjectDetectorScalingMode.GreaterToSmaller) {
 						UseParallelProcessing = true
 					};
 			});
@@ -183,16 +185,19 @@ namespace Eve.API.Vision {
 		/// </summary>
 		/// <param name="image">Image to search for faces on</param>
 		private async void DetectFacesAsync(UnmanagedImage image) {
+			if (this.detector == null)
+				throw new NullReferenceException("Initialize provider first! detector is null");
+
 			var sw = new System.Diagnostics.Stopwatch();
 			sw.Start();
 			this.isDetectingInProgress = true;
 
-			double xScale = image.Width / this.DetectingFrameWidth;
-			double yScale = image.Height / this.DetectingFrameHeight;
+			double xScale = image.Width / this.DetectingFrameWidthDefault;
+			double yScale = image.Height / this.DetectingFrameHeightDefault;
 
 			// Resize image (downsample)
-			var resize = new ResizeNearestNeighbor((int) this.DetectingFrameWidth,
-												   (int) this.DetectingFrameHeight);
+			var resize = new ResizeNearestNeighbor((int) this.DetectingFrameWidthDefault,
+												   (int) this.DetectingFrameHeightDefault);
 			UnmanagedImage downsampledImage = resize.Apply(image);
 
 			// Get detector regions
