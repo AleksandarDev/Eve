@@ -13,12 +13,15 @@ using Eve.API.Services.Contracts.Services.Interfaces;
 namespace Eve.API.Services.Relay {
 	[AspNetCompatibilityRequirements(
 		RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+	[ServiceBehavior(
+		InstanceContextMode = InstanceContextMode.Single,
+		ConcurrencyMode = ConcurrencyMode.Reentrant, 
+		UseSynchronizationContext = false)]
 	public class RelayService : IRelayService {
 		public RelayService() {}
 
 
-		#region IRelayService
+		#region IRelayService implementation
 
 		public void Subscribe() {
 			RelayManager.RegisterClient(new ServiceClient("SampleClient", "SampleClient") {
@@ -35,38 +38,8 @@ namespace Eve.API.Services.Relay {
 			throw new NotImplementedException();
 		}
 
-		#endregion
-
-		#region IEveAPIService
-
-		public bool SendTrackPadMessage(ServiceRequestDetails details,
-										TrackPadMessage message) {
-			throw new NotImplementedException();
-		}
-
-		public bool SendButtonMessage(ServiceRequestDetails details,
-									  ButtonMessage message) {
-			throw new NotImplementedException();
-		}
-
 		public string Ping(string yourName) {
 			return "Hello " + yourName;
-		}
-
-		public bool SignIn(ServiceUser user) {
-			throw new NotImplementedException();
-		}
-
-		public bool SignOut(ServiceUser user) {
-			throw new NotImplementedException();
-		}
-
-		public ClientState GetClientState() {
-			throw new NotImplementedException();
-		}
-
-		public ServiceClient[] GetAvailableClients() {
-			return RelayManager.GetClients().ToArray();
 		}
 
 		#endregion

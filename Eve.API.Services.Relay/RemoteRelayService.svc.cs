@@ -11,21 +11,17 @@ using Eve.API.Services.Contracts.Services;
 using Eve.API.Services.Contracts.Services.Interfaces;
 
 namespace Eve.API.Services.Relay {
-	[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+	[AspNetCompatibilityRequirements(
+		RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+	[ServiceBehavior(
+		InstanceContextMode = InstanceContextMode.Single,
+		ConcurrencyMode = ConcurrencyMode.Reentrant,
+		UseSynchronizationContext = false)]
 	public class RemoteRelayService : IEveAPIService {
 		public RemoteRelayService() {}
 
 
-		#region IEveAPIService
-
-		public bool SendTrackPadMessage(ServiceRequestDetails details, TrackPadMessage message) {
-			throw new NotImplementedException();
-		}
-
-		public bool SendButtonMessage(ServiceRequestDetails details, ButtonMessage message) {
-			throw new NotImplementedException();
-		}
+		#region IEveAPIService implementation
 
 		public string Ping(string yourName) {
 			foreach (var client in RelayManager.GetClients()) {
@@ -48,6 +44,20 @@ namespace Eve.API.Services.Relay {
 		}
 
 		public ServiceClient[] GetAvailableClients() {
+			return RelayManager.GetClients().ToArray();
+		}
+
+		#endregion
+
+		#region ITouchService implementation
+
+		public bool SendTrackPadMessage(ServiceRequestDetails details,
+								TrackPadMessage message) {
+			throw new NotImplementedException();
+		}
+
+		public bool SendButtonMessage(ServiceRequestDetails details,
+									  ButtonMessage message) {
 			throw new NotImplementedException();
 		}
 

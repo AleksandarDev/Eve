@@ -15,7 +15,7 @@ namespace Eve_Control {
 	public partial class App : Application {
 		public App() {
 			Log.Enabled = true;
-			Log.WriteToDebug = true;
+			//Log.WriteToDebug = true;
 			Log.WriteToDebugLevel = Log.LogLevels.All;
 		}
 	}

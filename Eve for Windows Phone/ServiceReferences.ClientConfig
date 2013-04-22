@@ -9,7 +9,7 @@
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://AleksandarPC:64410/RemoteRelayService.svc"
+            <endpoint address="http://192.168.1.101:64410/eve/relay/RemoteRelayService.svc"
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IEveAPIService"
                 contract="RelayServiceReference.IEveAPIService" name="BasicHttpBinding_IEveAPIService" />
         </client>

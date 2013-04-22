@@ -154,24 +154,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\RelayServiceReference\ClientRelayService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\ClientRelayService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\ClientRelayService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\ClientRelayService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\Eve_Control.RelayServiceReference.ClientState.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\RelayServiceReference\Eve_Control.RelayServiceReference.ServiceClient.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\RelayServiceReference\RelayService.wsdl" />
   </ItemGroup>
   <ItemGroup>
@@ -202,9 +184,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\RelayServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\RelayServiceReference\ClientRelayService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\RelayServiceReference\configuration91.svcinfo" />

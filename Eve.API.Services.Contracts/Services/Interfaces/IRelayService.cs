@@ -2,7 +2,7 @@
 
 namespace Eve.API.Services.Contracts.Services.Interfaces {
 	[ServiceContract(CallbackContract = typeof(IRelayCallbackContract))]
-	public interface IRelayService : IEveAPIService {
+	public interface IRelayService {
 		[OperationContract(IsOneWay = true)]
 		void Subscribe();
 
@@ -11,5 +11,8 @@ namespace Eve.API.Services.Contracts.Services.Interfaces {
 
 		[OperationContract]
 		bool UpdateClientState(ClientState state);
+
+		[OperationContract]
+		string Ping(string yourName);
 	}
 }

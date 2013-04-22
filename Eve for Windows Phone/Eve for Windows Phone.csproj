@@ -170,7 +170,6 @@
     <Content Include="Resources\Images\Shopping Bag.png" />
     <Content Include="Resources\Images\TileImage.png" />
     <Content Include="Resources\Images\View.png" />
-    <None Include="Service References\RelayServiceReference\RemoteRelayService.disco" />
     <None Include="Service References\RelayServiceReference\configuration91.svcinfo" />
     <None Include="Service References\RelayServiceReference\configuration.svcinfo" />
     <None Include="Service References\RelayServiceReference\Reference.svcmap">
@@ -179,18 +178,6 @@
     </None>
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\RelayServiceReference\RemoteRelayService.wsdl" />
-    <None Include="Service References\RelayServiceReference\RemoteRelayService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\RemoteRelayService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\RemoteRelayService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\RemoteRelayService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Images\IPod.png" />
@@ -205,6 +192,10 @@
     <ProjectReference Include="..\Eve.API.Services.Contracts\Eve.API.Services.Contracts.csproj">
       <Project>{B472F1C3-1ED7-460A-B48F-325E89557EC9}</Project>
       <Name>Eve.API.Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eve.Diagnostics\Eve.Diagnostics.csproj">
+      <Project>{B111BA92-F366-4ADA-B0CA-402FEC001711}</Project>
+      <Name>Eve.Diagnostics</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
