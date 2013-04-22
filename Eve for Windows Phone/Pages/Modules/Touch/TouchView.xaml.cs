@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Eve.API.Services.Contracts;
+using EveWindowsPhone.RelayServiceReference;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 

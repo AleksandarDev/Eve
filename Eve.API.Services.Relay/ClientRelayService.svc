@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="Eve.API.Services.Relay.RelayService" CodeBehind="ClientRelayService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Eve.API.Services.Relay.ClientRelayService" CodeBehind="ClientRelayService.svc.cs" %>

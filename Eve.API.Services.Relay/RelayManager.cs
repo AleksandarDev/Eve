@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Eve.API.Services.Contracts.Services;
+using Eve.API.Services.Common;
 
 namespace Eve.API.Services.Relay {
 	/// <summary>

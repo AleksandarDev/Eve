@@ -1,13 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RemoteRelayService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ClientRelayService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IClientRelayService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000" />
+          <wsrm:AcknowledgementInterval Milliseconds="200" />
+        </wsrm:RMAssertion>
+        <cdp:CompositeDuplex xmlns:cdp="http://schemas.microsoft.com/net/2006/06/duplex" />
+        <ow:OneWay xmlns:ow="http://schemas.microsoft.com/ws/2005/05/routing/policy" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:import namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" />
       <xs:import namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Touch" />
+      <xs:element name="Subscribe">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="clientData" nillable="true" type="q1:ServiceClient" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SubscribeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="SubscribeResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Unsibscribe">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="clientData" nillable="true" type="q2:ServiceClient" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UnsibscribeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="UnsibscribeResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ClientPing">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="yourName" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ClientPingResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ClientPingResult" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="SignIn">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="user" nillable="true" type="q1:ServiceUser" />
+            <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="user" nillable="true" type="q3:ServiceUser" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -21,7 +76,7 @@
       <xs:element name="SignOut">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="user" nillable="true" type="q2:ServiceUser" />
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="user" nillable="true" type="q4:ServiceUser" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -40,15 +95,15 @@
       <xs:element name="GetAvailableClientsResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="GetAvailableClientsResult" nillable="true" type="q3:ArrayOfServiceClient" />
+            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="GetAvailableClientsResult" nillable="true" type="q5:ArrayOfServiceClient" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="SendTrackPadMessage">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q4:ServiceRequestDetails" />
-            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Touch" minOccurs="0" name="message" nillable="true" type="q5:TrackPadMessage" />
+            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q6:ServiceRequestDetails" />
+            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Touch" minOccurs="0" name="message" nillable="true" type="q7:TrackPadMessage" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -62,8 +117,8 @@
       <xs:element name="SendButtonMessage">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q6:ServiceRequestDetails" />
-            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Touch" minOccurs="0" name="message" nillable="true" type="q7:ButtonMessage" />
+            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q8:ServiceRequestDetails" />
+            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Touch" minOccurs="0" name="message" nillable="true" type="q9:ButtonMessage" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -117,6 +172,13 @@
       <xs:attribute name="Ref" type="xs:IDREF" />
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ServiceClient">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Alias" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ServiceClient" nillable="true" type="tns:ServiceClient" />
       <xs:complexType name="ServiceUser">
         <xs:sequence>
           <xs:element minOccurs="0" name="IsValid" type="xs:boolean" />
@@ -132,13 +194,6 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="ArrayOfServiceClient" nillable="true" type="tns:ArrayOfServiceClient" />
-      <xs:complexType name="ServiceClient">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Alias" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:element name="ServiceClient" nillable="true" type="tns:ServiceClient" />
       <xs:complexType name="ServiceRequestDetails">
         <xs:sequence>
           <xs:element minOccurs="0" name="Client" nillable="true" type="tns:ServiceClient" />
@@ -256,109 +311,170 @@
       <xs:element name="Orientation" nillable="true" type="tns:Orientation" />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name="IEveAPIService_SignIn_InputMessage">
+  <wsdl:message name="IClientRelayService_Subscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Subscribe" />
+  </wsdl:message>
+  <wsdl:message name="IClientRelayService_Subscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientRelayService_Unsibscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Unsibscribe" />
+  </wsdl:message>
+  <wsdl:message name="IClientRelayService_Unsibscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnsibscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientRelayService_ClientPing_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClientPing" />
+  </wsdl:message>
+  <wsdl:message name="IClientRelayService_ClientPing_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClientPingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientRelayService_SignIn_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SignIn" />
   </wsdl:message>
-  <wsdl:message name="IEveAPIService_SignIn_OutputMessage">
+  <wsdl:message name="IClientRelayService_SignIn_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SignInResponse" />
   </wsdl:message>
-  <wsdl:message name="IEveAPIService_SignOut_InputMessage">
+  <wsdl:message name="IClientRelayService_SignOut_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SignOut" />
   </wsdl:message>
-  <wsdl:message name="IEveAPIService_SignOut_OutputMessage">
+  <wsdl:message name="IClientRelayService_SignOut_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SignOutResponse" />
   </wsdl:message>
-  <wsdl:message name="IEveAPIService_GetAvailableClients_InputMessage">
+  <wsdl:message name="IClientRelayService_GetAvailableClients_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GetAvailableClients" />
   </wsdl:message>
-  <wsdl:message name="IEveAPIService_GetAvailableClients_OutputMessage">
+  <wsdl:message name="IClientRelayService_GetAvailableClients_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GetAvailableClientsResponse" />
   </wsdl:message>
-  <wsdl:message name="IEveAPIService_SendTrackPadMessage_InputMessage">
+  <wsdl:message name="IClientRelayService_SendTrackPadMessage_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendTrackPadMessage" />
   </wsdl:message>
-  <wsdl:message name="IEveAPIService_SendTrackPadMessage_OutputMessage">
+  <wsdl:message name="IClientRelayService_SendTrackPadMessage_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendTrackPadMessageResponse" />
   </wsdl:message>
-  <wsdl:message name="IEveAPIService_SendButtonMessage_InputMessage">
+  <wsdl:message name="IClientRelayService_SendButtonMessage_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendButtonMessage" />
   </wsdl:message>
-  <wsdl:message name="IEveAPIService_SendButtonMessage_OutputMessage">
+  <wsdl:message name="IClientRelayService_SendButtonMessage_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendButtonMessageResponse" />
   </wsdl:message>
-  <wsdl:portType name="IEveAPIService">
+  <wsdl:portType name="IClientRelayService">
+    <wsdl:operation name="Subscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/Subscribe" message="tns:IClientRelayService_Subscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/SubscribeResponse" message="tns:IClientRelayService_Subscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Unsibscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/Unsibscribe" message="tns:IClientRelayService_Unsibscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/UnsibscribeResponse" message="tns:IClientRelayService_Unsibscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClientPing">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/ClientPing" message="tns:IClientRelayService_ClientPing_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/ClientPingResponse" message="tns:IClientRelayService_ClientPing_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="SignIn">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SignIn" message="tns:IEveAPIService_SignIn_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SignInResponse" message="tns:IEveAPIService_SignIn_OutputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/SignIn" message="tns:IClientRelayService_SignIn_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/SignInResponse" message="tns:IClientRelayService_SignIn_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="SignOut">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SignOut" message="tns:IEveAPIService_SignOut_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SignOutResponse" message="tns:IEveAPIService_SignOut_OutputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/SignOut" message="tns:IClientRelayService_SignOut_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/SignOutResponse" message="tns:IClientRelayService_SignOut_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetAvailableClients">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/GetAvailableClients" message="tns:IEveAPIService_GetAvailableClients_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/GetAvailableClientsResponse" message="tns:IEveAPIService_GetAvailableClients_OutputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/GetAvailableClients" message="tns:IClientRelayService_GetAvailableClients_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/GetAvailableClientsResponse" message="tns:IClientRelayService_GetAvailableClients_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendTrackPadMessage">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SendTrackPadMessage" message="tns:IEveAPIService_SendTrackPadMessage_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SendTrackPadMessageResponse" message="tns:IEveAPIService_SendTrackPadMessage_OutputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/SendTrackPadMessage" message="tns:IClientRelayService_SendTrackPadMessage_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/SendTrackPadMessageResponse" message="tns:IClientRelayService_SendTrackPadMessage_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendButtonMessage">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SendButtonMessage" message="tns:IEveAPIService_SendButtonMessage_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SendButtonMessageResponse" message="tns:IEveAPIService_SendButtonMessage_OutputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/SendButtonMessage" message="tns:IClientRelayService_SendButtonMessage_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/SendButtonMessageResponse" message="tns:IClientRelayService_SendButtonMessage_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="BasicHttpBinding_IEveAPIService" type="tns:IEveAPIService">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="SignIn">
-      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SignIn" style="document" />
+  <wsdl:binding name="WSDualHttpBinding_IClientRelayService" type="tns:IClientRelayService">
+    <wsp:PolicyReference URI="#WSDualHttpBinding_IClientRelayService_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Subscribe">
+      <soap12:operation soapAction="http://tempuri.org/IClientRelayService/Subscribe" style="document" />
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Unsibscribe">
+      <soap12:operation soapAction="http://tempuri.org/IClientRelayService/Unsibscribe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClientPing">
+      <soap12:operation soapAction="http://tempuri.org/IClientRelayService/ClientPing" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignIn">
+      <soap12:operation soapAction="http://tempuri.org/IClientRelayService/SignIn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SignOut">
-      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SignOut" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IClientRelayService/SignOut" style="document" />
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAvailableClients">
-      <soap:operation soapAction="http://tempuri.org/IEveAPIService/GetAvailableClients" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IClientRelayService/GetAvailableClients" style="document" />
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SendTrackPadMessage">
-      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SendTrackPadMessage" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IClientRelayService/SendTrackPadMessage" style="document" />
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SendButtonMessage">
-      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SendButtonMessage" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IClientRelayService/SendButtonMessage" style="document" />
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="RemoteRelayService">
-    <wsdl:port name="BasicHttpBinding_IEveAPIService" binding="tns:BasicHttpBinding_IEveAPIService">
-      <soap:address location="http://192.168.1.101:64410/eve/relay/RemoteRelayService.svc" />
+  <wsdl:service name="ClientRelayService">
+    <wsdl:port name="WSDualHttpBinding_IClientRelayService" binding="tns:WSDualHttpBinding_IClientRelayService">
+      <soap12:address location="http://192.168.1.101:64410/eve/relay/ClientRelayService.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://192.168.1.101:64410/eve/relay/ClientRelayService.svc</wsa10:Address>
+      </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

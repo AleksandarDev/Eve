@@ -9,133 +9,100 @@
 //------------------------------------------------------------------------------
 
 namespace EveControl.RelayServiceReference {
-    using System.Runtime.Serialization;
-    using System;
     
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ClientState", Namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Contracts.Services")]
-    [System.SerializableAttribute()]
-    public partial class ClientState : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="RelayServiceReference.IClientRelayService", CallbackContract=typeof(EveControl.RelayServiceReference.IClientRelayServiceCallback))]
+    public interface IClientRelayService {
         
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/Subscribe", ReplyAction="http://tempuri.org/IClientRelayService/SubscribeResponse")]
+        bool Subscribe(Eve.API.Services.Common.ServiceClient clientData);
         
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/Subscribe", ReplyAction="http://tempuri.org/IClientRelayService/SubscribeResponse")]
+        System.Threading.Tasks.Task<bool> SubscribeAsync(Eve.API.Services.Common.ServiceClient clientData);
         
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/Unsibscribe", ReplyAction="http://tempuri.org/IClientRelayService/UnsibscribeResponse")]
+        bool Unsibscribe(Eve.API.Services.Common.ServiceClient clientData);
         
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/Unsibscribe", ReplyAction="http://tempuri.org/IClientRelayService/UnsibscribeResponse")]
+        System.Threading.Tasks.Task<bool> UnsibscribeAsync(Eve.API.Services.Common.ServiceClient clientData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/ClientPing", ReplyAction="http://tempuri.org/IClientRelayService/ClientPingResponse")]
+        string ClientPing(string yourName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/ClientPing", ReplyAction="http://tempuri.org/IClientRelayService/ClientPingResponse")]
+        System.Threading.Tasks.Task<string> ClientPingAsync(string yourName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="RelayServiceReference.IRelayService", CallbackContract=typeof(EveControl.RelayServiceReference.IRelayServiceCallback))]
-    public interface IRelayService {
+    public interface IClientRelayServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IRelayService/Subscribe")]
-        void Subscribe();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/SignIn", ReplyAction="http://tempuri.org/IClientRelayService/SignInResponse")]
+        bool SignIn(Eve.API.Services.Common.ServiceUser user);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IRelayService/Subscribe")]
-        System.Threading.Tasks.Task SubscribeAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/SignOut", ReplyAction="http://tempuri.org/IClientRelayService/SignOutResponse")]
+        bool SignOut(Eve.API.Services.Common.ServiceUser user);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IRelayService/Unsibscribe")]
-        void Unsibscribe();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/GetAvailableClients", ReplyAction="http://tempuri.org/IClientRelayService/GetAvailableClientsResponse")]
+        Eve.API.Services.Common.ServiceClient[] GetAvailableClients();
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IRelayService/Unsibscribe")]
-        System.Threading.Tasks.Task UnsibscribeAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/SendTrackPadMessage", ReplyAction="http://tempuri.org/IClientRelayService/SendTrackPadMessageResponse")]
+        bool SendTrackPadMessage(Eve.API.Services.Common.ServiceRequestDetails details, Eve.API.Services.Common.Modules.Touch.TrackPadMessage message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRelayService/UpdateClientState", ReplyAction="http://tempuri.org/IRelayService/UpdateClientStateResponse")]
-        bool UpdateClientState(EveControl.RelayServiceReference.ClientState state);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRelayService/UpdateClientState", ReplyAction="http://tempuri.org/IRelayService/UpdateClientStateResponse")]
-        System.Threading.Tasks.Task<bool> UpdateClientStateAsync(EveControl.RelayServiceReference.ClientState state);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRelayService/Ping", ReplyAction="http://tempuri.org/IRelayService/PingResponse")]
-        string Ping(string yourName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRelayService/Ping", ReplyAction="http://tempuri.org/IRelayService/PingResponse")]
-        System.Threading.Tasks.Task<string> PingAsync(string yourName);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/SendButtonMessage", ReplyAction="http://tempuri.org/IClientRelayService/SendButtonMessageResponse")]
+        bool SendButtonMessage(Eve.API.Services.Common.ServiceRequestDetails details, Eve.API.Services.Common.Modules.Touch.ButtonMessage message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IRelayServiceCallback {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRelayService/PingRequest", ReplyAction="http://tempuri.org/IRelayService/PingRequestResponse")]
-        string PingRequest(string message);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IRelayServiceChannel : EveControl.RelayServiceReference.IRelayService, System.ServiceModel.IClientChannel {
+    public interface IClientRelayServiceChannel : EveControl.RelayServiceReference.IClientRelayService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RelayServiceClient : System.ServiceModel.DuplexClientBase<EveControl.RelayServiceReference.IRelayService>, EveControl.RelayServiceReference.IRelayService {
+    public partial class ClientRelayServiceClient : System.ServiceModel.DuplexClientBase<EveControl.RelayServiceReference.IClientRelayService>, EveControl.RelayServiceReference.IClientRelayService {
         
-        public RelayServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+        public ClientRelayServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
         }
         
-        public RelayServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+        public ClientRelayServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
                 base(callbackInstance, endpointConfigurationName) {
         }
         
-        public RelayServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+        public ClientRelayServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public RelayServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public ClientRelayServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public RelayServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public ClientRelayServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void Subscribe() {
-            base.Channel.Subscribe();
+        public bool Subscribe(Eve.API.Services.Common.ServiceClient clientData) {
+            return base.Channel.Subscribe(clientData);
         }
         
-        public System.Threading.Tasks.Task SubscribeAsync() {
-            return base.Channel.SubscribeAsync();
+        public System.Threading.Tasks.Task<bool> SubscribeAsync(Eve.API.Services.Common.ServiceClient clientData) {
+            return base.Channel.SubscribeAsync(clientData);
         }
         
-        public void Unsibscribe() {
-            base.Channel.Unsibscribe();
+        public bool Unsibscribe(Eve.API.Services.Common.ServiceClient clientData) {
+            return base.Channel.Unsibscribe(clientData);
         }
         
-        public System.Threading.Tasks.Task UnsibscribeAsync() {
-            return base.Channel.UnsibscribeAsync();
+        public System.Threading.Tasks.Task<bool> UnsibscribeAsync(Eve.API.Services.Common.ServiceClient clientData) {
+            return base.Channel.UnsibscribeAsync(clientData);
         }
         
-        public bool UpdateClientState(EveControl.RelayServiceReference.ClientState state) {
-            return base.Channel.UpdateClientState(state);
+        public string ClientPing(string yourName) {
+            return base.Channel.ClientPing(yourName);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateClientStateAsync(EveControl.RelayServiceReference.ClientState state) {
-            return base.Channel.UpdateClientStateAsync(state);
-        }
-        
-        public string Ping(string yourName) {
-            return base.Channel.Ping(yourName);
-        }
-        
-        public System.Threading.Tasks.Task<string> PingAsync(string yourName) {
-            return base.Channel.PingAsync(yourName);
+        public System.Threading.Tasks.Task<string> ClientPingAsync(string yourName) {
+            return base.Channel.ClientPingAsync(yourName);
         }
     }
 }

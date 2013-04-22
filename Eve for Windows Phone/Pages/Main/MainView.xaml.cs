@@ -23,6 +23,8 @@ namespace EveWindowsPhone.Pages.Main {
 		private readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(MainView));
 
+		public static EveAPIServiceClient client;
+
 		private const double TileMargins = 5;
 		private const double TileImageMargins = 18;
 
@@ -56,24 +58,16 @@ namespace EveWindowsPhone.Pages.Main {
 #if DEBUG
 
 			this.log.Info("Connecting to relay service...");
-			var client = new EveAPIServiceClient();
+			client = new EveAPIServiceClient();
 			client.OpenAsync();
-			client.OpenCompleted += (o, args) => {
+			client.OpenCompleted += (s, ea) => {
 				this.log.Info("Connected to relay service");
-				this.log.Info("Pinging service...");
-				client.PingAsync("Windows Phone");
-				client.PingCompleted +=
-					(s, ea) => {
-						this.log.Info("Got result from ping: \n" + ea.Result);
-						this.Title = ea.Result;
-
-						client.GetAvailableClientsAsync();
-						client.GetAvailableClientsCompleted += (sender1, eventArgs) => {
-							foreach (var serviceClient in eventArgs.Result) {
-								this.log.Info(serviceClient.ID);
-							}
-						};
-					};
+				client.GetAvailableClientsAsync();
+				client.GetAvailableClientsCompleted += (sender1, eventArgs) => {
+					foreach (var serviceClient in eventArgs.Result) {
+						this.log.Info(serviceClient.ID);
+					}
+				};
 			};
 
 #endif

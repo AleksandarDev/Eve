@@ -20,6 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Eve.API.Scripting;
+using Eve.API.Services.Common;
 using Eve.API.Speech;
 using Eve.API.Touch;
 using Eve.API.Vision;
@@ -27,6 +28,7 @@ using Eve.Core.Chrome;
 using Eve.Core.Kinect;
 using Eve.Core.Loging;
 using EveControl.Communication;
+using EveControl.RelayServiceReference;
 using Eve_Control.Windows.Vision;
 using Fleck2;
 using Fleck2.Interfaces;
@@ -40,6 +42,8 @@ namespace Eve_Control {
 	public partial class MainWindow : MetroWindow {
 		private readonly Log.LogInstance log = new Log.LogInstance(typeof(MainWindow));
 		private RelayProxy relay;
+		private RelayServiceCallbackHandler callbackHandler;
+		private ServiceClient serviceClientData;
 		private ChromeServer chromeServer;
 
 
@@ -159,12 +163,14 @@ namespace Eve_Control {
 				String.Format("WebSocket server started on \"{0}\"",
 							  this.chromeServer.ServerLocation), typeof(MainWindow).Name);
 
-			var callbackHandler = new RelayServiceCallbackHandler();
+			this.serviceClientData = new ServiceClient("Aleksandar Toplek Laptop",
+													   "AleksandarPC");
+			this.callbackHandler = new RelayServiceCallbackHandler();
 			this.relay = new RelayProxy(callbackHandler);
 			this.relay.ConnectionChanged += this.HandleRelayConnectionChanged;
 			this.relay.OnOpened += async relayClient => {
 				log.Info("Subscribing to relay service...");
-				await relay.Relay.SubscribeAsync();
+				await relay.Relay.SubscribeAsync(this.serviceClientData);
 				log.Info("Subscribed to relay service successful");
 			};
 			this.Closing += (s, se) => this.CloseRelayConnection();
@@ -181,7 +187,7 @@ namespace Eve_Control {
 		private async void CloseRelayConnection() {
 			// Unsubscribe from service
 			log.Info("Unsubscribing from relay service...");
-			await relay.Relay.UnsibscribeAsync();
+			await relay.Relay.UnsibscribeAsync(this.serviceClientData);
 
 			// Try closing service connection
 			log.Info("Closing connection to relay service...");

@@ -29,13 +29,13 @@ namespace EveControl.Communication {
 		/// Object constructor
 		/// </summary>
 		/// <param name="callbackImplementation">Relay Service callback handler object</param>
-		public RelayProxy(IRelayServiceCallback callbackImplementation) {
+		public RelayProxy(IClientRelayServiceCallback callbackImplementation) {
 			if (callbackImplementation == null)
 				throw new ArgumentNullException("callbackImplementation");
 
 			// Create relay proxy and context
 			this.instanceContext = new InstanceContext(callbackImplementation);
-			this.Relay = new RelayServiceClient(this.instanceContext);
+			this.Relay = new ClientRelayServiceClient(this.instanceContext);
 
 			// Set connection to false (this raises events)
 			this.IsConnected = false;
@@ -146,7 +146,7 @@ namespace EveControl.Communication {
 
 			// Call Ping to relay service and test if result is valid
 			try {
-				string response = await this.Relay.PingAsync(PingRequestContent);
+				string response = await this.Relay.ClientPingAsync(PingRequestContent);
 				if (response != PingResponsePrefix + PingRequestContent) {
 					this.log.Warn("Ping responded with wrong data");
 					this.IsConnected = false;
@@ -167,7 +167,7 @@ namespace EveControl.Communication {
 		/// <summary>
 		/// Gets Relay client from which API calls can be made
 		/// </summary>
-		public RelayServiceClient Relay { get; private set; }
+		public ClientRelayServiceClient Relay { get; private set; }
 
 		/// <summary>
 		/// Gets connection status of relays service proxy

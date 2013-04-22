@@ -67,9 +67,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MahApps.Metro.0.11.0.9-ALPHA\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="ManagedUPnP">
-      <HintPath>..\Libs\Managed UPnP Library and Demo Source (2.0)\ManagedUPnP\bin\Release\ManagedUPnP.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Microsoft SDKs\Speech\v11.0\Assembly\Microsoft.Speech.dll</HintPath>
@@ -151,18 +148,20 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\RelayServiceReference\RelayService.wsdl" />
+    <None Include="Service References\RelayServiceReference\ClientRelayService.wsdl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Eve.API.Services.Common\Eve.API.Services.Common.csproj">
+      <Project>{911D7554-7905-4AA6-906F-5E73E5788E47}</Project>
+      <Name>Eve.API.Services.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eve.API\Eve.API.csproj">
       <Project>{09f82341-e1f6-42d0-8d98-a76ecd27bc89}</Project>
       <Name>Eve.API</Name>
@@ -180,10 +179,10 @@
     <Resource Include="Eve256.ico" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Resource Include="ReadMe.Coding4Fun.Toolkit.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ReadMe.Coding4Fun.Toolkit.txt" />
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\RelayServiceReference\" />

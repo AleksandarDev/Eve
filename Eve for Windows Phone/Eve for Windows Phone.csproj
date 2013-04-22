@@ -170,19 +170,22 @@
     <Content Include="Resources\Images\Shopping Bag.png" />
     <Content Include="Resources\Images\TileImage.png" />
     <Content Include="Resources\Images\View.png" />
+    <None Include="Service References\RelayServiceReference\EveWindowsPhone.RelayServiceReference.ServiceClient.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\RelayServiceReference\RemoteRelayService.wsdl" />
+    <Content Include="ServiceReferences.ClientConfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Images\IPod.png" />
+    <Content Include="Resources\Images\Light Bulb.png" />
+    <Content Include="Resources\Images\Touch screens.png" />
     <None Include="Service References\RelayServiceReference\configuration91.svcinfo" />
     <None Include="Service References\RelayServiceReference\configuration.svcinfo" />
     <None Include="Service References\RelayServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
-    <None Include="Service References\RelayServiceReference\RemoteRelayService.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Images\IPod.png" />
-    <Content Include="Resources\Images\Light Bulb.png" />
-    <Content Include="Resources\Images\Touch screens.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>

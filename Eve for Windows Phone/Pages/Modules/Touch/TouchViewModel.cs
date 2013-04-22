@@ -6,6 +6,7 @@ using System.Text;
 using Eve.API.Services.Contracts;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Modules;
+using EveWindowsPhone.RelayServiceReference;
 using EveWindowsPhone.ViewModels;
 using Microsoft.Phone.Controls;
 
@@ -27,7 +28,8 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 		}
 
 
-		public void OnTrackPadGesture<T>(TrackPadMessage.TrackPadCommands command, T eventArgument) {
+		public void OnTrackPadGesture<T>(TrackPadMessage.TrackPadCommands command,
+										 T eventArgument) {
 			var message = this.ConstructTrackPadMessage<T>(command, eventArgument);
 			if (message == null) {
 				System.Diagnostics.Debug.WriteLine("Invalid gesture for TrackPad");
@@ -36,14 +38,33 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 			System.Diagnostics.Debug.WriteLine(message.ToString());
 
+			EveWindowsPhone.Pages.Main.MainView.client.SendTrackPadMessageAsync(
+				new ServiceRequestDetails() {
+					Client =
+						new ServiceClient() {
+							Alias = "Aleksandar Toplek Laptop",
+							ID = "AleksandarPC"
+						}
+				},
+				message);
 			//this.serviceClient.ProcessTrackPadMessageAsync("TestToken", message);
 		}
 
-		public void OnButtonGesture(ButtonMessage.Buttons button, ButtonMessage.ButtonCommands command) {
+		public void OnButtonGesture(ButtonMessage.Buttons button,
+									ButtonMessage.ButtonCommands command) {
 			var message = this.ConstructButtonMessage(button, command);
 
 			System.Diagnostics.Debug.WriteLine(message.ToString());
 
+			EveWindowsPhone.Pages.Main.MainView.client.SendButtonMessageAsync(
+				new ServiceRequestDetails() {
+					Client =
+						new ServiceClient() {
+							Alias = "Aleksandar Toplek Laptop",
+							ID = "AleksandarPC"
+						}
+				},
+				message);
 			//this.serviceClient.ProcessButtonMessageAsync("TestToken", message);
 		}
 
@@ -78,42 +99,62 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 		}
 
 		private TrackPadMessage ConstructTrackPadPinchMessage(TrackPadMessage.TrackPadCommands command, PinchGestureEventArgs args) {
-			return new TrackPadMessage(command,
-			                           ratio: args.DistanceRatio, angle: args.TotalAngleDelta);
+			return new TrackPadMessage() {
+				Command = command,
+				DistanceRatio = args.DistanceRatio,
+				Angle = args.TotalAngleDelta
+			};
 		}
 
 		private TrackPadMessage ConstructTrackPadMessage(PinchStartedGestureEventArgs args) {
-			return new TrackPadMessage(TrackPadMessage.TrackPadCommands.PinchStarted,
-									   ratio: args.Distance, angle: args.Angle);
+			return new TrackPadMessage() {
+				Command = TrackPadMessage.TrackPadCommands.PinchStarted,
+				DistanceRatio = args.Distance,
+				Angle = args.Angle
+			};
 		}
 
 		private TrackPadMessage ConstructTrackPadMessage(DragCompletedGestureEventArgs args) {
-			return new TrackPadMessage(TrackPadMessage.TrackPadCommands.DragCompleted,
-			                           direction: (Orientation) args.Direction, x: args.HorizontalChange, y: args.VerticalChange);
+			return new TrackPadMessage() {
+				Command = TrackPadMessage.TrackPadCommands.DragCompleted,
+				Direction = (Orientation) args.Direction,
+				X = args.HorizontalChange,
+				Y = args.VerticalChange
+			};
 		}
 
 		private TrackPadMessage ConstructTrackPadMessage(DragDeltaGestureEventArgs args) {
-			return new TrackPadMessage(TrackPadMessage.TrackPadCommands.DragDelta,
-			                           direction: (Orientation) args.Direction, x: args.HorizontalChange, y: args.VerticalChange);
+			return new TrackPadMessage() {
+				Command = TrackPadMessage.TrackPadCommands.DragDelta,
+				Direction = (Orientation) args.Direction,
+				X = args.HorizontalChange,
+				Y = args.VerticalChange
+			};
 		}
 
 		private TrackPadMessage ConstructTrackPadMessage(DragStartedGestureEventArgs args) {
-			return new TrackPadMessage(TrackPadMessage.TrackPadCommands.DragStarted,
-			                           direction: (Orientation) args.Direction);
+			return new TrackPadMessage() {
+				Command = TrackPadMessage.TrackPadCommands.DragStarted,
+				Direction = (Orientation) args.Direction
+			};
 		}
 
 		private TrackPadMessage ConstructTrackPadMessage(FlickGestureEventArgs args) {
-			return new TrackPadMessage(TrackPadMessage.TrackPadCommands.Flick,
-			                           angle: args.Angle, direction: (Orientation) args.Direction, x: args.HorizontalVelocity,
-			                           y: args.VerticalVelocity);
+			return new TrackPadMessage() {
+				Command = TrackPadMessage.TrackPadCommands.Flick,
+				Angle = args.Angle,
+				Direction = (Orientation) args.Direction,
+				X = args.HorizontalVelocity,
+				Y = args.VerticalVelocity
+			};
 		}
 
 		private TrackPadMessage ConstructTrackPadMessageSimple(TrackPadMessage.TrackPadCommands command) {
-			return new TrackPadMessage(command);
+			return new TrackPadMessage() {Command = command};
 		}
 
 		private ButtonMessage ConstructButtonMessage(ButtonMessage.Buttons button, ButtonMessage.ButtonCommands command) {
-			return new ButtonMessage(button, command);
+			return new ButtonMessage() {Button = button, Command = command};
 		}
 	}
 }

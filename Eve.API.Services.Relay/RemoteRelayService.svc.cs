@@ -6,9 +6,9 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Text;
+using Eve.API.Services.Common;
+using Eve.API.Services.Common.Modules.Touch;
 using Eve.API.Services.Contracts;
-using Eve.API.Services.Contracts.Services;
-using Eve.API.Services.Contracts.Services.Interfaces;
 
 namespace Eve.API.Services.Relay {
 	[AspNetCompatibilityRequirements(
@@ -18,27 +18,13 @@ namespace Eve.API.Services.Relay {
 		ConcurrencyMode = ConcurrencyMode.Reentrant,
 		UseSynchronizationContext = false)]
 	public class RemoteRelayService : IEveAPIService {
-		public RemoteRelayService() {}
-
-
 		#region IEveAPIService implementation
-
-		public string Ping(string yourName) {
-			if (RelayManager.GetClients().Any())
-				return
-					RelayManager.GetClients().First().Callback.PingRequest("relay " + yourName);
-			else return "No client available";
-		}
 
 		public bool SignIn(ServiceUser user) {
 			throw new NotImplementedException();
 		}
 
 		public bool SignOut(ServiceUser user) {
-			throw new NotImplementedException();
-		}
-
-		public ClientState GetClientState() {
 			throw new NotImplementedException();
 		}
 
@@ -51,13 +37,25 @@ namespace Eve.API.Services.Relay {
 		#region ITouchService implementation
 
 		public bool SendTrackPadMessage(ServiceRequestDetails details,
-								TrackPadMessage message) {
-			throw new NotImplementedException();
+										TrackPadMessage message) {
+			var client = RelayManager.GetClient(details.Client.ID);
+			if (client == null) return false;
+
+			var callback = client.Callback as IEveAPIService;
+			if (callback == null) return false;
+
+			return callback.SendTrackPadMessage(details, message);
 		}
 
 		public bool SendButtonMessage(ServiceRequestDetails details,
 									  ButtonMessage message) {
-			throw new NotImplementedException();
+			var client = RelayManager.GetClient(details.Client.ID);
+			if (client == null) return false;
+
+			var callback = client.Callback as IEveAPIService;
+			if (callback == null) return false;
+
+			return callback.SendButtonMessage(details, message);
 		}
 
 		#endregion

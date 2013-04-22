@@ -76,9 +76,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Properties\PublishProfiles\Eve.Relay.pubxml" />
     <None Include="Web.Debug.config">
@@ -89,8 +87,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Eve.API.Services.Common\Eve.API.Services.Common.csproj">
+      <Project>{911d7554-7905-4aa6-906f-5e73e5788e47}</Project>
+      <Name>Eve.API.Services.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eve.API.Services.Contracts\Eve.API.Services.Contracts.csproj">
-      <Project>{B472F1C3-1ED7-460A-B48F-325E89557EC9}</Project>
+      <Project>{b472f1c3-1ed7-460a-b48f-325e89557ec9}</Project>
       <Name>Eve.API.Services.Contracts</Name>
     </ProjectReference>
   </ItemGroup>

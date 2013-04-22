@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B472F1C3-1ED7-460A-B48F-325E89557EC9}</ProjectGuid>
+    <ProjectGuid>{911D7554-7905-4AA6-906F-5E73E5788E47}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eve.API.Services.Contracts</RootNamespace>
-    <AssemblyName>Eve.API.Services.Contracts</AssemblyName>
+    <RootNamespace>Eve.API.Services.Common</RootNamespace>
+    <AssemblyName>Eve.API.Services.Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile2</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -33,16 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IEveAPIService.cs" />
-    <Compile Include="IClientRelayService.cs" />
-    <Compile Include="Modules\ITouchService.cs" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Eve.API.Services.Common\Eve.API.Services.Common.csproj">
-      <Project>{911D7554-7905-4AA6-906F-5E73E5788E47}</Project>
-      <Name>Eve.API.Services.Common</Name>
-    </ProjectReference>
+    <Compile Include="Modules\Touch\ButtonMessage.cs" />
+    <Compile Include="Modules\Orientation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceClient.cs" />
+    <Compile Include="ServiceRequestDetails.cs" />
+    <Compile Include="ServiceUser.cs" />
+    <Compile Include="Modules\Touch\TrackPadMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
