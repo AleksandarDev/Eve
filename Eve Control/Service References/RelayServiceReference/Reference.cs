@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Eve_Control.RelayServiceReference {
+namespace EveControl.RelayServiceReference {
     using System.Runtime.Serialization;
     using System;
     
@@ -43,7 +43,7 @@ namespace Eve_Control.RelayServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="RelayServiceReference.IRelayService", CallbackContract=typeof(Eve_Control.RelayServiceReference.IRelayServiceCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="RelayServiceReference.IRelayService", CallbackContract=typeof(EveControl.RelayServiceReference.IRelayServiceCallback))]
     public interface IRelayService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IRelayService/Subscribe")]
@@ -59,10 +59,10 @@ namespace Eve_Control.RelayServiceReference {
         System.Threading.Tasks.Task UnsibscribeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRelayService/UpdateClientState", ReplyAction="http://tempuri.org/IRelayService/UpdateClientStateResponse")]
-        bool UpdateClientState(Eve_Control.RelayServiceReference.ClientState state);
+        bool UpdateClientState(EveControl.RelayServiceReference.ClientState state);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRelayService/UpdateClientState", ReplyAction="http://tempuri.org/IRelayService/UpdateClientStateResponse")]
-        System.Threading.Tasks.Task<bool> UpdateClientStateAsync(Eve_Control.RelayServiceReference.ClientState state);
+        System.Threading.Tasks.Task<bool> UpdateClientStateAsync(EveControl.RelayServiceReference.ClientState state);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRelayService/Ping", ReplyAction="http://tempuri.org/IRelayService/PingResponse")]
         string Ping(string yourName);
@@ -79,12 +79,12 @@ namespace Eve_Control.RelayServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IRelayServiceChannel : Eve_Control.RelayServiceReference.IRelayService, System.ServiceModel.IClientChannel {
+    public interface IRelayServiceChannel : EveControl.RelayServiceReference.IRelayService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RelayServiceClient : System.ServiceModel.DuplexClientBase<Eve_Control.RelayServiceReference.IRelayService>, Eve_Control.RelayServiceReference.IRelayService {
+    public partial class RelayServiceClient : System.ServiceModel.DuplexClientBase<EveControl.RelayServiceReference.IRelayService>, EveControl.RelayServiceReference.IRelayService {
         
         public RelayServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
@@ -122,11 +122,11 @@ namespace Eve_Control.RelayServiceReference {
             return base.Channel.UnsibscribeAsync();
         }
         
-        public bool UpdateClientState(Eve_Control.RelayServiceReference.ClientState state) {
+        public bool UpdateClientState(EveControl.RelayServiceReference.ClientState state) {
             return base.Channel.UpdateClientState(state);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateClientStateAsync(Eve_Control.RelayServiceReference.ClientState state) {
+        public System.Threading.Tasks.Task<bool> UpdateClientStateAsync(EveControl.RelayServiceReference.ClientState state) {
             return base.Channel.UpdateClientStateAsync(state);
         }
         

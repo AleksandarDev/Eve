@@ -24,11 +24,10 @@ namespace Eve.API.Services.Relay {
 		#region IEveAPIService implementation
 
 		public string Ping(string yourName) {
-			foreach (var client in RelayManager.GetClients()) {
-				client.Callback.PingRequest(String.Format("relay {0}", yourName));
-			}
-
-			return "Request sent";
+			if (RelayManager.GetClients().Any())
+				return
+					RelayManager.GetClients().First().Callback.PingRequest("relay " + yourName);
+			else return "No client available";
 		}
 
 		public bool SignIn(ServiceUser user) {

@@ -4,7 +4,6 @@ using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
 using System.Media;
-using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Speech.Synthesis;
 using System.Text;
@@ -27,29 +26,24 @@ using Eve.API.Vision;
 using Eve.Core.Chrome;
 using Eve.Core.Kinect;
 using Eve.Core.Loging;
-using Eve_Control.RelayServiceReference;
+using EveControl.Communication;
 using Eve_Control.Windows.Vision;
 using Fleck2;
 using Fleck2.Interfaces;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
-using Timer = System.Timers.Timer;
 
 namespace Eve_Control {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : MetroWindow {
-		private Log.LogInstance log = new Log.LogInstance(typeof(MainWindow));
+		private readonly Log.LogInstance log = new Log.LogInstance(typeof(MainWindow));
+		private RelayProxy relay;
 		private ChromeServer chromeServer;
 
 
 		public MainWindow() {
-			ThemeManager.ChangeTheme(this,
-									 new Accent("EveGreen",
-												new Uri("/Eve.UI;component/Styles/Accents/EveGreen.xaml",
-														UriKind.RelativeOrAbsolute)), Theme.Dark);
-
 			InitializeComponent();
 		}
 
@@ -165,45 +159,29 @@ namespace Eve_Control {
 				String.Format("WebSocket server started on \"{0}\"",
 							  this.chromeServer.ServerLocation), typeof(MainWindow).Name);
 
-			//System.Diagnostics.Debug.WriteLine("=== Creating Proxy...");
-
-			//this.client = new RelayServiceClient(this.instanceContext,
-			//									 new WSDualHttpBinding() {
-			//										 ClientBaseAddress = new Uri("http://localhost:8088/RelayService/"),
-			//										 Security = new WSDualHttpSecurity() { Mode = WSDualHttpSecurityMode.None }
-			//									 },
-			//									 new EndpointAddress("http://localhost:14004/RelayService.svc/Client/"));
-			//System.Diagnostics.Debug.WriteLine("=== Opening connection...");
-			//this.client.Open();
-			//System.Diagnostics.Debug.WriteLine("=== Sending request...");
-			//System.Diagnostics.Debug.WriteLine("=== Got message: " + this.client.Ping("Aleksandar"));
-			//System.Diagnostics.Debug.WriteLine("=== Closing connectiontion");
-			//this.client.Close();
-			//await this.client.PingOneWayAsync("Aleksandar");
-
-			this.relay = new RelayClient();
+			var callbackHandler = new RelayServiceCallbackHandler();
+			this.relay = new RelayProxy(callbackHandler);
 			this.relay.ConnectionChanged += this.HandleRelayConnectionChanged;
 			this.relay.OnOpened += async relayClient => {
 				log.Info("Subscribing to relay service...");
-				await relay.Proxy.SubscribeAsync();
+				await relay.Relay.SubscribeAsync();
 				log.Info("Subscribed to relay service successful");
 			};
 			this.Closing += (s, se) => this.CloseRelayConnection();
+			await this.relay.OpenAsync();
 		}
 
-		private RelayClient relay;
-
-		private void HandleRelayConnectionChanged(RelayClient client) {
+		private void HandleRelayConnectionChanged(RelayProxy proxy) {
 			// Change status label accordingly
 			this.StatusLabel.Dispatcher.InvokeAsync(() =>
 													this.StatusLabel.Content =
-													client.IsConnected ? "Connected" : "Connecting...");
+													proxy.IsConnected ? "Connected" : "Connecting...");
 		}
 
 		private async void CloseRelayConnection() {
 			// Unsubscribe from service
 			log.Info("Unsubscribing from relay service...");
-			await relay.Proxy.UnsibscribeAsync();
+			await relay.Relay.UnsibscribeAsync();
 
 			// Try closing service connection
 			log.Info("Closing connection to relay service...");
@@ -217,169 +195,6 @@ namespace Eve_Control {
 										 "Couldn't close connection to relay service!");
 			}
 			log.Info("Connection to relay service closed");
-		}
-
-		public delegate void RelayClientEventHandler(RelayClient client);
-
-		public class RelayClient {
-			// TODO Add firewall exception on initial connection timed out http://msdn.microsoft.com/en-us/library/aa366421(VS.85).aspx
-			private Log.LogInstance log = new Log.LogInstance(typeof(RelayClient));
-
-			private InstanceContext instanceContext;
-			private RelayServiceCallbackHandler callbackHandler;
-			private Timer timer;
-			private bool isConnected;
-			private const int ConnectionCheckInterval = 5000;
-			private const string PingRequestContent = "Client";
-			private const string PingResponsePrefix = "Hello ";
-
-			public event RelayClientEventHandler OnOpened;
-			public event RelayClientEventHandler OnClosed;
-			public event RelayClientEventHandler ConnectionChanged;
-
-
-			public RelayClient() {
-				this.callbackHandler = new RelayServiceCallbackHandler();
-				this.instanceContext = new InstanceContext(this.callbackHandler);
-				this.Proxy = new RelayServiceClient(this.instanceContext);
-
-				this.IsConnected = false;
-
-				// Attach to open and close events
-				this.OnOpened +=
-					client => { if (this.ConnectionChanged != null) this.ConnectionChanged(client); };
-				this.OnClosed +=
-					client => { if (this.ConnectionChanged != null) this.ConnectionChanged(client); };
-
-				// Set periodic connection tests
-				this.timer = new Timer(ConnectionCheckInterval);
-				this.timer.Elapsed += CheckConnection;
-				this.timer.Start();
-
-				this.Open();
-			}
-
-
-			private async void Open() {
-				// Check if communication isn't opening already
-				if (this.Proxy.State == CommunicationState.Opening) {
-					this.log.Info("Already opening...");
-					return;
-				}
-
-				// Check if connection is in faulted state so that we
-				// abort all operations on proxy and get it to closed state
-				if (this.Proxy.State == CommunicationState.Faulted) {
-					this.log.Info("Connection is faulted! Aborting and restarting.");
-					await Task.Run(() => this.Proxy.Abort());
-				}
-
-				// Open connection to relay
-				this.log.Info("Opening connection...");
-				await Task.Run(() => {
-					try {
-						this.Proxy.Open();
-						this.log.Info("Connection opened");
-						this.IsConnected = true;
-					}
-					catch (TimeoutException ex) {
-						this.log.Error<TimeoutException>(ex, "Unable to open connection to proxy - timed out");
-						this.IsConnected = false;
-						// TODO Activate pooling
-						// NOTE This could be due to firewall
-					} catch (Exception ex) {
-						this.log.Error<Exception>(ex, "Unknown error occurred while connecting to proxy");
-						this.IsConnected = false;
-					}
-				});
-			}
-
-			public async Task<bool> CloseAsync(bool forceClose = false) {
-				return await Task.Run(() => this.Close(forceClose));
-			}
-
-			private bool Close(bool forceClose = false) {
-				// Check if connection isn't already closed
-				if (this.Proxy.State == CommunicationState.Closed) {
-					this.log.Info("Connection already closed");
-					return true;
-				}
-
-				// Try to close connection
-				try {
-					if (forceClose) {
-						log.Info("Aborting connection...");
-						this.Proxy.Abort();
-						log.Info("Connection aborted");
-					}
-					else {
-						log.Info("Closing connection...");
-						this.Proxy.Close();
-						log.Info("Connection closed");
-					}
-
-					return true;
-				} catch (Exception ex) {
-					log.Error<Exception>(ex, "Unable close/abort connection!");
-					return false;
-				}
-			}
-
-			private async void CheckConnection(object sender, ElapsedEventArgs e) {
-				this.log.Info("Checking connection...");
-
-				if (this.Proxy.State != CommunicationState.Opened) {
-					this.log.Warn("Connection closed. Requesting to reopen...");
-					this.IsConnected = false;
-					this.Open();
-					return;
-				}
-
-				try {
-					string response = await this.Proxy.PingAsync(PingRequestContent);
-					if (response != PingResponsePrefix + PingRequestContent) {
-						this.log.Warn("Ping responded with wrong data");
-						this.IsConnected = false;
-					}
-					else {
-						this.log.Info("Connection confirmed");
-						this.IsConnected = true;
-					}
-				}
-				catch (Exception) {
-					this.log.Warn("Connection to relay timed out");
-					this.IsConnected = false;
-				}
-			}
-
-			#region Properties
-
-			public RelayServiceClient Proxy { get; private set; }
-
-			public bool IsConnected {
-				get { return this.isConnected; }
-				set {
-					bool hasChanged = this.isConnected != value;
-					this.isConnected = value;
-
-					if (hasChanged && value) {
-						if (this.OnOpened != null)
-							this.OnOpened(this);
-					}
-					else if (hasChanged) {
-						if (this.OnClosed != null)
-							this.OnClosed(this);
-					}
-				}
-			}
-
-			#endregion
-
-			public class RelayServiceCallbackHandler : IRelayServiceCallback {
-				public string PingRequest(string message) {
-					return "Control" + message;
-				}
-			}
 		}
 
 		private async Task StopServices() {

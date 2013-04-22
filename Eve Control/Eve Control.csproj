@@ -7,7 +7,7 @@
     <ProjectGuid>{30B3B19E-D5B3-4188-B35B-22B088D94F15}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eve_Control</RootNamespace>
+    <RootNamespace>EveControl</RootNamespace>
     <AssemblyName>Eve Control</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -104,6 +104,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Communication\RelayServiceCallbackHandler.cs" />
+    <Compile Include="Communication\RelayProxy.cs" />
+    <Compile Include="Communication\RelayProxyEventHandler.cs" />
     <Compile Include="Service References\RelayServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
