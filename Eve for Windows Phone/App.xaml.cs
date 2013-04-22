@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Eve.Diagnostics.Logging;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.ViewModels;
 using Microsoft.Phone.Controls;
@@ -61,6 +62,10 @@ namespace EveWindowsPhone {
 				PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
 			}
 
+			// Enable logging
+			Log.Enabled = true;
+			Log.WriteToDebug = true;
+			Log.WriteToDebugLevel = Log.LogLevels.All;
 		}
 
 		// Code to execute when the application is launching (eg, from Start)

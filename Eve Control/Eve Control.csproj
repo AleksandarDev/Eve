@@ -103,6 +103,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Communication\RelayProxy.cs" />
+    <Compile Include="Communication\RelayProxyEventHandler.cs" />
+    <Compile Include="Communication\RelayServiceCallbackHandler.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Service References\RelayServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

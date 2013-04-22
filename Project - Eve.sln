@@ -42,7 +42,26 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.API.Services.Remote.Sil
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9B0632F8-AE5C-4EB6-8330-645867F075C3}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveForChrome", "http://localhost:14004/EveForChrome", "{947D3030-BF9D-49B9-A5C6-CE42480CA963}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome", "http://localhost:8001/EveForChrome", "{947D3030-BF9D-49B9-A5C6-CE42480CA963}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/EveForChrome"
+		Debug.AspNetCompiler.PhysicalPath = "Web\EveForChrome\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\EveForChrome\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/EveForChrome"
+		Release.AspNetCompiler.PhysicalPath = "Web\EveForChrome\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\EveForChrome\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "Web\EveForChrome\"
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
@@ -63,7 +82,26 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveForChr
 		SlnRelativePath = "Web\EveForChrome\"
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveHome", "http://localhost:14004/EveHome", "{9A2C715B-BE52-438B-B2A4-1E16EE3651C2}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveHome", "http://localhost:8001/EveHome", "{9A2C715B-BE52-438B-B2A4-1E16EE3651C2}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/EveHome"
+		Debug.AspNetCompiler.PhysicalPath = "Web\EveHome\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\EveHome\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/EveHome"
+		Release.AspNetCompiler.PhysicalPath = "Web\EveHome\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\EveHome\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "Web\EveHome\"
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
@@ -96,6 +134,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UPnPTest", "TestProjects\UPnPTest\UPnPTest.csproj", "{5CE24381-E1A8-47DB-A320-AF1A6D0B46CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.API.Services.Relay.Hosting.Console", "Eve.API.Services.Relay.Hosting.Console\Eve.API.Services.Relay.Hosting.Console.csproj", "{22D4238B-0EB9-4122-8787-4CB5D3B5912E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.Diagnostics", "Eve.Diagnostics\Eve.Diagnostics.csproj", "{B111BA92-F366-4ADA-B0CA-402FEC001711}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -329,6 +369,20 @@ Global
 		{22D4238B-0EB9-4122-8787-4CB5D3B5912E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{22D4238B-0EB9-4122-8787-4CB5D3B5912E}.Release|Win32.ActiveCfg = Release|Any CPU
 		{22D4238B-0EB9-4122-8787-4CB5D3B5912E}.Release|x86.ActiveCfg = Release|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Release|Win32.ActiveCfg = Release|Any CPU
+		{B111BA92-F366-4ADA-B0CA-402FEC001711}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -343,6 +397,7 @@ Global
 		{E3E59183-DBC6-4093-864C-47CE568458D8} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
 		{B74D5BA1-F746-472C-A9A9-85346CC0B93A} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
 		{22D4238B-0EB9-4122-8787-4CB5D3B5912E} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
+		{B111BA92-F366-4ADA-B0CA-402FEC001711} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
 		{4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F} = {1CBDAAC6-AC23-4A6E-8708-1A916A5BB944}
 		{6D212EFD-E93A-49E3-9949-19F65E007F3A} = {4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F}
 		{AC713C21-2FB3-49B0-B763-97FBB075BA31} = {4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F}

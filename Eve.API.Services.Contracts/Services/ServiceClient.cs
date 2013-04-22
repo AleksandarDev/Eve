@@ -13,10 +13,10 @@ namespace Eve.API.Services.Contracts.Services {
 		#region Properties
 
 		[DataMember]
-		public string Alias { get; private set; }
+		public string Alias { get; set; }
 
 		[DataMember]
-		public string ID { get; private set; }
+		public string ID { get; set; }
 
 		public IRelayCallbackContract Callback { get; set; }
 

@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Coding4Fun.Toolkit.Controls;
+using Eve.Diagnostics.Logging;
 using EveWindowsPhone.Controllers.ApplicationBarController;
 using EveWindowsPhone.Modules;
 using Microsoft.Phone.Controls;
@@ -19,6 +20,9 @@ using EveWindowsPhone.RelayServiceReference;
 
 namespace EveWindowsPhone.Pages.Main {
 	public partial class MainView : PhoneApplicationPage {
+		private readonly Log.LogInstance log =
+			new Log.LogInstance(typeof(MainView));
+
 		private const double TileMargins = 5;
 		private const double TileImageMargins = 18;
 
@@ -51,10 +55,26 @@ namespace EveWindowsPhone.Pages.Main {
 			// TODO Testing only Remove
 #if DEBUG
 
+			this.log.Info("Connecting to relay service...");
 			var client = new EveAPIServiceClient();
-			client.PingAsync("Windows Phone");
-			client.PingCompleted +=
-				(s, ea) => this.Title = ea.Result;
+			client.OpenAsync();
+			client.OpenCompleted += (o, args) => {
+				this.log.Info("Connected to relay service");
+				this.log.Info("Pinging service...");
+				client.PingAsync("Windows Phone");
+				client.PingCompleted +=
+					(s, ea) => {
+						this.log.Info("Got result from ping: \n" + ea.Result);
+						this.Title = ea.Result;
+
+						client.GetAvailableClientsAsync();
+						client.GetAvailableClientsCompleted += (sender1, eventArgs) => {
+							foreach (var serviceClient in eventArgs.Result) {
+								this.log.Info(serviceClient.ID);
+							}
+						};
+					};
+			};
 
 #endif
 		}

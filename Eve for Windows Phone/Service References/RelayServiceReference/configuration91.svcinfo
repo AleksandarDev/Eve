@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="jvsOvJezMYn59F+wIfKo01wx/Kc=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="2aJxwPYVlvzYP9AcR1l9VaRlZw4=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IEveAPIService">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IEveAPIService" contract="RelayServiceReference.IEveAPIService" bindingType="basicHttpBinding" address="http://localhost:64410/RemoteRelayService.svc" bindingConfiguration="BasicHttpBinding_IEveAPIService">
+    <endpoint name="BasicHttpBinding_IEveAPIService" contract="RelayServiceReference.IEveAPIService" bindingType="basicHttpBinding" address="http://192.168.1.101:64410/eve/relay/RemoteRelayService.svc" bindingConfiguration="BasicHttpBinding_IEveAPIService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:64410/RemoteRelayService.svc</serializedValue>
+          <serializedValue>http://192.168.1.101:64410/eve/relay/RemoteRelayService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

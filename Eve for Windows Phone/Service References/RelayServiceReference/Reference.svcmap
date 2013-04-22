@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9e782d8a-a75f-47b5-9a75-9138e3b5a939" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f71a0a04-05f9-4feb-bf1c-cf2d38e2ea71" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -20,15 +20,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:64410/RemoteRelayService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://192.168.1.101:64410/eve/relay/RemoteRelayService.svc?singleWsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="RemoteRelayService.wsdl" MetadataType="Wsdl" ID="c8d2946f-08f0-4aa5-8314-c1b066bb8c48" SourceId="1" SourceUrl="http://localhost:64410/RemoteRelayService.svc?wsdl" />
-    <MetadataFile FileName="RemoteRelayService.disco" MetadataType="Disco" ID="8f6397ca-7665-43b0-a2b8-5c686be85e03" SourceId="1" SourceUrl="http://localhost:64410/RemoteRelayService.svc?disco" />
-    <MetadataFile FileName="RemoteRelayService.xsd" MetadataType="Schema" ID="a7804507-3827-4e13-9f28-ee203690ed9c" SourceId="1" SourceUrl="http://localhost:64410/RemoteRelayService.svc?xsd=xsd0" />
-    <MetadataFile FileName="RemoteRelayService1.xsd" MetadataType="Schema" ID="3181b880-8cb7-4225-800c-47278b588dc8" SourceId="1" SourceUrl="http://localhost:64410/RemoteRelayService.svc?xsd=xsd1" />
-    <MetadataFile FileName="RemoteRelayService2.xsd" MetadataType="Schema" ID="cad1e4cd-8c8d-4eac-9023-908bba388335" SourceId="1" SourceUrl="http://localhost:64410/RemoteRelayService.svc?xsd=xsd2" />
-    <MetadataFile FileName="RemoteRelayService3.xsd" MetadataType="Schema" ID="7e04ad3a-cb9c-44f8-9d78-a85223ded3b9" SourceId="1" SourceUrl="http://localhost:64410/RemoteRelayService.svc?xsd=xsd3" />
+    <MetadataFile FileName="RemoteRelayService.wsdl" MetadataType="Wsdl" ID="a27f7339-7754-472f-8de3-5c2503d388da" SourceId="1" SourceUrl="http://192.168.1.101:64410/eve/relay/RemoteRelayService.svc?singleWsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
