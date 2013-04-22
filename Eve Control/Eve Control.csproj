@@ -7,7 +7,7 @@
     <ProjectGuid>{30B3B19E-D5B3-4188-B35B-22B088D94F15}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eve_Control</RootNamespace>
+    <RootNamespace>EveControl</RootNamespace>
     <AssemblyName>Eve Control</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -107,6 +107,9 @@
     <Compile Include="Communication\RelayProxyEventHandler.cs" />
     <Compile Include="Communication\RelayServiceCallbackHandler.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Communication\RelayServiceCallbackHandler.cs" />
+    <Compile Include="Communication\RelayProxy.cs" />
+    <Compile Include="Communication\RelayProxyEventHandler.cs" />
     <Compile Include="Service References\RelayServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -157,24 +160,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\RelayServiceReference\ClientRelayService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\ClientRelayService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\ClientRelayService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\ClientRelayService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RelayServiceReference\Eve_Control.RelayServiceReference.ClientState.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\RelayServiceReference\Eve_Control.RelayServiceReference.ServiceClient.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\RelayServiceReference\RelayService.wsdl" />
   </ItemGroup>
   <ItemGroup>
@@ -205,9 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\RelayServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\RelayServiceReference\ClientRelayService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\RelayServiceReference\configuration91.svcinfo" />
