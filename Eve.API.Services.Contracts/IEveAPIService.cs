@@ -1,11 +1,10 @@
 ﻿using System.ServiceModel;
 using Eve.API.Services.Common;
 using Eve.API.Services.Common.Modules.Touch;
-using Eve.API.Services.Contracts.Modules;
 
 namespace Eve.API.Services.Contracts {
 	[ServiceContract]
-	public interface IEveAPIService/* : ITouchService */{
+	public interface IEveAPIService {
 		[OperationContract]
 		bool SignIn(ServiceUser user);
 
@@ -15,10 +14,14 @@ namespace Eve.API.Services.Contracts {
 		[OperationContract]
 		ServiceClient[] GetAvailableClients();
 
+		#region Touch module implementation
+
 		[OperationContract]
 		bool SendTrackPadMessage(ServiceRequestDetails details, TrackPadMessage message);
 
 		[OperationContract]
 		bool SendButtonMessage(ServiceRequestDetails details, ButtonMessage message);
+
+		#endregion
 	}
 }

@@ -36,7 +36,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IEveAPIService.cs" />
     <Compile Include="IClientRelayService.cs" />
-    <Compile Include="Modules\ITouchService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Eve.API.Services.Common\Eve.API.Services.Common.csproj">

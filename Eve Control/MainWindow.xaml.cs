@@ -40,6 +40,8 @@ namespace Eve_Control {
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : MetroWindow {
+		// TODO Open magnifier when using touch option
+
 		private readonly Log.LogInstance log = new Log.LogInstance(typeof(MainWindow));
 		private RelayProxy relay;
 		private RelayServiceCallbackHandler callbackHandler;
@@ -173,7 +175,7 @@ namespace Eve_Control {
 				await relay.Relay.SubscribeAsync(this.serviceClientData);
 				log.Info("Subscribed to relay service successful");
 			};
-			this.Closing += (s, se) => this.CloseRelayConnection();
+			this.Closing += async (s, se) => { await this.CloseRelayConnection(); };
 			await this.relay.OpenAsync();
 		}
 
@@ -184,7 +186,7 @@ namespace Eve_Control {
 													proxy.IsConnected ? "Connected" : "Connecting...");
 		}
 
-		private async void CloseRelayConnection() {
+		private async Task CloseRelayConnection() {
 			// Unsubscribe from service
 			log.Info("Unsubscribing from relay service...");
 			await relay.Relay.UnsibscribeAsync(this.serviceClientData);

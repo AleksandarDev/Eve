@@ -94,6 +94,9 @@ namespace EveWindowsPhone {
 			// Dispose ViewModels
 			var viewModelLocator = this.Resources["ViewModelLocator"] as ViewModelLocator;
 			if (viewModelLocator != null) viewModelLocator.Dispose();
+
+			// Close connection to relay service
+			EveWindowsPhone.Pages.Main.MainView.client.CloseAsync();
 		}
 
 		// Code to execute if a navigation fails

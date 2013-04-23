@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -55,22 +56,25 @@ namespace EveWindowsPhone.Pages.Main {
 			this.LoadFavoriteModules();
 
 			// TODO Testing only Remove
-#if DEBUG
 
 			this.log.Info("Connecting to relay service...");
-			client = new EveAPIServiceClient();
-			client.OpenAsync();
-			client.OpenCompleted += (s, ea) => {
-				this.log.Info("Connected to relay service");
-				client.GetAvailableClientsAsync();
-				client.GetAvailableClientsCompleted += (sender1, eventArgs) => {
-					foreach (var serviceClient in eventArgs.Result) {
-						this.log.Info(serviceClient.ID);
-					}
-				};
-			};
+			if (client == null) {
+				client = new EveAPIServiceClient();
 
-#endif
+				client.OpenCompleted += (s, ea) => {
+					this.log.Info("Connected to relay service");
+					client.GetAvailableClientsAsync();
+					client.GetAvailableClientsCompleted += (sender1, eventArgs) => {
+						foreach (var serviceClient in eventArgs.Result) {
+							this.log.Info(serviceClient.ID);
+						}
+					};
+				};
+			}
+
+			if (client.State != CommunicationState.Opened)
+				client.OpenAsync();
+			else this.log.Info("Already connected");
 		}
 
 		private void PanoramaSelectionChanged(object sender, SelectionChangedEventArgs e) {
