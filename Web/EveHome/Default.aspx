@@ -4,6 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 		<meta charset="utf-8"/>
 		<title>Eve</title>
 		<link href="DefaultStyle.css" type="text/css" rel="stylesheet" />
@@ -15,6 +17,7 @@
 		
 		<meta property="og:image" content="http://eve.toplek.net/Resources/Images/Eve256.png" />
 	<body>
+		<!-- Page Header -->
 		<div class="Header">
 			<a href="https://github.com/AleksandarDev/Eve"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 			<div class="CenteredLogo">
@@ -25,18 +28,22 @@
 			</div>
 		</div>
 		<div class="HeaderShadow"></div>
+		
+		<!-- Page Content -->
 		<div class="Content">
 			<div class="Post">
+				<a href="https://www.lucidchart.com/publicSegments/view/5155a328-a718-4cd2-a71d-78c10a0045e5/image.png" target="_blank">
+					<img class="PostImage" src="Resources/Images/Post1Layers.png" title="Eve Messaging Layers" width="251" />
+				</a>
 				<div class="PostText">
 					Schematic diagram showing basic message exchange mechanism and available application layers.<br/>
 					<div class="PostFooter">Aleksandar Toplek, 29.3.2013.</div>
 				</div>
-				<a href="https://www.lucidchart.com/publicSegments/view/5155a328-a718-4cd2-a71d-78c10a0045e5/image.png" target="_blank">
-					<img class="PostImage" src="Resources/Images/Post1Layers.png" title="Eve Messaging Layers" width="251" height="330" />
-				</a>
 			</div>
 		</div>
-		<div class="FooterShadow"></div>
+		
+		<!-- Page Footer -->
+		<!--<div class="FooterShadow"></div>-->
 		<div class="Footer">
 			<div class="SponsorLinks">
 				<div>
