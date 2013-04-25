@@ -96,6 +96,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Process\ProcessProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\IScript.cs" />
     <Compile Include="Scripting\IScriptReference.cs" />
@@ -111,11 +112,16 @@
     <Compile Include="Vision\CaptchaDecoderProvider.cs" />
     <Compile Include="Vision\DisplayEnhancementsProvider.cs" />
     <Compile Include="Vision\FaceDetectionProvider.cs" />
+    <Compile Include="Vision\ScreenViewerProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Eve.Core\Eve.Core.csproj">
       <Project>{2a424a38-2993-4a46-9b67-db23967d8b1b}</Project>
       <Name>Eve.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eve.Diagnostics\Eve.Diagnostics.csproj">
+      <Project>{B111BA92-F366-4ADA-B0CA-402FEC001711}</Project>
+      <Name>Eve.Diagnostics</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

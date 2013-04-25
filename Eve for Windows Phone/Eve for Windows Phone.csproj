@@ -77,6 +77,10 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\IRelayServiceFacade.cs" />
+    <Compile Include="Adapters\RelayServiceFacade.cs" />
+    <Compile Include="Communication\RelayProxy.cs" />
+    <Compile Include="Communication\RelayProxyEventHandler.cs" />
     <Compile Include="Modules\FavoriteModule.cs" />
     <Compile Include="Modules\FavoriteModules.cs" />
     <Compile Include="Adapters\IIsolatedStorageServiceFacade.cs" />

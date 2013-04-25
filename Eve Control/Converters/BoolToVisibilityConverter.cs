@@ -11,7 +11,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Eve_Control.Converters {
+namespace EveControl.Converters {
 	public class BoolToVisibilityConverter : IValueConverter {
 		public BoolToVisibilityConverter() {
 			this.DefaultHidden = Visibility.Hidden;

@@ -19,7 +19,7 @@ using Eve.API.Vision;
 using MahApps.Metro.Controls;
 using Size = System.Drawing.Size;
 
-namespace Eve_Control.Windows.Vision {
+namespace EveControl.Windows.Vision {
 	public partial class VisionView : MetroWindow {
 		private Size videoPlayerSize = new Size(320, 240);
 		private VideoSourcePlayer videoSourcePlayer;

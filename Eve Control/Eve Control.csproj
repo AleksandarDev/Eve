@@ -39,7 +39,7 @@
     <ApplicationIcon>Eve256.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Eve_Control.App</StartupObject>
+    <StartupObject>EveControl.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AForge">
@@ -169,6 +169,10 @@
     <ProjectReference Include="..\Eve.Core\Eve.Core.csproj">
       <Project>{2a424a38-2993-4a46-9b67-db23967d8b1b}</Project>
       <Name>Eve.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eve.Diagnostics\Eve.Diagnostics.csproj">
+      <Project>{b111ba92-f366-4ada-b0ca-402fec001711}</Project>
+      <Name>Eve.Diagnostics</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eve.UI\Eve.UI.csproj">
       <Project>{e3e59183-dbc6-4093-864c-47ce568458d8}</Project>

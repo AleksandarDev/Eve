@@ -28,6 +28,8 @@ namespace EveWindowsPhone.Services {
 				c => new NavigationServiceFacade(((App) Application.Current).RootFrame));
 			this.Container.Register<IIsolatedStorageServiceFacade>(
 				c => new IsolatedStorageServiceFacade());
+			this.Container.Register<IRelayServiceFacade>(
+				c => new RelayServiceFacade());
 
 			// Application Pages
 			this.Container.Register(
@@ -50,7 +52,8 @@ namespace EveWindowsPhone.Services {
 			this.Container.Register(
 				c => new TouchViewModel(
 					     c.Resolve<INavigationServiceFacade>(),
-						 c.Resolve<IIsolatedStorageServiceFacade>()
+						 c.Resolve<IIsolatedStorageServiceFacade>(),
+						 c.Resolve<IRelayServiceFacade>()
 					     )).ReusedWithin(ReuseScope.None);
 			this.Container.Register(
 				c => new LightsViewModel(

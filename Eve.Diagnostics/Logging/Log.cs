@@ -83,12 +83,14 @@ namespace Eve.Diagnostics.Logging {
 
 			public override string ToString() {
 				if (Level != LogLevels.Error)
-					return String.Format("{0} {1}: {2}",
-										 this.Time.ToString(), this.SenderType.Name, this.Message);
+					return String.Format("{0}:{1}:{2}.{3} {4}: {5}",
+						this.Time.Hour, this.Time.Minute, this.Time.Second, this.Time.Millisecond,
+						this.SenderType.Name, this.Message);
 				else
-					return String.Format("{0} {1}: {2}\n\t{3}",
-										 this.Time.ToString(), this.SenderType.Name, this.Message,
-										 this.Exception.ToString());
+					return String.Format("{0}:{1}:{2}.{3} {4}: {5}\n\t{6}",
+						this.Time.Hour, this.Time.Minute, this.Time.Second, this.Time.Millisecond,
+						this.SenderType.Name, this.Message,
+						this.Exception.ToString());
 			}
 		}
 

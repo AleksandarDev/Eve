@@ -15,16 +15,23 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 	public class TouchViewModel : NotificationObject {
 		private readonly INavigationServiceFacade navigationServiceFacade;
 		private readonly IIsolatedStorageServiceFacade isolatedStorageServiceFacade;
+		private readonly IRelayServiceFacade relayServiceFacade;
 		//private TouchServiceClient serviceClient;
 
 
 		public TouchViewModel(INavigationServiceFacade navigationServiceFacade,
-		                      IIsolatedStorageServiceFacade isolatedStorageServiceFacade) {
-			if (navigationServiceFacade == null) throw new ArgumentNullException("navigationServiceFacade");
+							  IIsolatedStorageServiceFacade isolatedStorageServiceFacade,
+							  IRelayServiceFacade relayServiceFacade) {
+			if (navigationServiceFacade == null)
+				throw new ArgumentNullException("navigationServiceFacade");
+			if (isolatedStorageServiceFacade == null)
+				throw new ArgumentNullException("isolatedStorageServiceFacade");
+			if (relayServiceFacade == null)
+				throw new ArgumentNullException("relayServiceFacade");
+
 			this.navigationServiceFacade = navigationServiceFacade;
 			this.isolatedStorageServiceFacade = isolatedStorageServiceFacade;
-
-			//this.serviceClient = new TouchServiceClient();
+			this.relayServiceFacade = relayServiceFacade;
 		}
 
 
@@ -38,16 +45,20 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 			System.Diagnostics.Debug.WriteLine(message.ToString());
 
-			EveWindowsPhone.Pages.Main.MainView.client.SendTrackPadMessageAsync(
-				new ServiceRequestDetails() {
-					Client =
-						new ServiceClient() {
-							Alias = "Aleksandar Toplek Laptop",
-							ID = "AleksandarPC"
-						}
-				},
-				message);
-			//this.serviceClient.ProcessTrackPadMessageAsync("TestToken", message);
+			// TODO Remove
+			//EveWindowsPhone.Pages.Main.MainView.client.SendTrackPadMessageAsync(
+			//	new ServiceRequestDetails() {
+			//		Client =
+			//			new ServiceClient() {
+			//				Alias = "Aleksandar Toplek Laptop",
+			//				ID = "AleksandarPC"
+			//			}
+			//	},
+			//	message);
+
+			// Send request for track pad message to client
+			this.relayServiceFacade.Proxy.Relay.SendTrackPadMessageAsync(
+				this.relayServiceFacade.Proxy.ActiveDetails, message);
 		}
 
 		public void OnButtonGesture(ButtonMessage.Buttons button,
@@ -56,16 +67,20 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 			System.Diagnostics.Debug.WriteLine(message.ToString());
 
-			EveWindowsPhone.Pages.Main.MainView.client.SendButtonMessageAsync(
-				new ServiceRequestDetails() {
-					Client =
-						new ServiceClient() {
-							Alias = "Aleksandar Toplek Laptop",
-							ID = "AleksandarPC"
-						}
-				},
-				message);
-			//this.serviceClient.ProcessButtonMessageAsync("TestToken", message);
+			// TODO Remove
+			//EveWindowsPhone.Pages.Main.MainView.client.SendButtonMessageAsync(
+			//	new ServiceRequestDetails() {
+			//		Client =
+			//			new ServiceClient() {
+			//				Alias = "Aleksandar Toplek Laptop",
+			//				ID = "AleksandarPC"
+			//			}
+			//	},
+			//	message);
+
+			// Send request for button message to client
+			this.relayServiceFacade.Proxy.Relay.SendButtonMessageAsync(
+				this.relayServiceFacade.Proxy.ActiveDetails, message);
 		}
 
 

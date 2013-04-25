@@ -14,7 +14,7 @@ using Accord.Imaging.Filters;
 using Accord.Vision.Detection;
 using Accord.Vision.Detection.Cascades;
 using Accord.Vision.Tracking;
-using Eve.Core.Loging;
+using Eve.Diagnostics.Logging;
 
 namespace Eve.API.Vision {
 	public class FaceDetectionProvider : IDisposable {

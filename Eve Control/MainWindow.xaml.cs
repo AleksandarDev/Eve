@@ -19,23 +19,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Eve.API.Process;
 using Eve.API.Scripting;
 using Eve.API.Services.Common;
 using Eve.API.Speech;
+using Eve.API.Text;
 using Eve.API.Touch;
 using Eve.API.Vision;
 using Eve.Core.Chrome;
 using Eve.Core.Kinect;
-using Eve.Core.Loging;
+using Eve.Diagnostics.Logging;
 using EveControl.Communication;
 using EveControl.RelayServiceReference;
-using Eve_Control.Windows.Vision;
+using EveControl.Windows.Vision;
 using Fleck2;
 using Fleck2.Interfaces;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 
-namespace Eve_Control {
+namespace EveControl {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
@@ -54,13 +56,20 @@ namespace Eve_Control {
 		}
 
 		private async void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
-			//await KinectService.Start();
-			//await SpeechProvider.Start();
-			//await TouchProvider.Start();
-			//await ScriptingProvider.Start();
+			// Stop services on closing
 			this.Closing += async (s, es) => { await StopServices(); };
 
-			System.Diagnostics.Debug.WriteLine("All Services started...", "Eve Control");
+			this.log.Info("Starting services...");
+
+			//await KinectService.Start();
+			//await SpeechProvider.Start();
+			await ProcessProvider.Start();
+			await TextProvider.Start();
+			await TouchProvider.Start();
+			await ScriptingProvider.Start();
+			await DisplayEnhancementsProvider.Start();
+
+			this.log.Info("All Services started");
 
 			//await SpeechProvider.Speak(new Prompt("Services initialized..."));
 			//await SpeechProvider.Speak(new Prompt("Welcome!"));
@@ -206,9 +215,17 @@ namespace Eve_Control {
 		}
 
 		private async Task StopServices() {
-			await ScriptingProvider.Stop();
-			await SpeechProvider.Stop();
+			this.log.Info("Stopping services...");
+
 			await KinectService.Stop();
+			await SpeechProvider.Stop();
+			await ProcessProvider.Stop();
+			await TextProvider.Stop();
+			await TouchProvider.Stop();
+			await ScriptingProvider.Stop();
+			await DisplayEnhancementsProvider.Stop();
+
+			this.log.Info("All services stopped");
 		}
 
 		private void VisionViewOnClick(object sender, RoutedEventArgs e) {

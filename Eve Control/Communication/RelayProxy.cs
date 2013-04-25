@@ -2,7 +2,7 @@
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Timers;
-using Eve.Core.Loging;
+using Eve.Diagnostics.Logging;
 using EveControl.RelayServiceReference;
 
 namespace EveControl.Communication {
@@ -14,8 +14,8 @@ namespace EveControl.Communication {
 		protected readonly Log.LogInstance log = new Log.LogInstance(typeof(RelayProxy));
 
 		protected readonly InstanceContext instanceContext;
-		protected readonly Timer timer;
 		protected bool isConnected;
+		protected readonly Timer timer;
 		protected const int ConnectionCheckInterval = 5000;
 		protected const string PingRequestContent = "Client";
 		protected const string PingResponsePrefix = "Hello ";

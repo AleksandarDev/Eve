@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.IO.Ports;
-using Eve.Core.Loging;
+using Eve.Diagnostics.Logging;
 using MahApps.Metro;
 
-namespace Eve_Control {
+namespace EveControl {
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>

@@ -24,8 +24,6 @@ namespace EveWindowsPhone.Pages.Main {
 		private readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(MainView));
 
-		public static EveAPIServiceClient client;
-
 		private const double TileMargins = 5;
 		private const double TileImageMargins = 18;
 
@@ -54,27 +52,6 @@ namespace EveWindowsPhone.Pages.Main {
 
 			this.LoadApplicationBar();
 			this.LoadFavoriteModules();
-
-			// TODO Testing only Remove
-
-			this.log.Info("Connecting to relay service...");
-			if (client == null) {
-				client = new EveAPIServiceClient();
-
-				client.OpenCompleted += (s, ea) => {
-					this.log.Info("Connected to relay service");
-					client.GetAvailableClientsAsync();
-					client.GetAvailableClientsCompleted += (sender1, eventArgs) => {
-						foreach (var serviceClient in eventArgs.Result) {
-							this.log.Info(serviceClient.ID);
-						}
-					};
-				};
-			}
-
-			if (client.State != CommunicationState.Opened)
-				client.OpenAsync();
-			else this.log.Info("Already connected");
 		}
 
 		private void PanoramaSelectionChanged(object sender, SelectionChangedEventArgs e) {

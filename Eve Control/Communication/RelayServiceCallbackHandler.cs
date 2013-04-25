@@ -2,7 +2,7 @@
 using Eve.API.Services.Common;
 using Eve.API.Services.Common.Modules.Touch;
 using Eve.API.Touch;
-using Eve.Core.Loging;
+using Eve.Diagnostics.Logging;
 using EveControl.RelayServiceReference;
 
 namespace EveControl.Communication {

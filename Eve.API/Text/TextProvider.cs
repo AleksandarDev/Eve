@@ -4,13 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsInput;
+using Eve.Diagnostics.Logging;
 
 namespace Eve.API.Text {
 	/// <summary>
 	/// This provider contains methods for text and keyboard manipulation
 	/// </summary>
 	public static class TextProvider {
-		// TODO Start/Stop service
+		private static readonly Log.LogInstance log =
+			new Log.LogInstance(typeof(TextProvider));
+
+		/// <summary>
+		/// Starts provider and initializes components
+		/// </summary>
+		/// <returns>Returns asynchronous void Task</returns>
+		public static async Task Start() {
+			// Make sure we don't start provider twice
+			if (TextProvider.IsRunning) {
+				TextProvider.log.Warn("Provider is already started");
+				return;
+			}
+
+			TextProvider.log.Info("Starting provider...");
+
+			TextProvider.IsRunning = true;
+			TextProvider.log.Info("Provider started");
+		}
+
+		/// <summary>
+		/// Stops provider and its components
+		/// </summary>
+		/// <returns>Returns asynchronous void Task</returns>
+		public static async Task Stop() {
+			TextProvider.log.Info("Stopping provider...");
+
+			TextProvider.IsRunning = false;
+			TextProvider.log.Info("Provider stopped");
+		}
 
 		/// <summary>
 		/// Calls WindowsInput.InputSimulator method that uses Win32 SendInput 
@@ -66,6 +96,26 @@ namespace Eve.API.Text {
 		public static void SimulateTextEntry(string text) {
 			InputSimulator.SimulateTextEntry(text);
 		}
+
+		/// <summary>
+		/// Check whether provider is running - writes warning if it's not running
+		/// </summary>
+		/// <returns>Returns Boolean value indicating whether provider is started</returns>
+		private static bool CheckIsRunning() {
+			if (!TextProvider.IsRunning)
+				TextProvider.log.Warn("Start provider before using it!");
+
+			return TextProvider.IsRunning;
+		}
+
+		#region Properties
+
+		/// <summary>
+		/// Gets indication whether provider is running
+		/// </summary>
+		public static bool IsRunning { get; private set; }
+
+		#endregion
 
 		/// <summary>
 		/// The list of VirtualKeyCodes (see: http://msdn.microsoft.com/en-us/library/ms645540(VS.85).aspx)
