@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace Eve.Diagnostics.Logging {
 	public static class Log {
+		// TODO InvokeWatchedMethod to measure time
+
 		private static LinkedList<LogMessage> messages = new LinkedList<LogMessage>();
 
 
@@ -83,11 +85,11 @@ namespace Eve.Diagnostics.Logging {
 
 			public override string ToString() {
 				if (Level != LogLevels.Error)
-					return String.Format("{0}:{1}:{2}.{3} {4}: {5}",
+					return String.Format("{0:00}:{1:00}:{2:00}.{3:000} {4}: {5}",
 						this.Time.Hour, this.Time.Minute, this.Time.Second, this.Time.Millisecond,
 						this.SenderType.Name, this.Message);
 				else
-					return String.Format("{0}:{1}:{2}.{3} {4}: {5}\n\t{6}",
+					return String.Format("{0:00}:{1:00}:{2:00}.{3:000} {4}: {5}\n\t{6}",
 						this.Time.Hour, this.Time.Minute, this.Time.Second, this.Time.Millisecond,
 						this.SenderType.Name, this.Message,
 						this.Exception.ToString());

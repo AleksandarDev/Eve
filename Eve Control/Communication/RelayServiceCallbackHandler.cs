@@ -1,4 +1,5 @@
 ﻿using System;
+using Eve.API;
 using Eve.API.Services.Common;
 using Eve.API.Services.Common.Modules.Touch;
 using Eve.API.Touch;
@@ -32,12 +33,12 @@ namespace EveControl.Communication {
 			this.log.Info("Handling Touch TrackPad message: {0}", message);
 
 			if (message.Command == TrackPadMessage.TrackPadCommands.DragDelta)
-				TouchProvider.MoveMouseSmart(message.X, message.Y);
+				ProviderManager.TouchProvider.MoveMouseSmart(message.X, message.Y);
 			else if (message.Command == TrackPadMessage.TrackPadCommands.Tap)
-				TouchProvider.ClickButton(TouchProvider.Buttons.Left);
+				ProviderManager.TouchProvider.ClickButton(TouchProvider.Buttons.Left);
 			else if (message.Command == TrackPadMessage.TrackPadCommands.DoubleTap) {
-				TouchProvider.ClickButton(TouchProvider.Buttons.Left);
-				TouchProvider.ClickButton(TouchProvider.Buttons.Left);
+				ProviderManager.TouchProvider.ClickButton(TouchProvider.Buttons.Left);
+				ProviderManager.TouchProvider.ClickButton(TouchProvider.Buttons.Left);
 			}
 
 			return true;
@@ -48,10 +49,10 @@ namespace EveControl.Communication {
 			this.log.Info("Handling Touch Button message: {0}", message);
 
 			if (message.Command == ButtonMessage.ButtonCommands.Tap)
-				TouchProvider.ClickButton((TouchProvider.Buttons)message.Button);
+				ProviderManager.TouchProvider.ClickButton((TouchProvider.Buttons)message.Button);
 			else if (message.Command == ButtonMessage.ButtonCommands.DoubleTap) {
-				TouchProvider.ClickButton((TouchProvider.Buttons)message.Button);
-				TouchProvider.ClickButton((TouchProvider.Buttons)message.Button);
+				ProviderManager.TouchProvider.ClickButton((TouchProvider.Buttons)message.Button);
+				ProviderManager.TouchProvider.ClickButton((TouchProvider.Buttons)message.Button);
 			} else if (message.Command == ButtonMessage.ButtonCommands.Hold) {
 				this.log.Warn("HOLD on button isn't implemented yet");
 			}

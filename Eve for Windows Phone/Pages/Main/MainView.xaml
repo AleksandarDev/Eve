@@ -1,19 +1,19 @@
 ﻿<phone:PhoneApplicationPage
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-    xmlns:c4fcontrols="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
-    xmlns:modules="clr-namespace:EveWindowsPhone.Modules"
-    xmlns:Converters="clr-namespace:Coding4Fun.Toolkit.Controls.Converters;assembly=Coding4Fun.Toolkit.Controls"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    x:Class="EveWindowsPhone.Pages.Main.MainView"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
-    SupportedOrientations="Portrait" Orientation="Portrait"
-    shell:SystemTray.IsVisible="True"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+	xmlns:c4fcontrols="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+	xmlns:modules="clr-namespace:EveWindowsPhone.Modules"
+	xmlns:Converters="clr-namespace:Coding4Fun.Toolkit.Controls.Converters;assembly=Coding4Fun.Toolkit.Controls"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	x:Class="EveWindowsPhone.Pages.Main.MainView"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+	SupportedOrientations="Portrait" Orientation="Portrait"
+	shell:SystemTray.IsVisible="True"
 	Loaded="MainViewLoaded">
 
 	<phone:PhoneApplicationPage.Resources>
@@ -63,9 +63,10 @@
 				
 				<!-- Client selection -->
 				<!-- TODO Client connected indicator -->
-				<toolkit:ListPicker x:Name="ClientDevicesListPicker" Header="Client device" Grid.ColumnSpan="2" SelectionChanged="ClientDevicesListPickerOnSelectionChanged">
-					<toolkit:ListPickerItem Content="Add new client device..." />
-				</toolkit:ListPicker>
+				<toolkit:ListPicker x:Name="ClientDevicesListPicker" 
+									Header="Client device" 
+									Grid.ColumnSpan="2" 
+									SelectionChanged="ClientDevicesListPickerOnSelectionChanged" />
 				
 				<!-- Advanced settings -->
 				<Button Click="AdvancedSettingOnClick" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">advanced</Button>

@@ -11,37 +11,9 @@ namespace Eve.API.Touch {
 	/// <summary>
 	/// This provider contains methods for controlling clients cursor
 	/// </summary>
-	public static class TouchProvider {
-		private static readonly Log.LogInstance log =
-			new Log.LogInstance(typeof(TouchProvider));
-
-		/// <summary>
-		/// Starts provider and initializes components
-		/// </summary>
-		/// <returns>Returns asynchronous void Task</returns>
-		public async static Task Start() {
-			// Make sure we don't start provider twice
-			if (TouchProvider.IsRunning) {
-				TouchProvider.log.Warn("Provider is already started");
-				return;
-			}
-
-			TouchProvider.log.Info("Starting provider...");
-
-			TouchProvider.IsRunning = true;
-			TouchProvider.log.Info("Provider started");
-		}
-
-		/// <summary>
-		/// Stops provider and its components
-		/// </summary>
-		/// <returns>Returns asynchronous void Task</returns>
-		public async static Task Stop() {
-			TouchProvider.log.Info("Stopping provider...");
-
-			TouchProvider.IsRunning = false;
-			TouchProvider.log.Info("Provider stopped");
-		}
+	public  class TouchProvider : ProviderBase<TouchProvider> {
+		protected override void Initialize() {}
+		protected override void Uninitialize() {}
 
 		/// <summary>
 		/// Moves mouse position relative to its current position
@@ -49,12 +21,12 @@ namespace Eve.API.Touch {
 		/// <param name="x">X move amount</param>
 		/// <param name="y">Y move amount</param>
 		/// <param name="overrideEvents">Overrides mouse move events</param>
-		public static void MoveMouse(int x, int y, bool overrideEvents = false) {
-			if (!TouchProvider.CheckIsRunning())
+		public  void MoveMouse(int x, int y, bool overrideEvents = false) {
+			if (!this.CheckIsRunning())
 				return;
 
 			if (overrideEvents)
-				TouchProvider.SetMousePosition(
+				this.SetMousePosition(
 					System.Windows.Forms.Cursor.Position.X + x,
 					System.Windows.Forms.Cursor.Position.Y + y);
 			else
@@ -68,8 +40,8 @@ namespace Eve.API.Touch {
 		/// </summary>
 		/// <param name="x">End position X</param>
 		/// <param name="y">End position Y</param>
-		public static void MoveMouseSmart(double x, double y) {
-			if (!TouchProvider.CheckIsRunning())
+		public  void MoveMouseSmart(double x, double y) {
+			if (!this.CheckIsRunning())
 				return;
 
 			int steps = Math.Max(2, (int)Math.Ceiling((Math.Abs(x) + Math.Abs(y)) / 10.0));
@@ -85,7 +57,7 @@ namespace Eve.API.Touch {
 
 			// Make small steps
 			for (int index = 0; index < steps; index++) {
-				TouchProvider.MoveMouse((int)x, (int)y);
+				this.MoveMouse((int)x, (int)y);
 				System.Threading.Thread.Sleep(2);
 			}
 		}
@@ -99,8 +71,8 @@ namespace Eve.API.Touch {
 		/// Overrides mouse move events. 
 		/// When set to false, only works on one display client configurations
 		/// </param>
-		public static void SetMousePosition(int x, int y, bool overrideEvents = true) {
-			if (!TouchProvider.CheckIsRunning())
+		public  void SetMousePosition(int x, int y, bool overrideEvents = true) {
+			if (!this.CheckIsRunning())
 				return;
 
 			if (overrideEvents) TouchProvider.Unmanaged.SetCursorPos(x, y);
@@ -114,8 +86,8 @@ namespace Eve.API.Touch {
 		/// </summary>
 		/// <param name="amount">Amount to scroll</param>
 		/// <param name="step">Step to scroll (1 for down, -1 for up)</param>
-		public static void ScrollMouse(uint amount, uint step = 1) {
-			if (!TouchProvider.CheckIsRunning())
+		public  void ScrollMouse(uint amount, uint step = 1) {
+			if (!this.CheckIsRunning())
 				return;
 
 			for (uint index = 0; index < amount; index += step) {
@@ -127,23 +99,23 @@ namespace Eve.API.Touch {
 		/// Press down and then up for given button
 		/// </summary>
 		/// <param name="button">Button to click</param>
-		public static void ClickButton(Buttons button) {
-			if (!TouchProvider.CheckIsRunning())
+		public  void ClickButton(Buttons button) {
+			if (!this.CheckIsRunning())
 				return;
 
 			switch (button) {
 				default:
 				case Buttons.Left:
-					TouchProvider.DoButton(Unmanaged.MouseEventFlags.LEFTDOWN);
-					TouchProvider.DoButton(Unmanaged.MouseEventFlags.LEFTUP);
+					this.DoButton(Unmanaged.MouseEventFlags.LEFTDOWN);
+					this.DoButton(Unmanaged.MouseEventFlags.LEFTUP);
 					break;
 				case Buttons.Middle:
-					TouchProvider.DoButton(Unmanaged.MouseEventFlags.MIDDLEDOWN);
-					TouchProvider.DoButton(Unmanaged.MouseEventFlags.MIDDLEUP);
+					this.DoButton(Unmanaged.MouseEventFlags.MIDDLEDOWN);
+					this.DoButton(Unmanaged.MouseEventFlags.MIDDLEUP);
 					break;
 				case Buttons.Right:
-					TouchProvider.DoButton(Unmanaged.MouseEventFlags.RIGHTDOWN);
-					TouchProvider.DoButton(Unmanaged.MouseEventFlags.RIGHTUP);
+					this.DoButton(Unmanaged.MouseEventFlags.RIGHTDOWN);
+					this.DoButton(Unmanaged.MouseEventFlags.RIGHTUP);
 					break;
 			}
 		}
@@ -153,8 +125,8 @@ namespace Eve.API.Touch {
 		/// </summary>
 		/// <param name="flag">Flag of button event to execute</param>
 		/// <exception cref="InvalidOperationException">Throws exception on invalid flag, only button flags are allowed</exception>
-		private static void DoButton(TouchProvider.Unmanaged.MouseEventFlags flag) {
-			if (!TouchProvider.CheckIsRunning())
+		private  void DoButton(TouchProvider.Unmanaged.MouseEventFlags flag) {
+			if (!this.CheckIsRunning())
 				return;
 
 			if (flag.HasFlag(TouchProvider.Unmanaged.MouseEventFlags.ABSOLUTE) ||
@@ -165,24 +137,8 @@ namespace Eve.API.Touch {
 			TouchProvider.Unmanaged.mouse_event((uint)flag, 0, 0, 0, 0);
 		}
 
-		/// <summary>
-		/// Check whether provider is running - writes warning if it's not running
-		/// </summary>
-		/// <returns>Returns Boolean value indicating whether provider is started</returns>
-		private static bool CheckIsRunning() {
-			if (!TouchProvider.IsRunning)
-				TouchProvider.log.Warn("Start provider before using it!");
-
-			return TouchProvider.IsRunning;
-		}
-
-
 		#region Properties
 
-		/// <summary>
-		/// Gets indication whether provider is running
-		/// </summary>
-		public static bool IsRunning { get; private set; }
 
 		#endregion
 

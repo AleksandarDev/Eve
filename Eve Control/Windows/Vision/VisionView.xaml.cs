@@ -15,15 +15,20 @@ using System.Windows.Shapes;
 using System.Drawing;
 using AForge.Controls;
 using AForge.Imaging;
+using AForge.Video;
+using Eve.API;
 using Eve.API.Vision;
+using Eve.Diagnostics.Logging;
 using MahApps.Metro.Controls;
 using Size = System.Drawing.Size;
 
 namespace EveControl.Windows.Vision {
 	public partial class VisionView : MetroWindow {
+		private readonly Log.LogInstance log = new
+			Log.LogInstance(typeof(VisionView));
+
 		private Size videoPlayerSize = new Size(320, 240);
 		private VideoSourcePlayer videoSourcePlayer;
-		private FaceDetectionProvider faceDetectionProvider;
 
 
 		public VisionView() {
@@ -31,28 +36,28 @@ namespace EveControl.Windows.Vision {
 		}
 
 		private async void VisionViewOnLoaded(object sender, RoutedEventArgs e) {
-			await this.LoadFaceDetectionProvider();
+			//await this.LoadFaceDetectionProvider();
 			this.LoadVideoPlayer();
 			
 			this.SetStatus("Ready");
 		}
 
-		private async Task LoadFaceDetectionProvider() {
-			this.SetStatus("Initializing face detection provider...");
+		//private async Task LoadFaceDetectionProvider() {
+		//	this.SetStatus("Initializing face detection provider...");
 
-			this.faceDetectionProvider = new FaceDetectionProvider();
-			await this.faceDetectionProvider.InitializeAsync();
-			await Task.Run(() => this.faceDetectionProvider.Source.Start());
+		//	this.faceDetectionProvider = new FaceDetectionProvider();
+		//	await this.faceDetectionProvider.InitializeAsync();
+		//	await Task.Run(() => this.faceDetectionProvider.Source.Start());
 
-			this.SetStatus("Face detection provider successfully initialized");
-		}
+		//	this.SetStatus("Face detection provider successfully initialized");
+		//}
 
 		private void LoadVideoPlayer() {
 			this.SetStatus("Creating video viewer...");
 
 			this.videoSourcePlayer = new VideoSourcePlayer() {
 				Size = this.videoPlayerSize,
-				VideoSource = this.faceDetectionProvider.Source
+				VideoSource = ProviderManager.VideoProvider.DeviceVideoSource
 			};
 			this.videoSourcePlayer.NewFrame += HandleNewVideoFrame;
 			this.VideoSourcePlayerWindowsFormsHost.Child = this.videoSourcePlayer;
@@ -61,15 +66,18 @@ namespace EveControl.Windows.Vision {
 		}
 
 		private void HandleNewVideoFrame(object sender, ref Bitmap image) {
-			if (this.faceDetectionProvider == null)
-				throw new NullReferenceException("faceDetectionProvider");
+			if (ProviderManager.FaceDetectionProvider == null ||
+				!ProviderManager.FaceDetectionProvider.IsRunning) {
+				this.log.Warn("Can't process frame. Start face detection provider first");
+				return;
+			}
 
 			var unmanagedImage = UnmanagedImage.FromManagedImage(image);
 
 			// TODO: Check if this can cause lag
-			this.faceDetectionProvider.ProcessFrameAsync(unmanagedImage);
+			ProviderManager.FaceDetectionProvider.ProcessFrame(ref unmanagedImage);
 
-			foreach (var tracker in this.faceDetectionProvider.Trackers) {
+			foreach (var tracker in ProviderManager.FaceDetectionProvider.Trackers) {
 				tracker.DrawMarker(ref unmanagedImage, true);
 			}
 
@@ -78,7 +86,6 @@ namespace EveControl.Windows.Vision {
 
 		private void VisionViewClosing(object sender, CancelEventArgs e) {
 			this.videoSourcePlayer.Dispose();
-			this.faceDetectionProvider.Dispose();
 		}
 
 		private void SetStatus(string message) {

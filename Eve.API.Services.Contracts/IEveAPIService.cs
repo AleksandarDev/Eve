@@ -14,13 +14,19 @@ namespace Eve.API.Services.Contracts {
 		[OperationContract]
 		ServiceClient[] GetAvailableClients();
 
-		#region Touch module implementation
+		#region Touch implementation
 
 		[OperationContract]
 		bool SendTrackPadMessage(ServiceRequestDetails details, TrackPadMessage message);
 
 		[OperationContract]
 		bool SendButtonMessage(ServiceRequestDetails details, ButtonMessage message);
+
+		#endregion
+
+		#region DisplayEnhancement implementation
+
+		bool SetZoom(ServiceRequestDetails details, int zoomValue);
 
 		#endregion
 	}

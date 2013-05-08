@@ -1,72 +1,134 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Eve.Core.Kinect;
+using Eve.Diagnostics.Logging;
 using Microsoft.Kinect;
-using Microsoft.Speech.AudioFormat;
-using Microsoft.Speech.Recognition;
-using Microsoft.Speech.Synthesis;
+using System.Speech.AudioFormat;
+using System.Speech.Recognition;
+using System.Speech.Synthesis;
 
 namespace Eve.API.Speech {
-	public static class SpeechProvider {
-		//
-		// Speech
-		//
-		private static SpeechRecognitionEngine speechRecognizer;
-		private static SpeechSynthesizer speechSynthesizer;
-		private static Stream audioSource;
+	public class SpeechProvider : ProviderBase<SpeechProvider> {
+		private SpeechRecognitionEngine speechRecognizer;
+		private SpeechSynthesizer speechSynthesizer;
+		private Stream audioSource;
 
-	
-		public async static Task Start() {
-			await SpeechProvider.InitializeSpeechRecognizer();
-			await SpeechProvider.InitializeSpeechSynthesizer();
-
-			SpeechProvider.IsRunning = true;
-
-			System.Diagnostics.Debug.WriteLine("Speech Provider started", typeof(SpeechProvider).Name);
+		protected override void Initialize() {
+			this.InitializeSpeechRecognizer();
+			this.InitializeSpeechSynthesizer();
 		}
 
-		public static async Task Stop() {
-			await Task.Run(() => {
-				if (SpeechProvider.speechRecognizer != null) {
-					SpeechProvider.speechRecognizer.SpeechRecognized -= SpeechRecognized;
-					SpeechProvider.speechRecognizer.SpeechRecognitionRejected -= SpeechRejected;
-					SpeechProvider.speechRecognizer.SpeechHypothesized -= SpeechHypothesized;
-					SpeechProvider.speechRecognizer.SpeechDetected -= SpeechDetected;
-					SpeechProvider.speechRecognizer.RecognizeAsyncCancel();
-					SpeechProvider.speechRecognizer = null;
+		protected override void Uninitialize() {
+			if (this.speechRecognizer != null) {
+				this.speechRecognizer.SpeechRecognized -= SpeechRecognized;
+				this.speechRecognizer.SpeechRecognitionRejected -= SpeechRejected;
+				this.speechRecognizer.SpeechHypothesized -= SpeechHypothesized;
+				this.speechRecognizer.SpeechDetected -= SpeechDetected;
+				this.speechRecognizer.RecognizeAsyncCancel();
+				this.speechRecognizer = null;
+			}
+
+			this.speechSynthesizer = null;
+
+			if (this.audioSource != null)
+				this.audioSource.Dispose();
+			this.audioSource = null;
+		}
+
+		private void InitializeSpeechSynthesizer() {
+			this.speechSynthesizer = new SpeechSynthesizer();
+			this.speechSynthesizer.SetOutputToDefaultAudioDevice();
+			string voice = this.GetSpeechSynthesizerVoice();
+			if (voice != null)
+				this.speechSynthesizer.SelectVoice(voice);
+			this.speechSynthesizer.Rate = 0;
+
+			this.log.Info("Speech Synthesizer created");
+		}
+
+		private void InitializeSpeechRecognizer() {
+			// Get recognizer info
+			var recognizerInfo = GetRecognizerInfo();
+			if (recognizerInfo == null) {
+				this.log.Error<Exception>(
+					null, "No recognizer data found!");
+				return;
+			}
+
+			// Setup recognizer
+			this.speechRecognizer =
+				new SpeechRecognitionEngine(recognizerInfo.Id);
+			this.speechRecognizer.SpeechRecognized += SpeechRecognized;
+			this.speechRecognizer.SpeechRecognitionRejected += SpeechRejected;
+			this.speechRecognizer.SpeechHypothesized += SpeechHypothesized;
+			this.speechRecognizer.SpeechDetected += SpeechDetected;
+
+			// TODO Change between grammar and dictation
+			// Create a grammar from grammar definition XML file.
+			//using (var stream = File.OpenRead("Speech/Grammars/EveGrammar.xml")) {
+			//	var g = new Grammar(stream);
+			//	this.speechRecognizer.LoadGrammar(g);
+			//}
+			speechRecognizer.LoadGrammar(
+					new System.Speech.Recognition.DictationGrammar());
+
+			// Get audio source
+			// TODO Implement kinect selector from KinectProvider
+			if (KinectService.HasSensorAvailable) {
+				var kinectAudioSource = KinectService.GetAudioSource(0);
+				if (kinectAudioSource == null) {
+					this.log.Error<Exception>(
+						null, "Can't get audio source for SpeechProvider!");
+					return;
 				}
 
-				SpeechProvider.speechSynthesizer = null;
+				// Try to get Kinect as audio source
+				kinectAudioSource.EchoCancellationMode =
+					EchoCancellationMode.CancellationAndSuppression;
+				kinectAudioSource.NoiseSuppression = true;
+				kinectAudioSource.AutomaticGainControlEnabled = true;
 
-				if (SpeechProvider.audioSource != null)
-					SpeechProvider.audioSource.Dispose();
-				SpeechProvider.audioSource = null;
+				this.audioSource = kinectAudioSource.Start();
 
-				SpeechProvider.IsRunning = false;
+				// Set audio source as speech recognizer input stream
+				if (this.audioSource != null && this.audioSource.CanRead)
+					this.speechRecognizer.SetInputToAudioStream(
+						this.audioSource, new SpeechAudioFormatInfo(EncodingFormat.Pcm,
+							16000, 16, 1, 32000, 2, null));
+			} else {
+				// TODO Allow input device selection instead of just selecting default
+				this.speechRecognizer.SetInputToDefaultAudioDevice();
+			}
 
-				System.Diagnostics.Debug.WriteLine("Speech Provider stopped!", typeof(SpeechProvider).Name);
-			});
+			// Initiate recognition
+			this.speechRecognizer.RecognizeAsync(RecognizeMode.Multiple);
+
+			this.log.Info("Speech Recognizer created");
 		}
 
-		public async static Task Speak(SpeechPrompt speechPrompt) {
-			if (!SpeechProvider.IsRunning)
-				await SpeechProvider.Start();
+		// TODO Implement Speak synch
+		public async Task SpeakAsync(SpeechPrompt speechPrompt) {
+			if (!this.CheckIsRunning())
+				return;
 
-			if (SpeechProvider.OnSynthesisRequested != null)
-				SpeechProvider.OnSynthesisRequested(new SpeechProviderSynthesizerEventArgs() {
-					Synthesizer = SpeechProvider.speechSynthesizer,
-					Prompt = speechPrompt
-				});
-
-			if (SpeechProvider.IsRunning && speechPrompt != null) {
-				if (SpeechProvider.OnSynthesisStarted != null)
-					SpeechProvider.OnSynthesisStarted(new SpeechProviderSynthesizerEventArgs() {
-						Synthesizer = SpeechProvider.speechSynthesizer,
+			if (this.OnSynthesisRequested != null)
+				this.OnSynthesisRequested(
+					new SpeechProviderSynthesizerEventArgs() {
+						Synthesizer = this.speechSynthesizer,
 						Prompt = speechPrompt
 					});
+
+			if (this.IsRunning && speechPrompt != null) {
+				if (this.OnSynthesisStarted != null)
+					this.OnSynthesisStarted(
+						new SpeechProviderSynthesizerEventArgs() {
+							Synthesizer = this.speechSynthesizer,
+							Prompt = speechPrompt
+						});
 
 				// TODO Check if service needs to be stoped before synthesis
 				//if (SpeechProvider.speechRecognizer != null) {
@@ -75,9 +137,12 @@ namespace Eve.API.Speech {
 				//	System.Diagnostics.Debug.WriteLine("Speech recognition stopped", typeof(SpeechProvider).Name);
 				//}
 
-				System.Diagnostics.Debug.WriteLine("Speech request executing...", typeof (SpeechProvider).Name);
-				await Task.Run(() => SpeechProvider.speechSynthesizer.Speak(speechPrompt.Prompt));
-				System.Diagnostics.Debug.WriteLine("Speech request executed", typeof (SpeechProvider).Name);
+				System.Diagnostics.Debug.WriteLine("Speech request executing...",
+					typeof(SpeechProvider).Name);
+				await
+					Task.Run(() => this.speechSynthesizer.Speak(speechPrompt.Prompt));
+				System.Diagnostics.Debug.WriteLine("Speech request executed",
+					typeof(SpeechProvider).Name);
 
 				//if (SpeechProvider.speechRecognizer != null) {
 				//	System.Diagnostics.Debug.WriteLine("Starting speech recognition...", typeof(SpeechProvider).Name);
@@ -85,123 +150,58 @@ namespace Eve.API.Speech {
 				//	System.Diagnostics.Debug.WriteLine("Speech recognition started", typeof(SpeechProvider).Name);
 				//}
 
-				if (SpeechProvider.OnSynthesisEnded != null)
-					SpeechProvider.OnSynthesisEnded(new SpeechProviderSynthesizerEventArgs() {
-						Synthesizer = SpeechProvider.speechSynthesizer,
+				if (this.OnSynthesisEnded != null)
+					this.OnSynthesisEnded(new SpeechProviderSynthesizerEventArgs() {
+						Synthesizer = this.speechSynthesizer,
 						Prompt = speechPrompt
 					});
 			}
 		}
 
-		private async static Task InitializeSpeechSynthesizer() {
-			await Task.Run(() => {
-				SpeechProvider.speechSynthesizer = new SpeechSynthesizer();
-				SpeechProvider.speechSynthesizer.SetOutputToDefaultAudioDevice();
-				SpeechProvider.speechSynthesizer.SelectVoice(GetSpeechSynthesizerVoice());
-				SpeechProvider.speechSynthesizer.Rate = 0;
+		private void SpeechDetected(object sender, SpeechDetectedEventArgs e) {
+			this.log.Info("Speech detected...");
 
-				System.Diagnostics.Debug.WriteLine("Speech Synthesizer created!", typeof (SpeechProvider).Name);
-			});
+			if (this.OnRecognitionDetected != null)
+				this.OnRecognitionDetected(
+					new SpeechProviderRecognozerEventArgs() {
+						Recognizer = this.speechRecognizer
+					});
 		}
 
-		private async static Task InitializeSpeechRecognizer() {
-			await Task.Run(() => {
-				// Get recognizer info
-				var recognizerInfo = GetRecognizerInfo();
-				if (recognizerInfo == null) {
-					System.Diagnostics.Debug.WriteLine("No recognizer data found!", typeof(SpeechProvider).Name);
-					// TODO Throw exception
-					return;
-				}
+		private void SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e) {
+			this.log.Info("Hypothesized \"{0}\"", e.Result.Text);
 
-				// Setup recognizer
-				SpeechProvider.speechRecognizer = new SpeechRecognitionEngine(recognizerInfo.Id);
-				SpeechProvider.speechRecognizer.SpeechRecognized += SpeechRecognized;
-				SpeechProvider.speechRecognizer.SpeechRecognitionRejected += SpeechRejected;
-				SpeechProvider.speechRecognizer.SpeechHypothesized += SpeechHypothesized;
-				SpeechProvider.speechRecognizer.SpeechDetected += SpeechDetected;
-
-				// Create a grammar from grammar definition XML file.
-				using (var stream = File.OpenRead("Speech/Grammars/EveGrammar.xml")) {
-					var g = new Grammar(stream);
-					speechRecognizer.LoadGrammar(g);
-				}
-
-				// Get audio source
-				if (KinectService.HasSensorAvailable) {
-					var kinectAudioSource = KinectService.GetAudioSource(0);
-					if (kinectAudioSource == null) {
-						System.Diagnostics.Debug.WriteLine("Can't get audio source for SpeechProvider!", typeof(SpeechProvider).Name);
-						// TODO throw exception
-						return;
-					}
-
-					// Try to get Kinect as audio source
-					kinectAudioSource.EchoCancellationMode = EchoCancellationMode.CancellationAndSuppression;
-					kinectAudioSource.NoiseSuppression = true;
-					kinectAudioSource.AutomaticGainControlEnabled = true;
-
-					SpeechProvider.audioSource = kinectAudioSource.Start();
-				}
-				else {
-					SpeechProvider.speechRecognizer.SetInputToDefaultAudioDevice();
-				}
-				// TODO Implement using KinectService
-				//SpeechProvider.speechRecognizer.SetInputToDefaultAudioDevice();
-
-				if (SpeechProvider.audioSource != null && SpeechProvider.audioSource.CanRead)
-					SpeechProvider.speechRecognizer.SetInputToAudioStream(
-						SpeechProvider.audioSource, new SpeechAudioFormatInfo(EncodingFormat.Pcm,
-						                                                       16000, 16, 1, 32000, 2, null));
-
-
-				// Initiate recognition
-				SpeechProvider.speechRecognizer.RecognizeAsync(RecognizeMode.Multiple);
-
-				System.Diagnostics.Debug.WriteLine("Speech Recognizer created!", typeof(SpeechProvider).Name);
-			});
-		}
-
-		private static void SpeechDetected(object sender, SpeechDetectedEventArgs e) {
-			System.Diagnostics.Debug.WriteLine("Speech detected...", typeof(SpeechProvider).Name);
-
-			if (SpeechProvider.OnRecognitionDetected != null)
-				SpeechProvider.OnRecognitionDetected(new SpeechProviderRecognozerEventArgs() {
-					Recognizer = SpeechProvider.speechRecognizer
-				});
-		}
-
-		private static void SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e) {
-			System.Diagnostics.Debug.WriteLine(String.Format("Hypothesized \"{0}\"", e.Result.Text), typeof(SpeechProvider).Name);
-
-			if (SpeechProvider.OnRecognitionHypothesized != null)
-				SpeechProvider.OnRecognitionHypothesized(new SpeechProviderRecognozerEventArgs() {
-					Recognizer = SpeechProvider.speechRecognizer,
-					Result = e.Result
-				});
-		}
-
-		private static void SpeechRejected(object sender, SpeechRecognitionRejectedEventArgs e) {
-			System.Diagnostics.Debug.WriteLine(String.Format("Rejected \"{0}\"", e.Result.Text), typeof(SpeechProvider).Name);
-
-			if (SpeechProvider.OnRecognitionRejected != null)
-					SpeechProvider.OnRecognitionRejected(new SpeechProviderRecognozerEventArgs() {
-						Recognizer = SpeechProvider.speechRecognizer,
+			if (this.OnRecognitionHypothesized != null)
+				this.OnRecognitionHypothesized(
+					new SpeechProviderRecognozerEventArgs() {
+						Recognizer = this.speechRecognizer,
 						Result = e.Result
 					});
 		}
 
-		private static void SpeechRecognized(object sender, SpeechRecognizedEventArgs e) {
-			if (e.Result.Confidence >= SpeechProvider.SpeechRecognitionConfidence) {
-				System.Diagnostics.Debug.WriteLine(
-					String.Format("Accepted \"{0}\" for {1}%", e.Result.Text, e.Result.Confidence*100),
-					typeof (SpeechProvider).Name);
+		private void SpeechRejected(object sender,
+			SpeechRecognitionRejectedEventArgs e) {
+			this.log.Info("Rejected \"{0}\"", e.Result.Text);
 
-				if (SpeechProvider.OnRecognitionAccepted != null)
-					SpeechProvider.OnRecognitionAccepted(new SpeechProviderRecognozerEventArgs() {
-						Recognizer = SpeechProvider.speechRecognizer,
+			if (this.OnRecognitionRejected != null)
+				this.OnRecognitionRejected(
+					new SpeechProviderRecognozerEventArgs() {
+						Recognizer = this.speechRecognizer,
 						Result = e.Result
 					});
+		}
+
+		private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e) {
+			if (e.Result.Confidence >= this.SpeechRecognitionConfidence) {
+				this.log.Info("Accepted \"{0}\" for {1}%",
+					e.Result.Text, e.Result.Confidence * 100);
+
+				if (this.OnRecognitionAccepted != null)
+					this.OnRecognitionAccepted(
+						new SpeechProviderRecognozerEventArgs() {
+							Recognizer = this.speechRecognizer,
+							Result = e.Result
+						});
 			}
 		}
 
@@ -213,19 +213,24 @@ namespace Eve.API.Speech {
 		/// RecognizerInfo if found, <code>null</code> otherwise.
 		/// </returns>
 		private static RecognizerInfo GetRecognizerInfo() {
+			// TODO Implement recognizer selection 
+
 			var recognizersAvailable = SpeechRecognitionEngine.InstalledRecognizers();
 
 			// Check if any recognizer available
 			if (recognizersAvailable.Count == 0)
 				return null;
 
-
 			// Match to Kinect for en-US
-			var kinectMatches = recognizersAvailable.Where(r => r.AdditionalInfo.Values.Contains("Kinect") &&
-			                                                    r.Culture.Name.Equals("en-US",
-			                                                                          StringComparison.OrdinalIgnoreCase));
+			var kinectMatches =
+				recognizersAvailable.Where(
+					r => r.AdditionalInfo.Values.Contains("Kinect") &&
+						r.Culture.Name.Equals("en-US",
+							StringComparison.OrdinalIgnoreCase));
+
 			// Check if list contains any matches
-			var kinectMatchesList = kinectMatches as IList<RecognizerInfo> ?? kinectMatches.ToList();
+			var kinectMatchesList =
+				kinectMatches as IList<RecognizerInfo> ?? kinectMatches.ToList();
 			if (kinectMatchesList.Any())
 				return kinectMatchesList.First();
 
@@ -233,34 +238,46 @@ namespace Eve.API.Speech {
 			return recognizersAvailable.First();
 		}
 
-		private static string GetSpeechSynthesizerVoice() {
-			var installedVoices = SpeechProvider.speechSynthesizer.GetInstalledVoices();
+		private string GetSpeechSynthesizerVoice() {
+			// TODO Implement voice selection
+
+			ReadOnlyCollection<InstalledVoice> installedVoices = null;
+			try {
+				installedVoices = this.speechSynthesizer.GetInstalledVoices();
+			}
+			catch (PlatformNotSupportedException ex) {
+				this.log.Error<PlatformNotSupportedException>(
+					ex, "No voices installed");
+				return null;
+			}
 
 			if (installedVoices.Count == 0)
 				return String.Empty;
-			
+
 			// Return Zira if available
 			if (installedVoices.Any(v => v.VoiceInfo.Name == "Microsoft Zira Desktop"))
 				return "Microsoft Zira Desktop";
-			
+
 			// Return first available
 			return installedVoices.First().VoiceInfo.Name;
 		}
 
-
 		#region Properties
 
-		public static bool IsRunning { get; private set; }
-		public static double SpeechRecognitionConfidence { get; set; }
+		/// <summary>
+		/// Gets or sets speech recognition confidence ratio
+		/// This determines whether recorded and hypothesized elements gets accepted
+		/// </summary>
+		public double SpeechRecognitionConfidence { get; set; }
 
-		public static event SpeechProviderRecognizerEventHandler OnRecognitionHypothesized;
-		public static event SpeechProviderRecognizerEventHandler OnRecognitionRejected;
-		public static event SpeechProviderRecognizerEventHandler OnRecognitionAccepted;
-		public static event SpeechProviderRecognizerEventHandler OnRecognitionDetected;
+		public event SpeechProviderRecognizerEventHandler OnRecognitionHypothesized;
+		public event SpeechProviderRecognizerEventHandler OnRecognitionRejected;
+		public event SpeechProviderRecognizerEventHandler OnRecognitionAccepted;
+		public event SpeechProviderRecognizerEventHandler OnRecognitionDetected;
 
-		public static event SpeechProviderSynthesizerEventHandler OnSynthesisRequested;
-		public static event SpeechProviderSynthesizerEventHandler OnSynthesisStarted;
-		public static event SpeechProviderSynthesizerEventHandler OnSynthesisEnded;
+		public event SpeechProviderSynthesizerEventHandler OnSynthesisRequested;
+		public event SpeechProviderSynthesizerEventHandler OnSynthesisStarted;
+		public event SpeechProviderSynthesizerEventHandler OnSynthesisEnded;
 
 		#endregion
 	}

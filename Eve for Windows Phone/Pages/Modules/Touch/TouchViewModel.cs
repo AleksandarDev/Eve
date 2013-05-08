@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using Eve.API.Services.Contracts;
+using Eve.Diagnostics.Logging;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Modules;
 using EveWindowsPhone.RelayServiceReference;
@@ -13,10 +14,15 @@ using Microsoft.Phone.Controls;
 namespace EveWindowsPhone.Pages.Modules.Touch {
 	[Module("MTouch", "Touch", "/Resources/Images/Touch screens.png", "/Pages/Modules/Touch/TouchView.xaml")]
 	public class TouchViewModel : NotificationObject {
+		private readonly Log.LogInstance log =
+			new Log.LogInstance(typeof(TouchViewModel));
+
 		private readonly INavigationServiceFacade navigationServiceFacade;
 		private readonly IIsolatedStorageServiceFacade isolatedStorageServiceFacade;
 		private readonly IRelayServiceFacade relayServiceFacade;
-		//private TouchServiceClient serviceClient;
+
+		private bool isZoomEnabled;
+		private int zoomAmount;
 
 
 		public TouchViewModel(INavigationServiceFacade navigationServiceFacade,
@@ -32,51 +38,54 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			this.navigationServiceFacade = navigationServiceFacade;
 			this.isolatedStorageServiceFacade = isolatedStorageServiceFacade;
 			this.relayServiceFacade = relayServiceFacade;
+
+			this.LoadSettings();
+
+			// Send zoom request if enabled
+			if (this.isZoomEnabled) {
+				// TODO SetZoom relay request
+			}
+
+			this.log.Info("View model created");
 		}
 
+		private void LoadSettings() {
+			// Check if zoom is enabled
+			this.isZoomEnabled = this.isolatedStorageServiceFacade.GetSetting<bool>(
+				IsolatedStorageServiceFacade.ActivateZoomOnTouchKey);
 
-		public void OnTrackPadGesture<T>(TrackPadMessage.TrackPadCommands command,
-										 T eventArgument) {
+			// If zoom is enabled, get zoom amount value
+			if (this.isZoomEnabled) {
+				this.zoomAmount = this.isolatedStorageServiceFacade.GetSetting<int>(
+					IsolatedStorageServiceFacade.ActivateZoomOnTouchValueKey);
+
+				this.log.Info("Zoom is enabled");
+				this.log.Info("Zoom amout se to [{0}]", this.zoomAmount);
+			}
+		}
+
+		#region Message handling
+
+		public void OnTrackPadGesture<T>(
+			TrackPadMessage.TrackPadCommands command, T eventArgument) {
 			var message = this.ConstructTrackPadMessage<T>(command, eventArgument);
 			if (message == null) {
 				System.Diagnostics.Debug.WriteLine("Invalid gesture for TrackPad");
 				return;
 			}
 
-			System.Diagnostics.Debug.WriteLine(message.ToString());
-
-			// TODO Remove
-			//EveWindowsPhone.Pages.Main.MainView.client.SendTrackPadMessageAsync(
-			//	new ServiceRequestDetails() {
-			//		Client =
-			//			new ServiceClient() {
-			//				Alias = "Aleksandar Toplek Laptop",
-			//				ID = "AleksandarPC"
-			//			}
-			//	},
-			//	message);
+			this.log.Info("Sending track pad message: {0}", message.ToString());
 
 			// Send request for track pad message to client
 			this.relayServiceFacade.Proxy.Relay.SendTrackPadMessageAsync(
 				this.relayServiceFacade.Proxy.ActiveDetails, message);
 		}
 
-		public void OnButtonGesture(ButtonMessage.Buttons button,
-									ButtonMessage.ButtonCommands command) {
+		public void OnButtonGesture(
+			ButtonMessage.Buttons button, ButtonMessage.ButtonCommands command) {
 			var message = this.ConstructButtonMessage(button, command);
 
-			System.Diagnostics.Debug.WriteLine(message.ToString());
-
-			// TODO Remove
-			//EveWindowsPhone.Pages.Main.MainView.client.SendButtonMessageAsync(
-			//	new ServiceRequestDetails() {
-			//		Client =
-			//			new ServiceClient() {
-			//				Alias = "Aleksandar Toplek Laptop",
-			//				ID = "AleksandarPC"
-			//			}
-			//	},
-			//	message);
+			this.log.Info("Sending button message: {0}", message.ToString());
 
 			// Send request for button message to client
 			this.relayServiceFacade.Proxy.Relay.SendButtonMessageAsync(
@@ -84,7 +93,8 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 		}
 
 
-		private TrackPadMessage ConstructTrackPadMessage<T>(TrackPadMessage.TrackPadCommands command, T eventArgument) {
+		private TrackPadMessage ConstructTrackPadMessage<T>(
+			TrackPadMessage.TrackPadCommands command, T eventArgument) {
 			// Process simple message
 			if (command == TrackPadMessage.TrackPadCommands.Tap ||
 			    command == TrackPadMessage.TrackPadCommands.DoubleTap ||
@@ -113,7 +123,10 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			return null;
 		}
 
-		private TrackPadMessage ConstructTrackPadPinchMessage(TrackPadMessage.TrackPadCommands command, PinchGestureEventArgs args) {
+		#region Message constructors
+
+		private TrackPadMessage ConstructTrackPadPinchMessage(
+			TrackPadMessage.TrackPadCommands command, PinchGestureEventArgs args) {
 			return new TrackPadMessage() {
 				Command = command,
 				DistanceRatio = args.DistanceRatio,
@@ -164,12 +177,18 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			};
 		}
 
-		private TrackPadMessage ConstructTrackPadMessageSimple(TrackPadMessage.TrackPadCommands command) {
+		private TrackPadMessage ConstructTrackPadMessageSimple(
+			TrackPadMessage.TrackPadCommands command) {
 			return new TrackPadMessage() {Command = command};
 		}
 
-		private ButtonMessage ConstructButtonMessage(ButtonMessage.Buttons button, ButtonMessage.ButtonCommands command) {
+		private ButtonMessage ConstructButtonMessage(
+			ButtonMessage.Buttons button, ButtonMessage.ButtonCommands command) {
 			return new ButtonMessage() {Button = button, Command = command};
 		}
+
+		#endregion
+
+		#endregion
 	}
 }

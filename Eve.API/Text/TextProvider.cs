@@ -10,37 +10,9 @@ namespace Eve.API.Text {
 	/// <summary>
 	/// This provider contains methods for text and keyboard manipulation
 	/// </summary>
-	public static class TextProvider {
-		private static readonly Log.LogInstance log =
-			new Log.LogInstance(typeof(TextProvider));
-
-		/// <summary>
-		/// Starts provider and initializes components
-		/// </summary>
-		/// <returns>Returns asynchronous void Task</returns>
-		public static async Task Start() {
-			// Make sure we don't start provider twice
-			if (TextProvider.IsRunning) {
-				TextProvider.log.Warn("Provider is already started");
-				return;
-			}
-
-			TextProvider.log.Info("Starting provider...");
-
-			TextProvider.IsRunning = true;
-			TextProvider.log.Info("Provider started");
-		}
-
-		/// <summary>
-		/// Stops provider and its components
-		/// </summary>
-		/// <returns>Returns asynchronous void Task</returns>
-		public static async Task Stop() {
-			TextProvider.log.Info("Stopping provider...");
-
-			TextProvider.IsRunning = false;
-			TextProvider.log.Info("Provider stopped");
-		}
+	public class TextProvider : ProviderBase<TextProvider> {
+		protected override void Initialize() {}
+		protected override void Uninitialize() {}
 
 		/// <summary>
 		/// Calls WindowsInput.InputSimulator method that uses Win32 SendInput 
@@ -48,7 +20,7 @@ namespace Eve.API.Text {
 		/// </summary>
 		/// <param name="key">Key to PRESS</param>
 		/// <remarks>This method uses inputsimulator.codeplex.com library</remarks>
-		public static void SimulateKeyPress(TextProvider.VirtualKeyCode key) {
+		public void SimulateKeyPress(TextProvider.VirtualKeyCode key) {
 			InputSimulator.SimulateKeyPress((WindowsInput.VirtualKeyCode)key);
 		}
 
@@ -58,7 +30,7 @@ namespace Eve.API.Text {
 		/// </summary>
 		/// <param name="key">Key to set to DOWN</param>
 		/// <remarks>This method uses inputsimulator.codeplex.com library</remarks>
-		public static void SimulateKeyDown(TextProvider.VirtualKeyCode key) {
+		public void SimulateKeyDown(TextProvider.VirtualKeyCode key) {
 			InputSimulator.SimulateKeyDown((WindowsInput.VirtualKeyCode)key);
 		}
 
@@ -68,7 +40,7 @@ namespace Eve.API.Text {
 		/// </summary>
 		/// <param name="key">Key to set to DOWN</param>
 		/// <remarks>This method uses inputsimulator.codeplex.com library</remarks>
-		public static void SimulateKeyUp(TextProvider.VirtualKeyCode key) {
+		public void SimulateKeyUp(TextProvider.VirtualKeyCode key) {
 			InputSimulator.SimulateKeyUp((WindowsInput.VirtualKeyCode)key);
 		}
 
@@ -80,7 +52,7 @@ namespace Eve.API.Text {
 		/// <param name="modifierKeys">List of modifier keys</param>
 		/// <param name="keys">List of keys</param>
 		/// <remarks>This method uses inputsimulator.codeplex.com library</remarks>
-		public static void SimulateModifiedKeyStroke(
+		public void SimulateModifiedKeyStroke(
 			IEnumerable<TextProvider.VirtualKeyCode> modifierKeys,
 			IEnumerable<TextProvider.VirtualKeyCode> keys) {
 			InputSimulator.SimulateModifiedKeyStroke(
@@ -93,27 +65,11 @@ namespace Eve.API.Text {
 		/// call to simulate multiple key strokes of given text
 		/// </summary>
 		/// <param name="text"></param>
-		public static void SimulateTextEntry(string text) {
+		public void SimulateTextEntry(string text) {
 			InputSimulator.SimulateTextEntry(text);
 		}
 
-		/// <summary>
-		/// Check whether provider is running - writes warning if it's not running
-		/// </summary>
-		/// <returns>Returns Boolean value indicating whether provider is started</returns>
-		private static bool CheckIsRunning() {
-			if (!TextProvider.IsRunning)
-				TextProvider.log.Warn("Start provider before using it!");
-
-			return TextProvider.IsRunning;
-		}
-
 		#region Properties
-
-		/// <summary>
-		/// Gets indication whether provider is running
-		/// </summary>
-		public static bool IsRunning { get; private set; }
 
 		#endregion
 

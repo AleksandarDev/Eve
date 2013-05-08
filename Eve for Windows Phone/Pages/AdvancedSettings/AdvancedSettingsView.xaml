@@ -1,31 +1,60 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="EveWindowsPhone.Pages.AdvancedSettings.AdvancedSettingsView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d"
+	x:Class="EveWindowsPhone.Pages.AdvancedSettings.AdvancedSettingsView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	SupportedOrientations="Portrait" Orientation="Portrait"
+	mc:Ignorable="d"
 	Loaded="AdvancedSettingsViewOnLoaded"
-    shell:SystemTray.IsVisible="True">
+	shell:SystemTray.IsVisible="True">
 	
 	<phone:PhoneApplicationPage.DataContext>
 		<Binding Source="{StaticResource ViewModelLocator}" Path="AdvancedSettingsViewModel" />
 	</phone:PhoneApplicationPage.DataContext>
 
 	<controls:Pivot x:Name="LayoutRoot" Title="SYNCUP">
+		
 		<controls:PivotItem Header="General">
 				
 		</controls:PivotItem>
+		
 		<controls:PivotItem Header="Favorites">
-			<toolkit:ListPicker x:Name="FavoriteRowsListPicker" Header="Favorite module rows" SelectedItem="{Binding FavoriteRows, Mode=TwoWay}" />
+			<toolkit:ListPicker Header="Favorite module rows" 
+								ItemsSource="{Binding FavoriteRowsList}"
+								SelectedItem="{Binding FavoriteRows, Mode=TwoWay}" />
 		</controls:PivotItem>
+		
+		<controls:PivotItem Header="Touch">
+			<StackPanel Orientation="Vertical">
+				<toolkit:ToggleSwitch x:Name="ActivateZoomOnTouchToggle" 
+									  Content="Activate zoom" 
+									  IsChecked="{Binding ActivateZoomOnTouch, Mode=TwoWay}" />
+				<toolkit:ListPicker Header="Zoom level" 
+									IsEnabled="{Binding ElementName=ActivateZoomOnTouchToggle, Path=IsChecked}"
+									ItemsSource="{Binding ActivateZoomValuesList}"
+									SelectedItem="{Binding ActivateZoomOnTouchValue, Mode=TwoWay}" />
+			</StackPanel>
+		</controls:PivotItem>
+
+		<controls:PivotItem Header="Keyboard">
+			<StackPanel Orientation="Vertical">
+				<toolkit:ToggleSwitch x:Name="ActivateZoomOnKeyboardToggle" 
+									  Content="Activate zoom" 
+									  IsChecked="{Binding ActivateZoomOnKeyboard, Mode=TwoWay}" />
+				<toolkit:ListPicker Header="Zoom level" 
+									IsEnabled="{Binding ElementName=ActivateZoomOnKeyboardToggle, Path=IsChecked}"
+									ItemsSource="{Binding ActivateZoomValuesList}" 
+									SelectedItem="{Binding ActivateZoomOnKeyboardValue, Mode=TwoWay}" />
+			</StackPanel>
+		</controls:PivotItem>
+		
 	</controls:Pivot>
 </phone:PhoneApplicationPage>

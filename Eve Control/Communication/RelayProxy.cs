@@ -1,7 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Forms.VisualStyles;
+using System.Windows.Navigation;
 using Eve.Diagnostics.Logging;
 using EveControl.RelayServiceReference;
 
@@ -65,27 +70,36 @@ namespace EveControl.Communication {
 			}
 
 			// OpenAsync connection to relay
-			try {
-				this.log.Info("Opening connection...");
-				await Task.Run(() => this.Relay.Open());
-				this.log.Info("Connection opened");
-				this.IsConnected = true;
+			this.log.Info("Opening connection...");
+			await Task.Run(() => {
+				try {
+					this.Relay.Open();
 
-				// Start connection check timer
-				this.timer.Start();
-			}
-			catch (TimeoutException ex) {
-				this.log.Error<TimeoutException>(ex,
-												 "Unable to open connection to proxy - timed out");
-				this.IsConnected = false;
-				// TODO Activate pooling
-				// NOTE This could be due to firewall
-			}
-			catch (Exception ex) {
-				this.log.Error<Exception>(ex,
-										  "Unknown error occurred while connecting to proxy");
-				this.IsConnected = false;
-			}
+					if (this.Relay.State == CommunicationState.Opened) {
+						this.log.Info("Connection opened");
+						this.IsConnected = true;
+
+						// Start connection check timer
+						this.timer.Start();
+					}
+				}
+				catch (TimeoutException ex) {
+					this.log.Error<TimeoutException>(ex,
+						"Unable to open connection to proxy - timed out");
+					this.IsConnected = false;
+					// TODO Activate pooling
+					// NOTE This could be due to firewall
+				}
+				catch (CommunicationObjectAbortedException ex) {
+					this.log.Error<CommunicationObjectAbortedException>(ex,
+						"Couldn't open connection because it was aborted already");
+					this.isConnected = false;
+				} catch (Exception ex) {
+					this.log.Error<Exception>(ex,
+						"Unknown error occurred while connecting to proxy");
+					this.IsConnected = false;
+				}
+			});
 
 			return this.IsConnected;
 		}
@@ -104,7 +118,7 @@ namespace EveControl.Communication {
 		/// </summary>
 		/// <param name="forceClose">Set this to true if connection should be aborted without waiting for any calls to finish</param>
 		/// <returns>Returns Boolean value that indicates whether connection was successfully closed</returns>
-		protected virtual bool Close(bool forceClose = false) {
+		public virtual bool Close(bool forceClose = false) {
 			// Check if connection isn't already closed
 			if (this.Relay.State == CommunicationState.Closed) {
 				this.log.Info("Connection already closed");
@@ -114,18 +128,20 @@ namespace EveControl.Communication {
 			// Try to close connection
 			try {
 				if (forceClose) {
-					log.Info("Aborting connection...");
+					this.log.Info("Aborting connection...");
 					this.Relay.Abort();
-					log.Info("Connection aborted");
+					this.log.Info("Connection aborted");
 				} else {
-					log.Info("Closing connection...");
+					this.log.Info("Closing connection...");
 					this.Relay.Close();
-					log.Info("Connection closed");
+					this.log.Info("Connection closed");
 				}
 
+				this.timer.Stop();
 				return true;
 			} catch (Exception ex) {
-				log.Error<Exception>(ex, "Unable close/abort connection!");
+				this.log.Error<Exception>(ex, "Unable close/abort connection!");
+				this.timer.Stop();
 				return false;
 			}
 		}
@@ -138,7 +154,7 @@ namespace EveControl.Communication {
 			this.log.Info("Checking connection...");
 
 			// Check if connection needs to be established first
-			if (this.Relay.State != CommunicationState.Opened) {
+			if (this.Relay.State == CommunicationState.Closed) {
 				this.log.Warn("Connection closed. Requesting to reopen...");
 				this.IsConnected = false;
 				return await this.OpenAsync();

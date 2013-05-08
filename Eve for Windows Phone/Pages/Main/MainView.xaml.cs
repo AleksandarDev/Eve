@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +20,8 @@ using EveWindowsPhone.Modules;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using EveWindowsPhone.RelayServiceReference;
+using Microsoft.Phone.Tasks;
+using Microsoft.Phone.UserData;
 
 namespace EveWindowsPhone.Pages.Main {
 	public partial class MainView : PhoneApplicationPage {
@@ -72,17 +76,22 @@ namespace EveWindowsPhone.Pages.Main {
 		}
 
 		private void PopulateApplicationBar() {
+			// Favorite modules page
+			var favoriteModulesPage = new ApplicationBarPage(ApplicationBarMode.Minimized);
+			favoriteModulesPage.AddMenuItem("settings...", () => this.ViewModel.AdvancedSettings(1));
+			this.applicationBarController.AddPage("favorite", favoriteModulesPage);
+
 			// All Modules page
 			var allModuesPage = new ApplicationBarPage(ApplicationBarMode.Default);
 			allModuesPage.AddIconButton("edit favorites", new Uri("/Resources/Images/Heart.png", UriKind.Relative),
-										() => { this.SetEditFavoriteModules(!this.isEditingFavoriteModules); });
+										() => this.SetEditFavoriteModules(!this.isEditingFavoriteModules));
 			allModuesPage.AddIconButton("get more", new Uri("/Resources/Images/Shopping Bag.png", UriKind.Relative), () => { });
 			this.applicationBarController.AddPage("all modules", allModuesPage);
 
 			// Options page
 			var optionsPage = new ApplicationBarPage(ApplicationBarMode.Default);
 			optionsPage.AddIconButton("about", new Uri("/Resources/Images/About.png", UriKind.Relative),
-									  () => { this.ShowAboutPrompt(); });
+									  this.ShowAboutPrompt);
 			this.applicationBarController.AddPage("options", optionsPage);
 		}
 
@@ -155,7 +164,7 @@ namespace EveWindowsPhone.Pages.Main {
 
 		public void SetEditFavoriteModules(bool mode) {
 			this.isEditingFavoriteModules = mode;
-			this.ViewModel.SetModulesIsEditing(mode);
+			this.ViewModel.SetModulesEditMode(mode);
 			if (!mode) this.ViewModel.SaveFavorites();
 		}
 
@@ -188,6 +197,10 @@ namespace EveWindowsPhone.Pages.Main {
 			aboutPrompt.Show();
 		}
 
+		private void AdvancedSettingOnClick(object sender, RoutedEventArgs e) {
+			this.ViewModel.AdvancedSettings();
+		}
+
 		#endregion
 
 		#region Properties
@@ -195,9 +208,5 @@ namespace EveWindowsPhone.Pages.Main {
 		public MainViewModel ViewModel { get; private set; }
 
 		#endregion
-
-		private void AdvancedSettingOnClick(object sender, RoutedEventArgs e) {
-			this.ViewModel.AdvancedSettings();
-		}
 	}
 }

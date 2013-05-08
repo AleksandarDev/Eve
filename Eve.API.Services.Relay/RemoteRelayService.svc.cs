@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Web.UI.WebControls;
 using Eve.API.Services.Common;
 using Eve.API.Services.Common.Modules.Touch;
 using Eve.API.Services.Contracts;
@@ -18,6 +19,23 @@ namespace Eve.API.Services.Relay {
 		ConcurrencyMode = ConcurrencyMode.Reentrant,
 		UseSynchronizationContext = false)]
 	public class RemoteRelayService : IEveAPIService {
+		// TODO Check if signed in
+
+		/// <summary>
+		/// Retrieve callback contract of subscribed client
+		/// </summary>
+		/// <param name="details">Details about client to get callback from</param>
+		/// <returns>Returns null if requested client isn't subscribed</returns>
+		protected IEveAPIService GetCallback(ServiceRequestDetails details) {
+			if (details == null)
+				throw new ArgumentNullException("details");
+
+			var client = RelayManager.GetClient(details.Client.ID);
+			if (client == null) return null;
+
+			return client.Callback as IEveAPIService;
+		}
+
 		#region IEveAPIService implementation
 
 		public bool SignIn(ServiceUser user) {
@@ -34,14 +52,11 @@ namespace Eve.API.Services.Relay {
 
 		#endregion
 
-		#region ITouchService implementation
+		#region Touch implementation
 
 		public bool SendTrackPadMessage(ServiceRequestDetails details,
 										TrackPadMessage message) {
-			var client = RelayManager.GetClient(details.Client.ID);
-			if (client == null) return false;
-
-			var callback = client.Callback as IEveAPIService;
+			var callback = this.GetCallback(details);
 			if (callback == null) return false;
 
 			return callback.SendTrackPadMessage(details, message);
@@ -49,13 +64,21 @@ namespace Eve.API.Services.Relay {
 
 		public bool SendButtonMessage(ServiceRequestDetails details,
 									  ButtonMessage message) {
-			var client = RelayManager.GetClient(details.Client.ID);
-			if (client == null) return false;
-
-			var callback = client.Callback as IEveAPIService;
+			var callback = this.GetCallback(details);
 			if (callback == null) return false;
 
 			return callback.SendButtonMessage(details, message);
+		}
+
+		#endregion
+
+		#region DisplayEnhancements implementation
+
+		public bool SetZoom(ServiceRequestDetails details, int zoomValue) {
+			var callback = this.GetCallback(details);
+			if (callback == null) return false;
+
+			return callback.SetZoom(details, zoomValue);
 		}
 
 		#endregion
