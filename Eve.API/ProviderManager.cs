@@ -21,22 +21,30 @@ namespace Eve.API {
 		private static readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(ProviderManager));
 
-		/// <summary>
-		/// Creates all provider objects
-		/// </summary>
-		static ProviderManager() {
-			//var providers = ProviderManager.GetSortedProviders();
+		private static IEnumerable<IProvider> providers;
 
-			ProviderManager.TouchProvider = new TouchProvider();
-			ProviderManager.ProcessProvider = new ProcessProvider();
-			ProviderManager.ScriptingProvider = new ScriptingProvider();
-			ProviderManager.SpeechProvider = new SpeechProvider();
-			ProviderManager.TextProvider = new TextProvider();
-			ProviderManager.CaptchaDecoderProvider = new CaptchaDecoderProvider();
-			ProviderManager.DisplayEnhancementsProvider = new DisplayEnhancementsProvider();
-			ProviderManager.VideoProvider = new VideoProvider();
-			ProviderManager.FaceDetectionProvider = new FaceDetectionProvider();
-			ProviderManager.ScreenViewerProvider = new ScreenViewerProvider();			
+		public delegate void ProviderManagerEventHandler();
+		public static event ProviderManagerEventHandler OnInitialized;
+
+
+		static ProviderManager() {
+			ProviderManager.providers = ProviderManager.GetSortedProviders();
+
+			ProviderManager.TouchProvider = ProviderManager.providers.OfType<TouchProvider>().First();
+			ProviderManager.ProcessProvider = ProviderManager.providers.OfType<ProcessProvider>().First();
+			ProviderManager.ScriptingProvider = ProviderManager.providers.OfType<ScriptingProvider>().First();
+			ProviderManager.SpeechProvider = ProviderManager.providers.OfType<SpeechProvider>().First();
+			ProviderManager.TextProvider = ProviderManager.providers.OfType<TextProvider>().First();
+			ProviderManager.CaptchaDecoderProvider = ProviderManager.providers.OfType<CaptchaDecoderProvider>().First();
+			ProviderManager.DisplayEnhancementsProvider = ProviderManager.providers.OfType<DisplayEnhancementsProvider>().First();
+			ProviderManager.VideoProvider = ProviderManager.providers.OfType<VideoProvider>().First();
+			ProviderManager.FaceDetectionProvider = ProviderManager.providers.OfType<FaceDetectionProvider>().First();
+			ProviderManager.FaceControllerProvider = ProviderManager.providers.OfType<FaceControllerProvider>().First();
+			ProviderManager.ScreenViewerProvider = ProviderManager.providers.OfType<ScreenViewerProvider>().First();
+
+			ProviderManager.IsInitialized = true;
+			if (ProviderManager.OnInitialized != null)
+				ProviderManager.OnInitialized();
 		}
 
 		/// <summary>
@@ -46,19 +54,12 @@ namespace Eve.API {
 		public static async Task StartAsync() {
 			ProviderManager.log.Info("Starting providers...");
 
-			await ProviderManager.TouchProvider.StartAsync();
-			await ProviderManager.ProcessProvider.StartAsync();
-			await ProviderManager.ScriptingProvider.StartAsync();
-			await ProviderManager.SpeechProvider.StartAsync();
-			await ProviderManager.TextProvider.StartAsync();
-			await ProviderManager.CaptchaDecoderProvider.StartAsync();
-			await ProviderManager.DisplayEnhancementsProvider.StartAsync();
-			await ProviderManager.VideoProvider.StartAsync();
-			await ProviderManager.FaceDetectionProvider.StartAsync();
-			await ProviderManager.ScreenViewerProvider.StartAsync();
+			foreach (var provider in ProviderManager.providers) {
+				await provider.StartAsync();
+			}
 
 			ProviderManager.IsStarted = true;
-			ProviderManager.log.Info("All Provider started");
+			ProviderManager.log.Info("All Providers started");
 		}
 
 		/// <summary>
@@ -68,32 +69,78 @@ namespace Eve.API {
 		public static async Task StopAsync() {
 			ProviderManager.log.Info("Stopping providers...");
 
-			await ProviderManager.TouchProvider.StopAsync();
-			await ProviderManager.ProcessProvider.StopAsync();
-			await ProviderManager.ScriptingProvider.StopAsync();
-			await ProviderManager.SpeechProvider.StopAsync();
-			await ProviderManager.TextProvider.StopAsync();
-			await ProviderManager.CaptchaDecoderProvider.StopAsync();
-			await ProviderManager.DisplayEnhancementsProvider.StopAsync();
-			await ProviderManager.VideoProvider.StopAsync();
-			await ProviderManager.FaceDetectionProvider.StopAsync();
-			await ProviderManager.ScreenViewerProvider.StopAsync();
+			foreach (var provider in ProviderManager.providers.Reverse()) {
+				await provider.StopAsync();
+			}
 
 			ProviderManager.IsStarted = false;
 			ProviderManager.log.Info("All Provider stopped");
 		}
 
-		public static IEnumerable<IProvider> GetSortedProviders() {
-			// Retrieve all providers
-			var providers = System.Reflection.Assembly.GetExecutingAssembly()
-				.GetTypes().Where(t => t.IsAssignableFrom(typeof(IProvider)) && t.IsInterface);
+		private static IEnumerable<IProvider> GetSortedProviders() {
+			// Retrieve all providers (distinct)
+			var providerTypes = System.Reflection.Assembly.GetExecutingAssembly()
+									  .GetTypes()
+									  .Where(
+										  t =>
+										  typeof(IProvider).IsAssignableFrom(t) && !t.IsInterface &&
+										  !t.IsAbstract && !t.IsSealed)
+									  .Distinct().ToList();
 
-			foreach (var provider in providers) {
-				// TODO Implement sort algorithm
+			var providerInstances = new List<IProvider>();
+
+			// Sort list according to dependencies
+			for (int index = 0; index < providerTypes.Count; index++) {
+				// Retrieve description
+				var description = ProviderManager.RetrieveDescription(
+					providerTypes.ElementAt(index));
+
+				// Skip if doesn't contain any dependencies
+				if (description == null || 
+					description.Dependencies == null ||
+					description.Dependencies.Length == 0) continue;
+
+				// Sort dependencies
+				foreach (var dependency in description.Dependencies) {
+					// Skip self dependent
+					if (dependency == providerTypes[index]) continue;
+
+					// Find type in list and move it one place before current provider
+					int dependencyIndex = -1;
+					for (int typeIndex = index + 1; typeIndex < providerTypes.Count; typeIndex++)
+						if (providerTypes[typeIndex] == dependency) {
+							dependencyIndex = typeIndex;
+							break;
+						}
+
+					// Check if we found dependency type on the list
+					if (dependencyIndex <= 0) {
+						ProviderManager.log.Warn("Couldn't find dependency type on list [{0}]",
+												 dependency.Name);
+						continue;
+					}
+
+					// Check if type is already higher priority
+					if (dependencyIndex < index) continue;
+
+					// Move dependency one place before current provider type
+					providerTypes.Insert(index, providerTypes.ElementAt(dependencyIndex));
+					providerTypes.RemoveAt(dependencyIndex + 1);
+					index--;
+				}
 			}
-			// Build lis t of providers
-			//return providers;
-			throw new NotImplementedException();
+
+			// Build list of providers instances
+			foreach (var type in providerTypes) {
+				var instance = Activator.CreateInstance(type);
+				var providerInstance = instance as IProvider;
+				if (providerInstance != null)
+					providerInstances.Add(providerInstance);
+				else
+					ProviderManager.log.Warn("Couldn't create instance of [{0}]", type.Name);
+			}
+
+			return providerInstances;
 		} 
 
 		/// <summary>
@@ -101,7 +148,7 @@ namespace Eve.API {
 		/// </summary>
 		/// <param name="providerType">Type of provider to retrieve description for</param>
 		/// <returns>Returns description of given provider type</returns>
-		private static ProviderDescription RetrieveDescription(Type providerType) {
+		public static ProviderDescription RetrieveDescription(Type providerType) {
 			// Retrieve attributes
 			var attributes = Attribute.GetCustomAttributes(providerType);
 
@@ -119,7 +166,9 @@ namespace Eve.API {
 
 		#region Providers
 
+		public static bool IsInitialized { get; private set; }
 		public static bool IsStarted { get; private set; }
+		public static IEnumerable<IProvider> Providers { get { return ProviderManager.providers; } } 
 
 		public static TouchProvider TouchProvider { get; private set; }
 		public static ProcessProvider ProcessProvider { get; private set; }
@@ -130,6 +179,7 @@ namespace Eve.API {
 		public static DisplayEnhancementsProvider DisplayEnhancementsProvider { get; private set; }
 		public static VideoProvider VideoProvider { get; private set; }
 		public static FaceDetectionProvider FaceDetectionProvider { get; private set; }
+		public static FaceControllerProvider FaceControllerProvider { get; private set; }
 		public static ScreenViewerProvider ScreenViewerProvider { get; private set; }
 
 		#endregion

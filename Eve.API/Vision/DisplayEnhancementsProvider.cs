@@ -7,6 +7,7 @@ using Eve.API.Process;
 using Eve.Diagnostics.Logging;
 
 namespace Eve.API.Vision {
+	[ProviderDescription("Display Enhancements Provider", typeof(ProcessProvider))]
 	public class DisplayEnhancementsProvider : ProviderBase<DisplayEnhancementsProvider> {
 		protected override void Initialize() { }
 		protected override void Uninitialize() { }

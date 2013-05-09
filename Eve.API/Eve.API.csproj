@@ -99,6 +99,7 @@
     <Compile Include="IProvider.cs" />
     <Compile Include="Process\ProcessProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProviderDescription.cs" />
     <Compile Include="ProviderEventHandler.cs" />
     <Compile Include="ProviderManager.cs" />
     <Compile Include="Scripting\IScript.cs" />
@@ -115,7 +116,10 @@
     <Compile Include="Touch\TouchProvider.cs" />
     <Compile Include="Vision\CaptchaDecoderProvider.cs" />
     <Compile Include="Vision\DisplayEnhancementsProvider.cs" />
-    <Compile Include="Vision\FaceDetectionProvider.cs" />
+    <Compile Include="Vision\FaceControllerProvider.cs" />
+    <Compile Include="Vision\FaceDetectionProvider\FaceDetectionEventArgs.cs" />
+    <Compile Include="Vision\FaceDetectionProvider\FaceDetectionEventHandler.cs" />
+    <Compile Include="Vision\FaceDetectionProvider\FaceDetectionProvider.cs" />
     <Compile Include="Vision\ScreenViewerProvider.cs" />
     <Compile Include="Vision\VideoProvider.cs" />
   </ItemGroup>

@@ -5,6 +5,7 @@ using AForge.Video;
 using AForge.Video.DirectShow;
 
 namespace Eve.API.Vision {
+	[ProviderDescription("Video Provider")]
 	public class VideoProvider : ProviderBase<VideoProvider> {
 		// Default settings
 		private const int DefaultSourceWidth = 320;
@@ -53,7 +54,7 @@ namespace Eve.API.Vision {
 			this.log.Info("Stopping video device...");
 
 			// Signal camera to stop recording
-			this.Device.SignalToStop();
+			this.Device.SignalToStop(); 
 
 			// Wait for some amount of seconds for camera to stop recording
 			for (int time = 0; time < this.StopWaitTime && this.Device.IsRunning; time += this.StopCheckPeriod) 

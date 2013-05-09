@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -21,13 +22,18 @@ namespace Eve.API.Vision {
 		// TODO Call face detection periodically
 		private const int FramesToSkip = 10;
 		private int framesSkipped = 0;
+		private HaarObjectDetector detector;
+		private List<FaceTracker> trackers;
+		private bool isDetectingInProgress;
+
 		public double DetectingFrameWidth = 160.0;
 		public double DetectingFrameHeight = 120.0;
 		public float DetectingAreaStep = 1.2f;
 		public int DetectingAreaMin = 25;
-		private HaarObjectDetector detector;
-		private List<FaceTracker> trackers;
-		private bool isDetectingInProgress;
+
+		public event FaceDetectionEventHandler OnFaceDetected;
+		public event FaceDetectionEventHandler OnFaceLost;
+		public event FaceDetectionEventHandler OnFaceMove;
 
 
 		protected override void Initialize() {
@@ -36,9 +42,13 @@ namespace Eve.API.Vision {
 
 			// Initialize components
 			this.InitializeDetectors();
+
+			ProviderManager.VideoProvider.Device.NewFrame += this.ProcessFrame;
 		}
 
 		protected override void Uninitialize() {
+			ProviderManager.VideoProvider.Device.NewFrame -= this.ProcessFrame;
+
 			this.detector = null;
 
 			if (this.trackers != null) {
@@ -59,7 +69,17 @@ namespace Eve.API.Vision {
 				};
 		}
 
+		private void ProcessFrame(Object sender, NewFrameEventArgs args) {
+			if (!this.CheckIsRunning()) return;
+
+			var unmanagedImage = UnmanagedImage.FromManagedImage(args.Frame);
+			this.ProcessFrame(ref unmanagedImage);
+			unmanagedImage.Dispose();
+		}
+
 		public void ProcessFrame(ref UnmanagedImage frame) {
+			if (!this.CheckIsRunning()) return;
+
 			// Skip first few frames during initialization
 			if (this.framesSkipped <= FramesToSkip) {
 				this.framesSkipped++;
@@ -73,6 +93,8 @@ namespace Eve.API.Vision {
 		}
 
 		private void DetectFaces(ref UnmanagedImage image) {
+			if (!this.CheckIsRunning()) return;
+
 			var sw = new System.Diagnostics.Stopwatch();
 			sw.Start();
 			this.isDetectingInProgress = true;
@@ -86,10 +108,10 @@ namespace Eve.API.Vision {
 			UnmanagedImage downsampledImage = resize.Apply(image);
 
 			// Get detector regions
-			var regions = detector.ProcessFrame(downsampledImage);
+			var regions = this.detector.ProcessFrame(downsampledImage);
 
 			// Check if the face has been steady for 5 frames in a row
-			if (this.detector.Steady > 5) {
+			if (this.detector != null && this.detector.Steady > 5) {
 				// Create face tracker for each of detected regions
 				foreach (var region in regions) {
 					this.CreateFaceTracker(region, xScale, yScale, ref image);
@@ -104,6 +126,8 @@ namespace Eve.API.Vision {
 
 		private void CreateFaceTracker(Rectangle trackingRegion, double xScale,
 									   double yScale, ref UnmanagedImage image) {
+			if (!this.CheckIsRunning()) return;
+
 			// Find first not active tracker 
 			// object or create new one if none found
 			int faceTrackerIndex = -1;
@@ -134,17 +158,35 @@ namespace Eve.API.Vision {
 			faceTracker.Tracker.Reset();
 			faceTracker.Tracker.SearchWindow = trackingArea;
 			faceTracker.Tracker.ProcessFrame(image);
+
+			if (this.OnFaceDetected != null)
+				this.OnFaceDetected(this,
+					new FaceDetectionEventArgs() {Tracker = faceTracker});
 		}
 
 		private void TrackFaces(ref UnmanagedImage image) {
+			if (!this.CheckIsRunning()) return;
+
 			// Do tracking for all trackers
 			foreach (var tracker in this.trackers)
 				this.TrackFace(tracker, ref image);
+
+			// Remove not active face trackers
+			var nonActive = this.trackers.Where(t => !t.IsActive).ToList();
+			foreach (var faceTracker in nonActive) {
+				this.trackers.Remove(faceTracker);
+			}
 		}
 
 		private void TrackFace(FaceTracker faceTracker, ref UnmanagedImage image) {
+			if (!this.CheckIsRunning()) return;
+
 			// Check if face tracker is active
 			if (!faceTracker.IsActive) return;
+
+			// Save tracking object state before updating it so that
+			// we can determine if any change has been made to the tracker
+			var oldObject = faceTracker.Tracker.TrackingObject.Clone();
 
 			// Process given frame
 			faceTracker.Tracker.ProcessFrame(image);
@@ -155,9 +197,20 @@ namespace Eve.API.Vision {
 			// If tracking object is empty, start new detection
 			if (trackingObject.IsEmpty || trackingObject.Area < 5) {
 				faceTracker.IsActive = false;
+
 				this.log.Info("Face not in view, tracker set to inactive state");
+
+				if (this.OnFaceLost != null)
+					this.OnFaceLost(this, new FaceDetectionEventArgs() {Tracker = faceTracker});
+
 				return;
 			}
+
+			// Check if we need to call event and if any change
+			// to tracker has been made during processing
+			if (this.OnFaceMove != null &&
+				oldObject != faceTracker.Tracker.TrackingObject)
+				this.OnFaceMove(this, new FaceDetectionEventArgs() {Tracker = faceTracker});
 		}
 
 

@@ -74,14 +74,12 @@ namespace EveControl.Windows.Vision {
 
 			var unmanagedImage = UnmanagedImage.FromManagedImage(image);
 
-			// TODO: Check if this can cause lag
-			ProviderManager.FaceDetectionProvider.ProcessFrame(ref unmanagedImage);
-
 			foreach (var tracker in ProviderManager.FaceDetectionProvider.Trackers) {
 				tracker.DrawMarker(ref unmanagedImage, true);
 			}
 
 			image = unmanagedImage.ToManagedImage();
+			unmanagedImage.Dispose();
 		}
 
 		private void VisionViewClosing(object sender, CancelEventArgs e) {

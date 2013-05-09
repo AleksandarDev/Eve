@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Eve.API.Vision {
+	[ProviderDescription("Captcha Decoder Provider")]
 	public class CaptchaDecoderProvider : ProviderBase<CaptchaDecoderProvider> {
 		protected override void Initialize() { }
 		protected override void Uninitialize() { }

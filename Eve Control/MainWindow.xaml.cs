@@ -60,6 +60,17 @@ namespace EveControl {
 		}
 
 		private async void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
+			if (!ProviderManager.IsInitialized)
+				ProviderManager.OnInitialized += async () => await this.MainWindowOnProvidersInitializedAsync();
+			else await this.MainWindowOnProvidersInitializedAsync();
+		}
+
+		private async Task MainWindowOnProvidersInitializedAsync() {
+			// Start providers
+			this.ShowCloseButton = false;
+			await ProviderManager.StartAsync();
+			this.ShowCloseButton = true;
+
 			// SpeechProvider hello message
 			ProviderManager.SpeechProvider.OnStarted += async p => {
 				await ProviderManager.SpeechProvider.SpeakAsync(
@@ -68,10 +79,6 @@ namespace EveControl {
 					new SpeechPrompt("Welcome!"));
 			};
 
-			// Start providers
-			this.ShowCloseButton = false;
-			await ProviderManager.StartAsync();
-			this.ShowCloseButton = true;
 			//SpeechProvider.OnRecognitionAccepted += args => {
 			//	if (args.Result.Semantics.Value.ToString() == "NextSong") {
 			//		foreach (var connection in this.connections) {
@@ -166,11 +173,7 @@ namespace EveControl {
 				this.log.Info("Subscribed to relay service successful");
 			};
 
-			this.relay.OpenAsync();
-
-			this.log.Info("Starting display zoom");
-			ProviderManager.DisplayEnhancementsProvider.ZoomInitialSetup();
-			await ProviderManager.DisplayEnhancementsProvider.SetZoom(200);
+			//this.relay.OpenAsync();
 		}
 
 		private void HandleRelayConnectionChanged(RelayProxy proxy) {

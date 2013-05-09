@@ -10,6 +10,7 @@ namespace Eve.API.Text {
 	/// <summary>
 	/// This provider contains methods for text and keyboard manipulation
 	/// </summary>
+	[ProviderDescription("Text Provider")]
 	public class TextProvider : ProviderBase<TextProvider> {
 		protected override void Initialize() {}
 		protected override void Uninitialize() {}

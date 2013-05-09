@@ -10,6 +10,7 @@ using Eve.Diagnostics.Logging;
 using Microsoft.CSharp;
 
 namespace Eve.API.Scripting {
+	[ProviderDescription("Scripting Provider")]
 	public class ScriptingProvider : ProviderBase<ScriptingProvider> {
 		// TODO Replace System.Diagnostics.Debug with this.log
 		public const string DefaultScriptEntryPointName = "Initiate";

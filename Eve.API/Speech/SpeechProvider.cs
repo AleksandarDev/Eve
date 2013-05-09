@@ -12,6 +12,7 @@ using System.Speech.Recognition;
 using System.Speech.Synthesis;
 
 namespace Eve.API.Speech {
+	[ProviderDescription("Speech Provider")]
 	public class SpeechProvider : ProviderBase<SpeechProvider> {
 		private SpeechRecognitionEngine speechRecognizer;
 		private SpeechSynthesizer speechSynthesizer;

@@ -33,11 +33,11 @@ namespace Eve.API {
 		/// </summary>
 		/// <returns>Returns asynchronous void Task</returns>
 		public virtual async Task StopAsync() {
+			this.IsRunning = false;
 			this.log.Info("Stopping provider...");
 
 			await Task.Run(() => this.Uninitialize());
 
-			this.IsRunning = false;
 			this.log.Info("Provider stopped");
 
 			if (this.OnStopped != null)

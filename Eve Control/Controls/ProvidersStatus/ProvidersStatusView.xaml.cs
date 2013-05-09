@@ -26,36 +26,19 @@ namespace EveControl.Controls.ProvidersStatus {
 		}
 
 		private void ProvidersStatusViewOnLoaded(object sender, RoutedEventArgs e) {
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.TouchProvider,
-					"Touch Provider"));
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.ProcessProvider,
-					"Process Provider"));
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.ScriptingProvider,
-					"Scripting Provider"));
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.SpeechProvider,
-					"Speech Provider"));
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.TextProvider,
-					"Text Provider"));
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.CaptchaDecoderProvider,
-					"Captcha Decoder Provider"));
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.DisplayEnhancementsProvider,
-					"Display Enhancements Provider"));
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.VideoProvider,
-					"Video Provider"));
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.FaceDetectionProvider,
-					"Face Detection Provider"));
-			this.ProvidersStackPanel.Children.Add(
-				this.CreateProviderControl(ProviderManager.ScreenViewerProvider,
-					"Screen Viewer Provider"));
+			if (!ProviderManager.IsInitialized)
+				ProviderManager.OnInitialized += this.ProviderManagerOnOnInitialized;
+			else this.ProviderManagerOnOnInitialized();
+		}
+
+		private void ProviderManagerOnOnInitialized() {
+			ProviderManager.OnInitialized -= this.ProviderManagerOnOnInitialized;
+
+			foreach (var provider in ProviderManager.Providers)
+				this.ProvidersStackPanel.Children.Add(
+					this.CreateProviderControl(
+						provider,
+						ProviderManager.RetrieveDescription(provider.GetType()).Name));
 		}
 
 		private UIElement CreateProviderControl(IProvider provider, string alias) {

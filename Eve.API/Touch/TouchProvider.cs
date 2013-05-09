@@ -11,6 +11,7 @@ namespace Eve.API.Touch {
 	/// <summary>
 	/// This provider contains methods for controlling clients cursor
 	/// </summary>
+	[ProviderDescription("Touch Provider")]
 	public  class TouchProvider : ProviderBase<TouchProvider> {
 		protected override void Initialize() {}
 		protected override void Uninitialize() {}

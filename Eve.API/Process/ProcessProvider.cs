@@ -11,6 +11,7 @@ using Eve.Diagnostics.Logging;
 using Processes = System.Diagnostics;
 
 namespace Eve.API.Process {
+	[ProviderDescription("Process Provider")]
 	public class ProcessProvider : ProviderBase<ProcessProvider> {
 		// TODO Check if service started
 		private const int ProcessExitWaitDefault = 500;

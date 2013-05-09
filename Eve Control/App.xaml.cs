@@ -22,6 +22,9 @@ namespace EveControl {
 		/// Runs initialization asynchronously 
 		/// </summary>
 		public App() {
+			// Close all windows on closing main window
+			Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+	
 			Task.Run(() => this.Initialize());
 		}
 
