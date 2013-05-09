@@ -26,6 +26,7 @@ namespace Eve.API.Services.Contracts {
 
 		#region DisplayEnhancement implementation
 
+		[OperationContract]
 		bool SetZoom(ServiceRequestDetails details, int zoomValue);
 
 		#endregion

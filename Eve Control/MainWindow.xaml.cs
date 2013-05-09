@@ -173,7 +173,7 @@ namespace EveControl {
 				this.log.Info("Subscribed to relay service successful");
 			};
 
-			//this.relay.OpenAsync();
+			this.relay.OpenAsync();
 		}
 
 		private void HandleRelayConnectionChanged(RelayProxy proxy) {

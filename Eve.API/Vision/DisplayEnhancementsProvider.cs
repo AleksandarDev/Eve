@@ -39,7 +39,7 @@ namespace Eve.API.Vision {
 		/// set settings will be overwritten when process is stopped
 		/// </param>
 		/// <returns>Returns asynchronous void Task</returns>
-		public async Task SetZoom(int value, bool activateZoom = true) {
+		public async Task SetZoomAsync(int value, bool activateZoom = true) {
 			if (activateZoom)
 				await this.DeactivateZoomAsync();
 
@@ -49,7 +49,7 @@ namespace Eve.API.Vision {
 				return;
 			registryKeys.SetValue("Magnification", value);
 
-			if (activateZoom)
+			if (activateZoom && value != 100)
 				await this.ActivateZoomAsync();
 
 			this.log.Info("Zoom set to {0}", value);

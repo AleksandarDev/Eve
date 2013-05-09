@@ -26,7 +26,7 @@ namespace EveControl.Communication {
 			throw new InvalidOperationException("This call shouldn't have been passed to client!");
 		}
 
-		#region Touch module implementation
+		#region Touch implementation
 
 		public bool SendTrackPadMessage(ServiceRequestDetails details, TrackPadMessage message) {
 			// TODO Check user credentials
@@ -61,5 +61,21 @@ namespace EveControl.Communication {
 		}
 
 		#endregion
+
+		#region Display Enhancements implementation
+		#endregion
+
+		public bool SetZoom(ServiceRequestDetails details, int zoomValue) {
+			// TODO Check user credentials
+			this.log.Info("Handling Zoom request. Value: {0}", zoomValue);
+
+			// This can be run async because there is no other 
+			// instruction below this code and returns void
+			#pragma warning disable 4014
+			ProviderManager.DisplayEnhancementsProvider.SetZoomAsync(zoomValue);
+			#pragma warning restore 4014
+
+			return true;
+		}
 	}
 }

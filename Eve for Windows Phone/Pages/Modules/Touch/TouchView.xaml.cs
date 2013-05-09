@@ -29,6 +29,12 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			this.AssignGestures();
 		}
 
+		protected override void OnNavigatedFrom(NavigationEventArgs e) {
+			this.ViewModel.NavigatedFrom(e);
+			
+			base.OnNavigatedFrom(e);
+		}
+
 		private void AssignGestures() {
 			// Retrieve gesture listeners
 			var trackPadGestureListener = GestureService.GetGestureListener(this.TrackPad);

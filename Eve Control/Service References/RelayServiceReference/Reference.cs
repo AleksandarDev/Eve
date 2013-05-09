@@ -51,6 +51,9 @@ namespace EveControl.RelayServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/SendButtonMessage", ReplyAction="http://tempuri.org/IClientRelayService/SendButtonMessageResponse")]
         bool SendButtonMessage(Eve.API.Services.Common.ServiceRequestDetails details, Eve.API.Services.Common.Modules.Touch.ButtonMessage message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientRelayService/SetZoom", ReplyAction="http://tempuri.org/IClientRelayService/SetZoomResponse")]
+        bool SetZoom(Eve.API.Services.Common.ServiceRequestDetails details, int zoomValue);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

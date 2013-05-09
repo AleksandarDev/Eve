@@ -436,6 +436,11 @@ namespace EveWindowsPhone.RelayServiceReference {
         System.IAsyncResult BeginSendButtonMessage(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, EveWindowsPhone.RelayServiceReference.ButtonMessage message, System.AsyncCallback callback, object asyncState);
         
         bool EndSendButtonMessage(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEveAPIService/SetZoom", ReplyAction="http://tempuri.org/IEveAPIService/SetZoomResponse")]
+        System.IAsyncResult BeginSetZoom(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int zoomValue, System.AsyncCallback callback, object asyncState);
+        
+        bool EndSetZoom(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -539,6 +544,25 @@ namespace EveWindowsPhone.RelayServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SetZoomCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SetZoomCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class EveAPIServiceClient : System.ServiceModel.ClientBase<EveWindowsPhone.RelayServiceReference.IEveAPIService>, EveWindowsPhone.RelayServiceReference.IEveAPIService {
         
         private BeginOperationDelegate onBeginSignInDelegate;
@@ -570,6 +594,12 @@ namespace EveWindowsPhone.RelayServiceReference {
         private EndOperationDelegate onEndSendButtonMessageDelegate;
         
         private System.Threading.SendOrPostCallback onSendButtonMessageCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSetZoomDelegate;
+        
+        private EndOperationDelegate onEndSetZoomDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetZoomCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -633,6 +663,8 @@ namespace EveWindowsPhone.RelayServiceReference {
         public event System.EventHandler<SendTrackPadMessageCompletedEventArgs> SendTrackPadMessageCompleted;
         
         public event System.EventHandler<SendButtonMessageCompletedEventArgs> SendButtonMessageCompleted;
+        
+        public event System.EventHandler<SetZoomCompletedEventArgs> SetZoomCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -870,6 +902,54 @@ namespace EveWindowsPhone.RelayServiceReference {
                         message}, this.onEndSendButtonMessageDelegate, this.onSendButtonMessageCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginSetZoom(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int zoomValue, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetZoom(details, zoomValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool EveWindowsPhone.RelayServiceReference.IEveAPIService.EndSetZoom(System.IAsyncResult result) {
+            return base.Channel.EndSetZoom(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetZoom(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details = ((EveWindowsPhone.RelayServiceReference.ServiceRequestDetails)(inValues[0]));
+            int zoomValue = ((int)(inValues[1]));
+            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginSetZoom(details, zoomValue, callback, asyncState);
+        }
+        
+        private object[] OnEndSetZoom(System.IAsyncResult result) {
+            bool retVal = ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).EndSetZoom(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSetZoomCompleted(object state) {
+            if ((this.SetZoomCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetZoomCompleted(this, new SetZoomCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetZoomAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int zoomValue) {
+            this.SetZoomAsync(details, zoomValue, null);
+        }
+        
+        public void SetZoomAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int zoomValue, object userState) {
+            if ((this.onBeginSetZoomDelegate == null)) {
+                this.onBeginSetZoomDelegate = new BeginOperationDelegate(this.OnBeginSetZoom);
+            }
+            if ((this.onEndSetZoomDelegate == null)) {
+                this.onEndSetZoomDelegate = new EndOperationDelegate(this.OnEndSetZoom);
+            }
+            if ((this.onSetZoomCompletedDelegate == null)) {
+                this.onSetZoomCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetZoomCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetZoomDelegate, new object[] {
+                        details,
+                        zoomValue}, this.onEndSetZoomDelegate, this.onSetZoomCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1009,6 +1089,20 @@ namespace EveWindowsPhone.RelayServiceReference {
             public bool EndSendButtonMessage(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("SendButtonMessage", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSetZoom(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int zoomValue, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = details;
+                _args[1] = zoomValue;
+                System.IAsyncResult _result = base.BeginInvoke("SetZoom", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndSetZoom(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("SetZoom", _args, result)));
                 return _result;
             }
         }

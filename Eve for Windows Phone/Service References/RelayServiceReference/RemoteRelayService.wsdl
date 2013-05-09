@@ -74,6 +74,21 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="SetZoom">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q8:ServiceRequestDetails" />
+            <xs:element minOccurs="0" name="zoomValue" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetZoomResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="SetZoomResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="anyType" nillable="true" type="xs:anyType" />
@@ -286,6 +301,12 @@
   <wsdl:message name="IEveAPIService_SendButtonMessage_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendButtonMessageResponse" />
   </wsdl:message>
+  <wsdl:message name="IEveAPIService_SetZoom_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetZoom" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SetZoom_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetZoomResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEveAPIService">
     <wsdl:operation name="SignIn">
       <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SignIn" message="tns:IEveAPIService_SignIn_InputMessage" />
@@ -306,6 +327,10 @@
     <wsdl:operation name="SendButtonMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SendButtonMessage" message="tns:IEveAPIService_SendButtonMessage_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SendButtonMessageResponse" message="tns:IEveAPIService_SendButtonMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetZoom">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SetZoom" message="tns:IEveAPIService_SetZoom_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SetZoomResponse" message="tns:IEveAPIService_SetZoom_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEveAPIService" type="tns:IEveAPIService">
@@ -348,6 +373,15 @@
     </wsdl:operation>
     <wsdl:operation name="SendButtonMessage">
       <soap:operation soapAction="http://tempuri.org/IEveAPIService/SendButtonMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetZoom">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SetZoom" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

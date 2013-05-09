@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Windows.Navigation;
 using Eve.API.Services.Contracts;
 using Eve.Diagnostics.Logging;
 using EveWindowsPhone.Adapters;
@@ -44,6 +45,9 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			// Send zoom request if enabled
 			if (this.isZoomEnabled) {
 				// TODO SetZoom relay request
+				this.relayServiceFacade.Proxy.Relay.SetZoomAsync(
+					this.relayServiceFacade.Proxy.ActiveDetails, this.zoomAmount);
+				this.log.Info("Zoom set to {0}", this.zoomAmount);
 			}
 
 			this.log.Info("View model created");
@@ -190,5 +194,13 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 		#endregion
 
 		#endregion
+
+		public void NavigatedFrom(NavigationEventArgs e) {
+			// Deactivate zoom 
+			if (this.isZoomEnabled) {
+				this.relayServiceFacade.Proxy.Relay.SetZoomAsync(
+					this.relayServiceFacade.Proxy.ActiveDetails, 100);
+			}
+		}
 	}
 }

@@ -129,6 +129,21 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="SetZoom">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q10:ServiceRequestDetails" />
+            <xs:element minOccurs="0" name="zoomValue" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetZoomResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="SetZoomResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="anyType" nillable="true" type="xs:anyType" />
@@ -359,6 +374,12 @@
   <wsdl:message name="IClientRelayService_SendButtonMessage_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendButtonMessageResponse" />
   </wsdl:message>
+  <wsdl:message name="IClientRelayService_SetZoom_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SetZoom" />
+  </wsdl:message>
+  <wsdl:message name="IClientRelayService_SetZoom_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SetZoomResponse" />
+  </wsdl:message>
   <wsdl:portType name="IClientRelayService">
     <wsdl:operation name="Subscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/Subscribe" message="tns:IClientRelayService_Subscribe_InputMessage" />
@@ -391,6 +412,10 @@
     <wsdl:operation name="SendButtonMessage">
       <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/SendButtonMessage" message="tns:IClientRelayService_SendButtonMessage_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/SendButtonMessageResponse" message="tns:IClientRelayService_SendButtonMessage_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetZoom">
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientRelayService/SetZoom" message="tns:IClientRelayService_SetZoom_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientRelayService/SetZoomResponse" message="tns:IClientRelayService_SetZoom_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_IClientRelayService" type="tns:IClientRelayService">
@@ -461,6 +486,15 @@
     </wsdl:operation>
     <wsdl:operation name="SendButtonMessage">
       <soap12:operation soapAction="http://tempuri.org/IClientRelayService/SendButtonMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetZoom">
+      <soap12:operation soapAction="http://tempuri.org/IClientRelayService/SetZoom" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
