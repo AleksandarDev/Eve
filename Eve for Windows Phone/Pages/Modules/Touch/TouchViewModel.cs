@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Windows.Navigation;
 using Eve.API.Services.Contracts;
 using Eve.Diagnostics.Logging;
@@ -24,6 +25,10 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 		private bool isZoomEnabled;
 		private int zoomAmount;
+
+		private const int TrackPadRequestTimerPeriod = 57;
+		private Timer trackPadRequestTimer;
+		private TrackPadMessage trackPadDragDeltaMessage;
 
 
 		public TouchViewModel(INavigationServiceFacade navigationServiceFacade,
@@ -50,6 +55,10 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 				this.log.Info("Zoom set to {0}", this.zoomAmount);
 			}
 
+			// Initialize request timer
+			this.trackPadRequestTimer = new Timer(
+				OnTrackPadRequestTimer, null, 0, TrackPadRequestTimerPeriod);
+
 			this.log.Info("View model created");
 		}
 
@@ -70,6 +79,21 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 		#region Message handling
 
+		private void OnTrackPadRequestTimer(object state) {
+			// Send message if exists
+			if (this.trackPadDragDeltaMessage != null) {
+				// Send message
+				this.relayServiceFacade.Proxy.Relay.SendTrackPadMessageAsync(
+					this.relayServiceFacade.Proxy.ActiveDetails, this.trackPadDragDeltaMessage);
+
+				this.log.Info("Sending track pad message: {0}",
+							  this.trackPadDragDeltaMessage.ToString());
+
+				// Clear message
+				this.trackPadDragDeltaMessage = null;
+			}
+		}
+
 		public void OnTrackPadGesture<T>(
 			TrackPadMessage.TrackPadCommands command, T eventArgument) {
 			var message = this.ConstructTrackPadMessage<T>(command, eventArgument);
@@ -78,11 +102,27 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 				return;
 			}
 
-			this.log.Info("Sending track pad message: {0}", message.ToString());
+			// If command is drag delta, cache it
+			if (message.Command == TrackPadMessage.TrackPadCommands.DragDelta) {
+				// Assign current message as cached or 
+				// add delta values to existing message
+				if (this.trackPadDragDeltaMessage == null)
+					this.trackPadDragDeltaMessage = message;
+				else {
+					this.trackPadDragDeltaMessage.X += message.X;
+					this.trackPadDragDeltaMessage.Y += message.Y;
+				}
 
-			// Send request for track pad message to client
-			this.relayServiceFacade.Proxy.Relay.SendTrackPadMessageAsync(
-				this.relayServiceFacade.Proxy.ActiveDetails, message);
+				this.log.Info("Track pad message cached: {0}",
+							  this.trackPadDragDeltaMessage.ToString());
+			}
+			else {
+				this.log.Info("Sending track pad message: {0}", message.ToString());
+
+				// Send request for track pad message to client
+				this.relayServiceFacade.Proxy.Relay.SendTrackPadMessageAsync(
+					this.relayServiceFacade.Proxy.ActiveDetails, message);
+			}
 		}
 
 		public void OnButtonGesture(

@@ -49,7 +49,12 @@ namespace Eve.API.Vision {
 				return;
 			registryKeys.SetValue("Magnification", value);
 
-			if (activateZoom && value != 100)
+			if (value == 100) {
+				this.log.Info("Zoom deactivated. Value: {0}", value);
+				return;
+			}
+
+			if (activateZoom)
 				await this.ActivateZoomAsync();
 
 			this.log.Info("Zoom set to {0}", value);
@@ -73,9 +78,9 @@ namespace Eve.API.Vision {
 				Microsoft.Win32.RegistryValueKind.DWord);
 
 			// Set follow option to all three
-			registryKeys.SetValue("FollowCaret", "1",
+			registryKeys.SetValue("FollowCaret", "0",
 				Microsoft.Win32.RegistryValueKind.DWord);
-			registryKeys.SetValue("FollowFocus", "1",
+			registryKeys.SetValue("FollowFocus", "0",
 				Microsoft.Win32.RegistryValueKind.DWord);
 			registryKeys.SetValue("FollowMouse", "1",
 				Microsoft.Win32.RegistryValueKind.DWord);
