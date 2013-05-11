@@ -408,6 +408,134 @@ namespace EveWindowsPhone.RelayServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Light", Namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EveWindowsPhone.RelayServiceReference.AmbientalLight))]
+    public partial class Light : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string AliasField;
+        
+        private int IDField;
+        
+        private bool StateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Alias {
+            get {
+                return this.AliasField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AliasField, value) != true)) {
+                    this.AliasField = value;
+                    this.RaisePropertyChanged("Alias");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool State {
+            get {
+                return this.StateField;
+            }
+            set {
+                if ((this.StateField.Equals(value) != true)) {
+                    this.StateField = value;
+                    this.RaisePropertyChanged("State");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AmbientalLight", Namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Ambiental" +
+        "")]
+    public partial class AmbientalLight : EveWindowsPhone.RelayServiceReference.Light {
+        
+        private byte AValueField;
+        
+        private byte BValueField;
+        
+        private byte GValueField;
+        
+        private byte RValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte AValue {
+            get {
+                return this.AValueField;
+            }
+            set {
+                if ((this.AValueField.Equals(value) != true)) {
+                    this.AValueField = value;
+                    this.RaisePropertyChanged("AValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte BValue {
+            get {
+                return this.BValueField;
+            }
+            set {
+                if ((this.BValueField.Equals(value) != true)) {
+                    this.BValueField = value;
+                    this.RaisePropertyChanged("BValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte GValue {
+            get {
+                return this.GValueField;
+            }
+            set {
+                if ((this.GValueField.Equals(value) != true)) {
+                    this.GValueField = value;
+                    this.RaisePropertyChanged("GValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte RValue {
+            get {
+                return this.RValueField;
+            }
+            set {
+                if ((this.RValueField.Equals(value) != true)) {
+                    this.RValueField = value;
+                    this.RaisePropertyChanged("RValue");
+                }
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="RelayServiceReference.IEveAPIService")]
     public interface IEveAPIService {
@@ -441,6 +569,16 @@ namespace EveWindowsPhone.RelayServiceReference {
         System.IAsyncResult BeginSetZoom(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int zoomValue, System.AsyncCallback callback, object asyncState);
         
         bool EndSetZoom(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEveAPIService/GetLights", ReplyAction="http://tempuri.org/IEveAPIService/GetLightsResponse")]
+        System.IAsyncResult BeginGetLights(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.Light> EndGetLights(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEveAPIService/GetAmbientalLights", ReplyAction="http://tempuri.org/IEveAPIService/GetAmbientalLightsResponse")]
+        System.IAsyncResult BeginGetAmbientalLights(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight> EndGetAmbientalLights(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -563,6 +701,44 @@ namespace EveWindowsPhone.RelayServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetLightsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetLightsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.Light> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.Light>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetAmbientalLightsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetAmbientalLightsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class EveAPIServiceClient : System.ServiceModel.ClientBase<EveWindowsPhone.RelayServiceReference.IEveAPIService>, EveWindowsPhone.RelayServiceReference.IEveAPIService {
         
         private BeginOperationDelegate onBeginSignInDelegate;
@@ -600,6 +776,18 @@ namespace EveWindowsPhone.RelayServiceReference {
         private EndOperationDelegate onEndSetZoomDelegate;
         
         private System.Threading.SendOrPostCallback onSetZoomCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetLightsDelegate;
+        
+        private EndOperationDelegate onEndGetLightsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetLightsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetAmbientalLightsDelegate;
+        
+        private EndOperationDelegate onEndGetAmbientalLightsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetAmbientalLightsCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -665,6 +853,10 @@ namespace EveWindowsPhone.RelayServiceReference {
         public event System.EventHandler<SendButtonMessageCompletedEventArgs> SendButtonMessageCompleted;
         
         public event System.EventHandler<SetZoomCompletedEventArgs> SetZoomCompleted;
+        
+        public event System.EventHandler<GetLightsCompletedEventArgs> GetLightsCompleted;
+        
+        public event System.EventHandler<GetAmbientalLightsCompletedEventArgs> GetAmbientalLightsCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -950,6 +1142,94 @@ namespace EveWindowsPhone.RelayServiceReference {
                         zoomValue}, this.onEndSetZoomDelegate, this.onSetZoomCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginGetLights(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetLights(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.Light> EveWindowsPhone.RelayServiceReference.IEveAPIService.EndGetLights(System.IAsyncResult result) {
+            return base.Channel.EndGetLights(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetLights(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginGetLights(callback, asyncState);
+        }
+        
+        private object[] OnEndGetLights(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.Light> retVal = ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).EndGetLights(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetLightsCompleted(object state) {
+            if ((this.GetLightsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetLightsCompleted(this, new GetLightsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetLightsAsync() {
+            this.GetLightsAsync(null);
+        }
+        
+        public void GetLightsAsync(object userState) {
+            if ((this.onBeginGetLightsDelegate == null)) {
+                this.onBeginGetLightsDelegate = new BeginOperationDelegate(this.OnBeginGetLights);
+            }
+            if ((this.onEndGetLightsDelegate == null)) {
+                this.onEndGetLightsDelegate = new EndOperationDelegate(this.OnEndGetLights);
+            }
+            if ((this.onGetLightsCompletedDelegate == null)) {
+                this.onGetLightsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetLightsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetLightsDelegate, null, this.onEndGetLightsDelegate, this.onGetLightsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginGetAmbientalLights(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAmbientalLights(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight> EveWindowsPhone.RelayServiceReference.IEveAPIService.EndGetAmbientalLights(System.IAsyncResult result) {
+            return base.Channel.EndGetAmbientalLights(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetAmbientalLights(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginGetAmbientalLights(callback, asyncState);
+        }
+        
+        private object[] OnEndGetAmbientalLights(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight> retVal = ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).EndGetAmbientalLights(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetAmbientalLightsCompleted(object state) {
+            if ((this.GetAmbientalLightsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetAmbientalLightsCompleted(this, new GetAmbientalLightsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetAmbientalLightsAsync() {
+            this.GetAmbientalLightsAsync(null);
+        }
+        
+        public void GetAmbientalLightsAsync(object userState) {
+            if ((this.onBeginGetAmbientalLightsDelegate == null)) {
+                this.onBeginGetAmbientalLightsDelegate = new BeginOperationDelegate(this.OnBeginGetAmbientalLights);
+            }
+            if ((this.onEndGetAmbientalLightsDelegate == null)) {
+                this.onEndGetAmbientalLightsDelegate = new EndOperationDelegate(this.OnEndGetAmbientalLights);
+            }
+            if ((this.onGetAmbientalLightsCompletedDelegate == null)) {
+                this.onGetAmbientalLightsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAmbientalLightsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetAmbientalLightsDelegate, null, this.onEndGetAmbientalLightsDelegate, this.onGetAmbientalLightsCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1103,6 +1383,30 @@ namespace EveWindowsPhone.RelayServiceReference {
             public bool EndSetZoom(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("SetZoom", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetLights(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetLights", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.Light> EndGetLights(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.Light> _result = ((System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.Light>)(base.EndInvoke("GetLights", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetAmbientalLights(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetAmbientalLights", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight> EndGetAmbientalLights(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight> _result = ((System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight>)(base.EndInvoke("GetAmbientalLights", _args, result)));
                 return _result;
             }
         }

@@ -109,10 +109,14 @@ namespace EveWindowsPhone.Pages.Main {
 
 		private void LoadFavoriteModules() {
 			// Initial variable values
-			this.tileHeight = this.FavoriteModulesGrid.ActualHeight/this.ViewModel.TileRows - 2*TileMargins;
+			this.tileHeight =
+				(this.FavoriteModulesGrid.ActualHeight -
+				 this.FavoriteModulesGrid.Margin.Bottom -
+				 this.FavoriteModulesGrid.Margin.Top) / this.ViewModel.TileRows -
+				2 * TileMargins;
 
 			// Attach on favorite modules collection changed
-			this.ViewModel.FavoriteModules.CollectionChanged += (sender, args) => { this.UpdateFavoriteModulesLayout(); };
+			this.ViewModel.FavoriteModules.CollectionChanged += (sender, args) => this.UpdateFavoriteModulesLayout();
 
 			// Initial layout for favorite modules
 			this.UpdateFavoriteModulesLayout();
@@ -130,11 +134,11 @@ namespace EveWindowsPhone.Pages.Main {
 			// Generate row and column definitions
 			for (int index = 0; index < this.ViewModel.TileRows; index++) {
 				this.FavoriteModulesGrid.RowDefinitions.Add(
-					new RowDefinition() { Height = new GridLength(tileHeight + 2 * TileMargins) });
+					new RowDefinition() { Height = new GridLength(this.tileHeight + 2 * TileMargins) });
 			}
 			for (int index = 0; index < numColumns; index++) {
 				this.FavoriteModulesGrid.ColumnDefinitions.Add(
-					new ColumnDefinition() { Width = new GridLength(tileHeight + 2 * TileMargins) });
+					new ColumnDefinition() { Width = new GridLength(this.tileHeight + 2 * TileMargins) });
 			}
 
 			// Generate tiles

@@ -14,7 +14,9 @@ using EveWindowsPhone.ViewModels;
 using Microsoft.Phone.Controls;
 
 namespace EveWindowsPhone.Pages.Modules.Touch {
-	[Module("MTouch", "Touch", "/Resources/Images/Touch screens.png", "/Pages/Modules/Touch/TouchView.xaml")]
+	[Module("MTouch", "Touch", 
+		"/Resources/Images/Touch screens.png", 
+		"/Pages/Modules/Touch/TouchView.xaml")]
 	public class TouchViewModel : NotificationObject {
 		private readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(TouchViewModel));

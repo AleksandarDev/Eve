@@ -4,6 +4,8 @@
     <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:import namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" />
       <xs:import namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Touch" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Ambiental" />
       <xs:element name="SignIn">
         <xs:complexType>
           <xs:sequence>
@@ -86,6 +88,30 @@
         <xs:complexType>
           <xs:sequence>
             <xs:element minOccurs="0" name="SetZoomResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetLights">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetLightsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" minOccurs="0" name="GetLightsResult" nillable="true" type="q9:ArrayOfLight" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAmbientalLights">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAmbientalLightsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Ambiental" minOccurs="0" name="GetAmbientalLightsResult" nillable="true" type="q10:ArrayOfAmbientalLight" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -270,6 +296,44 @@
       </xs:simpleType>
       <xs:element name="Orientation" nillable="true" type="tns:Orientation" />
     </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ArrayOfLight">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Light" nillable="true" type="tns:Light" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfLight" nillable="true" type="tns:ArrayOfLight" />
+      <xs:complexType name="Light">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Alias" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ID" type="xs:int" />
+          <xs:element minOccurs="0" name="State" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Light" nillable="true" type="tns:Light" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Ambiental" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Ambiental" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" />
+      <xs:complexType name="ArrayOfAmbientalLight">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="AmbientalLight" nillable="true" type="tns:AmbientalLight" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfAmbientalLight" nillable="true" type="tns:ArrayOfAmbientalLight" />
+      <xs:complexType name="AmbientalLight">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" base="q1:Light">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="AValue" type="xs:unsignedByte" />
+              <xs:element minOccurs="0" name="BValue" type="xs:unsignedByte" />
+              <xs:element minOccurs="0" name="GValue" type="xs:unsignedByte" />
+              <xs:element minOccurs="0" name="RValue" type="xs:unsignedByte" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="AmbientalLight" nillable="true" type="tns:AmbientalLight" />
+    </xs:schema>
   </wsdl:types>
   <wsdl:message name="IEveAPIService_SignIn_InputMessage">
     <wsdl:part name="parameters" element="tns:SignIn" />
@@ -307,6 +371,18 @@
   <wsdl:message name="IEveAPIService_SetZoom_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetZoomResponse" />
   </wsdl:message>
+  <wsdl:message name="IEveAPIService_GetLights_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLights" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_GetLights_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLightsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_GetAmbientalLights_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAmbientalLights" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_GetAmbientalLights_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAmbientalLightsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEveAPIService">
     <wsdl:operation name="SignIn">
       <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SignIn" message="tns:IEveAPIService_SignIn_InputMessage" />
@@ -331,6 +407,14 @@
     <wsdl:operation name="SetZoom">
       <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SetZoom" message="tns:IEveAPIService_SetZoom_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SetZoomResponse" message="tns:IEveAPIService_SetZoom_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLights">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/GetLights" message="tns:IEveAPIService_GetLights_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/GetLightsResponse" message="tns:IEveAPIService_GetLights_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAmbientalLights">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/GetAmbientalLights" message="tns:IEveAPIService_GetAmbientalLights_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/GetAmbientalLightsResponse" message="tns:IEveAPIService_GetAmbientalLights_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEveAPIService" type="tns:IEveAPIService">
@@ -382,6 +466,24 @@
     </wsdl:operation>
     <wsdl:operation name="SetZoom">
       <soap:operation soapAction="http://tempuri.org/IEveAPIService/SetZoom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLights">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/GetLights" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAmbientalLights">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/GetAmbientalLights" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

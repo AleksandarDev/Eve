@@ -157,7 +157,8 @@ namespace EveWindowsPhone {
 
 			// Create the frame but don't set it as RootVisual yet; this allows the splash
 			// screen to remain active until the application is ready to render.
-			RootFrame = new PhoneApplicationFrame();
+			// NOTE http://www.geekchamp.com/articles/windows-phone-7-navigation-transitions-step-by-step-guide
+			RootFrame = new TransitionFrame();
 			RootFrame.Navigated += CompleteInitializePhoneApplication;
 
 			// Handle navigation failures

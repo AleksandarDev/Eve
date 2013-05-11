@@ -7,19 +7,20 @@ using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Modules;
 using EveWindowsPhone.ViewModels;
 
-namespace EveWindowsPhone.Pages.Modules.Lights {
-	[Module("MLights", "Lights", 
-		"/Resources/Images/Light Bulb.png",
-		"/Pages/Modules/Lights/LightsView.xaml")]
-	public class LightsViewModel : NotificationObject {
+namespace EveWindowsPhone.Pages.Modules.Vision {
+	[Module("MVision", "Vision",
+		"/Resources/Images/",
+		"/Pages/Modules/Vision/VisionView.xaml")]
+	public class VisionViewModel : NotificationObject {
 		private readonly Log.LogInstance log =
-			new Log.LogInstance(typeof(LightsViewModel));
+			new Log.LogInstance(typeof(VisionViewModel));
 
 		private readonly INavigationServiceFacade navigationServiceFacade;
 		private readonly IIsolatedStorageServiceFacade isolatedStorageServiceFacade;
 		private readonly IRelayServiceFacade relayServiceFacade;
 
-		public LightsViewModel(INavigationServiceFacade navigationServiceFacade,
+
+		public VisionViewModel(INavigationServiceFacade navigationServiceFacade,
 							   IIsolatedStorageServiceFacade isolatedStorageServiceFacade,
 							   IRelayServiceFacade relayServiceFacade) {
 			if (navigationServiceFacade == null)

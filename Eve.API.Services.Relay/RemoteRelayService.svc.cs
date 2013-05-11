@@ -8,6 +8,8 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Web.UI.WebControls;
 using Eve.API.Services.Common;
+using Eve.API.Services.Common.Modules.Ambiental;
+using Eve.API.Services.Common.Modules.Lights;
 using Eve.API.Services.Common.Modules.Touch;
 using Eve.API.Services.Contracts;
 
@@ -79,6 +81,30 @@ namespace Eve.API.Services.Relay {
 			if (callback == null) return false;
 
 			return callback.SetZoom(details, zoomValue);
+		}
+
+		#endregion
+
+		#region Lights implementation
+
+		public Light[] GetLights() {
+			// TODO Implement
+			return new Light[] {
+				new Light(0, "Living Room", true),
+				new Light(1, "Bedroom", true)
+			};
+		}
+
+		#endregion
+
+		#region Ambiental implementation
+
+		public AmbientalLight[] GetAmbientalLights() {
+			return new AmbientalLight[] {
+				new AmbientalLight(0, "Living Room Ceiling", true, 0, 255, 255, 255),
+				new AmbientalLight(0, "Bedroom Ceiling", true, 255, 55, 55, 255),
+				new AmbientalLight(0, "Kitchen", true, 255, 255, 255, 255)
+			};
 		}
 
 		#endregion

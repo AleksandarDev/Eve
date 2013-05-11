@@ -19,37 +19,41 @@
 	<phone:PhoneApplicationPage.Resources>
 		<Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 	</phone:PhoneApplicationPage.Resources>
-	<phone:PhoneApplicationPage.FontFamily>
-		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
-	</phone:PhoneApplicationPage.FontFamily>
-	<phone:PhoneApplicationPage.FontSize>
-		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
-	</phone:PhoneApplicationPage.FontSize>
-	<phone:PhoneApplicationPage.Foreground>
-		<StaticResource ResourceKey="PhoneForegroundBrush"/>
-	</phone:PhoneApplicationPage.Foreground>
 	<phone:PhoneApplicationPage.DataContext>
 		<Binding Path="MainViewModel" Source="{StaticResource ViewModelLocator}"/>
 	</phone:PhoneApplicationPage.DataContext>
 
 	<controls:Panorama x:Name="LayoutRoot" Title="syncup" SelectionChanged="PanoramaSelectionChanged">
+		
+		<!-- Favorites tab -->
 		<controls:PanoramaItem Header="favorite" Orientation="Horizontal">
-			<Grid x:Name="FavoriteModulesGrid" Margin="0,0,0,5"/>
+			<Grid x:Name="FavoriteModulesGrid" 
+				  Margin="0,0,0,25"/>
 		</controls:PanoramaItem>
-		<controls:PanoramaItem Header="all modules">
+		
+		<!-- All modules tab -->
+		<controls:PanoramaItem Header="all modules" Margin="0,0,0,40">
 			<ListBox x:Name="ModulesList" ItemsSource="{Binding AvailableModules}">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal">
-							<CheckBox x:Name="PART_CheckBox" IsChecked="{Binding IsFavorite, Mode=TwoWay}" Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}" />
-							<Image Source="{Binding Module.Image}" Width="84" Height="84" />
-							<TextBlock Text="{Binding Module.Name}" FontSize="36" VerticalAlignment="Center" Margin="10,0,0,0" />
+							<CheckBox x:Name="PART_CheckBox" 
+									  IsChecked="{Binding IsFavorite, Mode=TwoWay}" 
+									  Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}" />
+							<Image Source="{Binding Module.Image}" 
+								   Width="84" Height="84" />
+							<TextBlock Text="{Binding Module.Name}" 
+									   FontSize="36" 
+									   VerticalAlignment="Center" 
+									   Margin="10,0,0,0" />
 						</StackPanel>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
 		</controls:PanoramaItem>
-		<controls:PanoramaItem Header="options">
+		
+		<!-- Options tab -->
+		<controls:PanoramaItem Header="options" Margin="0,0,0,40">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
@@ -63,6 +67,7 @@
 				
 				<!-- Client selection -->
 				<!-- TODO Client connected indicator -->
+				<!-- TODO Make this a list not list picker -->
 				<toolkit:ListPicker x:Name="ClientDevicesListPicker" 
 									Header="Client device" 
 									Grid.ColumnSpan="2" 
@@ -72,6 +77,31 @@
 				<Button Click="AdvancedSettingOnClick" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">advanced</Button>
 			</Grid>
 		</controls:PanoramaItem>
+		
 	</controls:Panorama>
+
+	<!-- Navigation transitions -->
+	<!-- NOTE http://www.geekchamp.com/articles/windows-phone-7-navigation-transitions-step-by-step-guide -->
+	<toolkit:TransitionService.NavigationInTransition>
+		<toolkit:NavigationInTransition>
+			<toolkit:NavigationInTransition.Backward>
+				<toolkit:TurnstileTransition Mode="BackwardIn"/>
+			</toolkit:NavigationInTransition.Backward>
+			<toolkit:NavigationInTransition.Forward>
+				<toolkit:TurnstileTransition Mode="ForwardIn"/>
+			</toolkit:NavigationInTransition.Forward>
+		</toolkit:NavigationInTransition>
+	</toolkit:TransitionService.NavigationInTransition>
+
+	<toolkit:TransitionService.NavigationOutTransition>
+		<toolkit:NavigationOutTransition>
+			<toolkit:NavigationOutTransition.Backward>
+				<toolkit:TurnstileTransition Mode="BackwardOut"/>
+			</toolkit:NavigationOutTransition.Backward>
+			<toolkit:NavigationOutTransition.Forward>
+				<toolkit:TurnstileTransition Mode="ForwardOut"/>
+			</toolkit:NavigationOutTransition.Forward>
+		</toolkit:NavigationOutTransition>
+	</toolkit:TransitionService.NavigationOutTransition>
 
 </phone:PhoneApplicationPage>

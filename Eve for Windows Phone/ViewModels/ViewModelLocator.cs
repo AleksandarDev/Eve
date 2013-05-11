@@ -5,9 +5,12 @@ using System.Text;
 using EveWindowsPhone.Pages.AdvancedSettings;
 using EveWindowsPhone.Pages.ChangeClient;
 using EveWindowsPhone.Pages.Main;
+using EveWindowsPhone.Pages.Modules.Ambiental;
+using EveWindowsPhone.Pages.Modules.Keyboard;
 using EveWindowsPhone.Pages.Modules.Lights;
 using EveWindowsPhone.Pages.Modules.Play;
 using EveWindowsPhone.Pages.Modules.Touch;
+using EveWindowsPhone.Pages.Modules.Vision;
 using EveWindowsPhone.Services;
 
 namespace EveWindowsPhone.ViewModels {
@@ -44,6 +47,18 @@ namespace EveWindowsPhone.ViewModels {
 
 		public PlayViewModel PlayViewModel {
 			get { return this.viewModelContainerService.Container.Resolve<PlayViewModel>(); }
+		}
+
+		public AmbientalViewModel AmbientalViewModel {
+			get { return this.viewModelContainerService.Container.Resolve<AmbientalViewModel>(); }
+		}
+
+		public KeyboardViewModel KeyboardViewModel {
+			get { return this.viewModelContainerService.Container.Resolve<KeyboardViewModel>(); }
+		}
+
+		public VisionViewModel VisionViewModel {
+			get { return this.viewModelContainerService.Container.Resolve<VisionViewModel>(); }
 		}
 
 		#endregion
