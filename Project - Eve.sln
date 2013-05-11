@@ -64,7 +64,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveHome", "http://localhost:8001/EveHome", "{9A2C715B-BE52-438B-B2A4-1E16EE3651C2}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/EveHome"
 		Debug.AspNetCompiler.PhysicalPath = "Web\EveHome\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\EveHome\"

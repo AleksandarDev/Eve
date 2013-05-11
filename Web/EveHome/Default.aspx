@@ -55,6 +55,9 @@
 					<a href="http://www.windowsphone.com/"><img src="Resources/Images/WindowsPhone.png" /></a>
 					<a href="http://www.xbox.com/en-US/kinect"><img src="Resources/Images/KinectLogo.png" /></a>
 				</div>
+				<div>
+					<a target="_blank" href="https://affiliate.godaddy.com/redirect/EA78984805C2FE02A65D7C73113C40CC5002E4F98CBE44155FE80ADA72091B4AA121C7B25C403B9B2639B3BD98416D6D5B339A6E92F4C6D822CBCB53366B2B1C"><img src="https://affiliate.godaddy.com/ads/EA78984805C2FE02A65D7C73113C40CC5002E4F98CBE44155FE80ADA72091B4AA121C7B25C403B9B2639B3BD98416D6D5B339A6E92F4C6D822CBCB53366B2B1C" border="0" width="200"  height="200" alt="50% of Hosting for your Website at GoDaddy.com!"/></a>
+				</div>
 			</div>
 			<label class="FooterEnd">&#169; 2013 <a href="http://toplek.net/" target="_blank">Aleksandar Toplek</a> | App Start Contest 2013.</label>
 		</div>
