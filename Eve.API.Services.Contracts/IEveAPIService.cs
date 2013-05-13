@@ -36,23 +36,23 @@ namespace Eve.API.Services.Contracts {
 		#region Lights implementation
 
 		[OperationContract]
-		Light[] GetLights();
+		Light[] GetLights(ServiceRequestDetails details);
 
-		//[OperationContract]
-		//bool SetLightState(int id, bool state);
+		[OperationContract]
+		bool SetLightState(ServiceRequestDetails details, int id, bool state);
 
 		#endregion
 
 		#region Ambiental implementation
 
 		[OperationContract]
-		AmbientalLight[] GetAmbientalLights();
+		AmbientalLight[] GetAmbientalLights(ServiceRequestDetails details);
 
-		//[OperationContract]
-		//bool SetAmbientalLightState(int id, bool state);
+		[OperationContract]
+		bool SetAmbientalLightState(ServiceRequestDetails details, int id, bool state);
 
-		//[OperationContract]
-		//bool SetAmbientalLightColor(byte r, byte g, byte b, byte a);
+		[OperationContract]
+		bool SetAmbientalLightColor(ServiceRequestDetails details, int id, byte r, byte g, byte b, byte a);
 
 		#endregion
 	}

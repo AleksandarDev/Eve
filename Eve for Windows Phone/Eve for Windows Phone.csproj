@@ -81,9 +81,20 @@
     <Compile Include="Adapters\RelayServiceFacade.cs" />
     <Compile Include="Communication\RelayProxy.cs" />
     <Compile Include="Communication\RelayProxyEventHandler.cs" />
+    <Compile Include="Controls\AmbientalLightViewControl.xaml.cs">
+      <DependentUpon>AmbientalLightViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AmbientalLightViewControlEventHandler.cs" />
+    <Compile Include="Controls\LightViewControl.xaml.cs">
+      <DependentUpon>LightViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LightViewControlEvetnHandler.cs" />
     <Compile Include="Controls\ModuleHeader.xaml.cs">
       <DependentUpon>ModuleHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AmbientalLightToColorConverter.cs" />
+    <Compile Include="Converters\AmbientalLightToSolidBrushConverter.cs" />
+    <Compile Include="Effects\TiltEffect.cs" />
     <Compile Include="Modules\FavoriteModule.cs" />
     <Compile Include="Modules\FavoriteModules.cs" />
     <Compile Include="Adapters\IIsolatedStorageServiceFacade.cs" />
@@ -117,6 +128,7 @@
       <DependentUpon>AmbientalView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Modules\Ambiental\AmbientalViewModel.cs" />
+    <Compile Include="Pages\Modules\Ambiental\AmbientalViewModelEventHandler.cs" />
     <Compile Include="Pages\Modules\Keyboard\KeyboardView.xaml.cs">
       <DependentUpon>KeyboardView.xaml</DependentUpon>
     </Compile>
@@ -125,6 +137,7 @@
       <DependentUpon>LightsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Modules\Lights\LightsViewModel.cs" />
+    <Compile Include="Pages\Modules\Lights\LightsViewModelEventHandler.cs" />
     <Compile Include="Pages\Modules\Play\PlayView.xaml.cs">
       <DependentUpon>PlayView.xaml</DependentUpon>
     </Compile>
@@ -153,6 +166,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\AmbientalLightViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LightViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ModuleHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -201,7 +222,9 @@
     <None Include="Properties\DataSources\Eve.API.Services.Contracts.Services.ServiceClient.datasource" />
     <None Include="Properties\WMAppManifest.xml" />
     <Content Include="Resources\Images\About.png" />
+    <Content Include="Resources\Images\Color Picker.png" />
     <Content Include="Resources\Images\Heart.png" />
+    <Content Include="Resources\Images\Keyboard.png" />
     <Content Include="Resources\Images\Light-Bulb-Ambiental.png" />
     <Content Include="Resources\Images\Settings-02.png" />
     <Content Include="Resources\Images\Shopping Bag.png" />
@@ -217,6 +240,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\RelayServiceReference\RemoteRelayService.wsdl" />
+    <Content Include="Resources\Images\Webcam.png" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>

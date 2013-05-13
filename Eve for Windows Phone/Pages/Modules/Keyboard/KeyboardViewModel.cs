@@ -5,11 +5,12 @@ using System.Text;
 using Eve.Diagnostics.Logging;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Modules;
+using EveWindowsPhone.Pages.AdvancedSettings;
 using EveWindowsPhone.ViewModels;
 
 namespace EveWindowsPhone.Pages.Modules.Keyboard {
 	[Module("MKeyboard", "Keyboard", 
-		"/Resources/Images/", 
+		"/Resources/Images/Keyboard.png", 
 		"/Pages/Modules/Keyboard/KeyboardView.xaml")]
 	public class KeyboardViewModel : NotificationObject {
 		private readonly Log.LogInstance log =
@@ -33,6 +34,10 @@ namespace EveWindowsPhone.Pages.Modules.Keyboard {
 			this.navigationServiceFacade = navigationServiceFacade;
 			this.isolatedStorageServiceFacade = isolatedStorageServiceFacade;
 			this.relayServiceFacade = relayServiceFacade;
+		}
+
+		public void AdvancedSettings() {
+			AdvancedSettingsView.NavigateWithIndex(this.navigationServiceFacade, 3);
 		}
 	}
 }

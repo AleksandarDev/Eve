@@ -22,17 +22,25 @@
 	<phone:PhoneApplicationPage.DataContext>
 		<Binding Path="MainViewModel" Source="{StaticResource ViewModelLocator}"/>
 	</phone:PhoneApplicationPage.DataContext>
+	
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar/>
+	</phone:PhoneApplicationPage.ApplicationBar>
 
 	<controls:Panorama x:Name="LayoutRoot" Title="syncup" SelectionChanged="PanoramaSelectionChanged">
 		
 		<!-- Favorites tab -->
 		<controls:PanoramaItem Header="favorite" Orientation="Horizontal">
 			<Grid x:Name="FavoriteModulesGrid" 
-				  Margin="0,0,0,25"/>
+				  toolkit:TiltEffect.IsTiltEnabled="True" Margin="0,0,0,12">
+				<TextBlock FontSize="{StaticResource PhoneFontSizeLarge}" Foreground="{StaticResource PhoneSubtleBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="{StaticResource PhoneFontFamilyLight}">
+					add favorites from next page
+				</TextBlock>
+			</Grid>
 		</controls:PanoramaItem>
 		
 		<!-- All modules tab -->
-		<controls:PanoramaItem Header="all modules" Margin="0,0,0,40">
+		<controls:PanoramaItem Header="all modules">
 			<ListBox x:Name="ModulesList" ItemsSource="{Binding AvailableModules}">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
@@ -53,7 +61,7 @@
 		</controls:PanoramaItem>
 		
 		<!-- Options tab -->
-		<controls:PanoramaItem Header="options" Margin="0,0,0,40">
+		<controls:PanoramaItem Header="options">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
@@ -68,13 +76,14 @@
 				<!-- Client selection -->
 				<!-- TODO Client connected indicator -->
 				<!-- TODO Make this a list not list picker -->
-				<toolkit:ListPicker x:Name="ClientDevicesListPicker" 
-									Header="Client device" 
-									Grid.ColumnSpan="2" 
-									SelectionChanged="ClientDevicesListPickerOnSelectionChanged" />
+				<StackPanel Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2">
+					<TextBlock Margin="12,0,12,0" FontSize="{StaticResource PhoneFontSizeMedium}" Foreground="{StaticResource PhoneSubtleBrush}">Client ID</TextBlock>
+					<TextBox x:Name="ClientDeviceIDTextBox" Text="{Binding ClientID, Mode=TwoWay, UpdateSourceTrigger=Default}" />
+					<TextBlock Margin="12,0" FontSize="{StaticResource PhoneFontSizeSmall}" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap">Enter your computer unique ID. You can fins it in application that is runing on targeted computer.</TextBlock>
+				</StackPanel>
 				
 				<!-- Advanced settings -->
-				<Button Click="AdvancedSettingOnClick" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">advanced</Button>
+				<Button Click="AdvancedSettingOnClick" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,10">advanced</Button>
 			</Grid>
 		</controls:PanoramaItem>
 		

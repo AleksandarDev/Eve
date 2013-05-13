@@ -51,10 +51,16 @@ namespace EveWindowsPhone.Pages.Main {
 
 
 		private void MainViewLoaded(object sender, RoutedEventArgs e) {
+			this.LoadApplicationBar();
+			this.LoadFavoriteModules();
+		}
+
+		protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e) {
+			base.OnNavigatedTo(e);
+
 			// Update settings on reload
 			this.ViewModel.LoadSettings();
-
-			this.LoadApplicationBar();
+			this.ViewModel.LoadModules();
 			this.LoadFavoriteModules();
 		}
 
@@ -77,8 +83,9 @@ namespace EveWindowsPhone.Pages.Main {
 
 		private void PopulateApplicationBar() {
 			// Favorite modules page
-			var favoriteModulesPage = new ApplicationBarPage(ApplicationBarMode.Minimized);
-			favoriteModulesPage.AddMenuItem("settings...", () => this.ViewModel.AdvancedSettings(1));
+			var favoriteModulesPage = new ApplicationBarPage(ApplicationBarMode.Default);
+			favoriteModulesPage.AddIconButton("settings...",
+											  new Uri("/Resources/Images/Settings-02.png", UriKind.Relative), this.ViewModel.AdvancedSettings);
 			this.applicationBarController.AddPage("favorite", favoriteModulesPage);
 
 			// All Modules page
@@ -108,6 +115,8 @@ namespace EveWindowsPhone.Pages.Main {
 		#region Favorite modules
 
 		private void LoadFavoriteModules() {
+			if (this.FavoriteModulesGrid.ActualHeight == 0) return;
+
 			// Initial variable values
 			this.tileHeight =
 				(this.FavoriteModulesGrid.ActualHeight -
@@ -123,6 +132,8 @@ namespace EveWindowsPhone.Pages.Main {
 		}
 
 		private void UpdateFavoriteModulesLayout() {
+			if (this.ViewModel.FavoriteModules.Count == 0) return;
+
 			// Clear all previous data
 			this.FavoriteModulesGrid.Children.Clear();
 			this.FavoriteModulesGrid.RowDefinitions.Clear();
@@ -193,6 +204,9 @@ namespace EveWindowsPhone.Pages.Main {
 		}
 
 		private void ShowAboutPrompt() {
+			this.LayoutRoot.SetValue(Panorama.SelectedIndexProperty, 0);
+			this.LayoutRoot.Measure(new Size());
+
 			var aboutPrompt = new AboutPrompt() {
 				Title = "SyncUp for Eve",
 				VersionNumber = "Version 0.1 Alpha",

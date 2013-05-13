@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 
 namespace Eve.Diagnostics.Logging {
+	public delegate void LogEventHandler(
+		Log.LogInstance instance, Log.LogMessage message);
+
 	public static class Log {
 		// TODO InvokeWatchedMethod to measure time
 
 		private static LinkedList<LogMessage> messages = new LinkedList<LogMessage>();
 
+		public static event LogEventHandler OnMessage;
 
-		private static void AddMessage(LogMessage message) {
+		private static void AddMessage(Log.LogInstance instance, LogMessage message) {
 			Log.messages.AddLast(message);
 
 			if (Log.WriteToDebug && (Log.WriteToDebugLevel & message.Level) == message.Level)
 				System.Diagnostics.Debug.WriteLine(message.ToString());
+
+			if (Log.OnMessage != null)
+				Log.OnMessage(instance, message);
 		}
 
 		public static void SaveToFile(string path) {
@@ -67,7 +74,7 @@ namespace Eve.Diagnostics.Logging {
 			All		= Error | Debug | Warninig | Information | Write
 		}
 
-		private class LogMessage {
+		public class LogMessage {
 			public Type SenderType { get; set; }
 			public DateTime Time { get; set; }
 			public LogLevels Level { get; set; }
@@ -114,7 +121,7 @@ namespace Eve.Diagnostics.Logging {
 
 
 			public ILogInstance WriteLine(string format, params object[] args) {
-				Log.AddMessage(new LogMessage() {
+				Log.AddMessage(this, new LogMessage() {
 					SenderType = this.targetType,
 					Level = LogLevels.Write,
 					Message = String.Format(format, args)
@@ -124,7 +131,7 @@ namespace Eve.Diagnostics.Logging {
 			}
 
 			public ILogInstance Info(string format, params object[] args) {
-				Log.AddMessage(new LogMessage() {
+				Log.AddMessage(this, new LogMessage() {
 					SenderType = this.targetType,
 					Level = LogLevels.Information,
 					Message = String.Format(format, args)
@@ -134,7 +141,7 @@ namespace Eve.Diagnostics.Logging {
 			}
 
 			public ILogInstance Warn(string format, params object[] args) {
-				Log.AddMessage(new LogMessage() {
+				Log.AddMessage(this, new LogMessage() {
 					SenderType = this.targetType,
 					Level = LogLevels.Warninig,
 					Message = String.Format(format, args)
@@ -144,7 +151,7 @@ namespace Eve.Diagnostics.Logging {
 			}
 
 			public ILogInstance Error<TException>(TException exception, string format, params object[] args) {
-				Log.AddMessage(new LogMessage() {
+				Log.AddMessage(this, new LogMessage() {
 					SenderType = this.targetType,
 					Level = LogLevels.Error,
 					Message = String.Format(format, args),
@@ -156,7 +163,7 @@ namespace Eve.Diagnostics.Logging {
 			}
 
 			public ILogInstance Debug(string format, params object[] args) {
-				Log.AddMessage(new LogMessage() {
+				Log.AddMessage(this, new LogMessage() {
 					SenderType = this.targetType,
 					Level = LogLevels.Debug,
 					Message = String.Format(format, args)

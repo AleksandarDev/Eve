@@ -7,9 +7,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:EveWindowsPhone.Controls"
-	xmlns:c4fcontrols="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
 	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-	xmlns:relayServiceReference="clr-namespace:EveWindowsPhone.RelayServiceReference"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Foreground="{StaticResource PhoneForegroundBrush}"
@@ -24,9 +22,9 @@
 	</shell:SystemTray.ProgressIndicator>
 	
 	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
-			<shell:ApplicationBarIconButton IconUri="/Resources/Images/Settings-02.png" Text="settings" />
-			<shell:ApplicationBarIconButton IconUri="/Resources/Images/About.png" Text="help" />
+		<shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default">
+			<shell:ApplicationBarIconButton IconUri="/Resources/Images/Settings-02.png" Text="settings" Click="SettingsClick" />
+			<shell:ApplicationBarIconButton IconUri="/Resources/Images/About.png" Text="help" Click="HelpClick" />
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 
@@ -40,11 +38,48 @@
 		<controls:ModuleHeader Alias="Ambiental" 
 							   ImageSourcePath="/Resources/Images/Light-Bulb-Ambiental.png" />
 		
+		<!-- No lights availablle message -->
+		<TextBlock Text="No lights available" 
+				   VerticalAlignment="Center"
+				   HorizontalAlignment="Center"
+				   FontFamily="{StaticResource PhoneFontFamilyLight}"
+				   FontSize="{StaticResource PhoneFontSizeExtraLarge}"
+				   Foreground="{StaticResource PhoneChromeBrush}"
+				   Visibility="{Binding IsLoadingLights, Converter={StaticResource BooleanToVisibilityConverter}}"
+				   Grid.Row="2"/>
+		
 		<!--ContentPanel - place additional content here-->
-		<StackPanel x:Name="ContentPanel" 
-					Orientation="Vertical" 
-					Grid.Row="1" 
-					Margin="12,24,12,0"/>
+		<ScrollViewer Grid.Row="1" 
+					  Margin="12,24,12,0"
+					  VerticalScrollBarVisibility="Auto"
+					  HorizontalScrollBarVisibility="Disabled">
+			<StackPanel x:Name="ContentPanel" 
+						Orientation="Vertical" />
+		</ScrollViewer>
 	</Grid>
+
+	<!-- Navigation transitions -->
+	<!-- NOTE http://www.geekchamp.com/articles/windows-phone-7-navigation-transitions-step-by-step-guide -->
+	<toolkit:TransitionService.NavigationInTransition>
+		<toolkit:NavigationInTransition>
+			<toolkit:NavigationInTransition.Backward>
+				<toolkit:TurnstileTransition Mode="BackwardIn"/>
+			</toolkit:NavigationInTransition.Backward>
+			<toolkit:NavigationInTransition.Forward>
+				<toolkit:TurnstileTransition Mode="ForwardIn"/>
+			</toolkit:NavigationInTransition.Forward>
+		</toolkit:NavigationInTransition>
+	</toolkit:TransitionService.NavigationInTransition>
+
+	<toolkit:TransitionService.NavigationOutTransition>
+		<toolkit:NavigationOutTransition>
+			<toolkit:NavigationOutTransition.Backward>
+				<toolkit:TurnstileTransition Mode="BackwardOut"/>
+			</toolkit:NavigationOutTransition.Backward>
+			<toolkit:NavigationOutTransition.Forward>
+				<toolkit:TurnstileTransition Mode="ForwardOut"/>
+			</toolkit:NavigationOutTransition.Forward>
+		</toolkit:NavigationOutTransition>
+	</toolkit:TransitionService.NavigationOutTransition>
 
 </phone:PhoneApplicationPage>

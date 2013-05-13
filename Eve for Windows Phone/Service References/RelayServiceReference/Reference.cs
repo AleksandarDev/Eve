@@ -571,14 +571,29 @@ namespace EveWindowsPhone.RelayServiceReference {
         bool EndSetZoom(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEveAPIService/GetLights", ReplyAction="http://tempuri.org/IEveAPIService/GetLightsResponse")]
-        System.IAsyncResult BeginGetLights(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetLights(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.Light> EndGetLights(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEveAPIService/SetLightState", ReplyAction="http://tempuri.org/IEveAPIService/SetLightStateResponse")]
+        System.IAsyncResult BeginSetLightState(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state, System.AsyncCallback callback, object asyncState);
+        
+        bool EndSetLightState(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEveAPIService/GetAmbientalLights", ReplyAction="http://tempuri.org/IEveAPIService/GetAmbientalLightsResponse")]
-        System.IAsyncResult BeginGetAmbientalLights(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetAmbientalLights(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight> EndGetAmbientalLights(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEveAPIService/SetAmbientalLightState", ReplyAction="http://tempuri.org/IEveAPIService/SetAmbientalLightStateResponse")]
+        System.IAsyncResult BeginSetAmbientalLightState(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state, System.AsyncCallback callback, object asyncState);
+        
+        bool EndSetAmbientalLightState(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IEveAPIService/SetAmbientalLightColor", ReplyAction="http://tempuri.org/IEveAPIService/SetAmbientalLightColorResponse")]
+        System.IAsyncResult BeginSetAmbientalLightColor(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, byte r, byte g, byte b, byte a, System.AsyncCallback callback, object asyncState);
+        
+        bool EndSetAmbientalLightColor(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -720,6 +735,25 @@ namespace EveWindowsPhone.RelayServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SetLightStateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SetLightStateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class GetAmbientalLightsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -733,6 +767,44 @@ namespace EveWindowsPhone.RelayServiceReference {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SetAmbientalLightStateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SetAmbientalLightStateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SetAmbientalLightColorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SetAmbientalLightColorCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
@@ -783,11 +855,29 @@ namespace EveWindowsPhone.RelayServiceReference {
         
         private System.Threading.SendOrPostCallback onGetLightsCompletedDelegate;
         
+        private BeginOperationDelegate onBeginSetLightStateDelegate;
+        
+        private EndOperationDelegate onEndSetLightStateDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetLightStateCompletedDelegate;
+        
         private BeginOperationDelegate onBeginGetAmbientalLightsDelegate;
         
         private EndOperationDelegate onEndGetAmbientalLightsDelegate;
         
         private System.Threading.SendOrPostCallback onGetAmbientalLightsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSetAmbientalLightStateDelegate;
+        
+        private EndOperationDelegate onEndSetAmbientalLightStateDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetAmbientalLightStateCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSetAmbientalLightColorDelegate;
+        
+        private EndOperationDelegate onEndSetAmbientalLightColorDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetAmbientalLightColorCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -856,7 +946,13 @@ namespace EveWindowsPhone.RelayServiceReference {
         
         public event System.EventHandler<GetLightsCompletedEventArgs> GetLightsCompleted;
         
+        public event System.EventHandler<SetLightStateCompletedEventArgs> SetLightStateCompleted;
+        
         public event System.EventHandler<GetAmbientalLightsCompletedEventArgs> GetAmbientalLightsCompleted;
+        
+        public event System.EventHandler<SetAmbientalLightStateCompletedEventArgs> SetAmbientalLightStateCompleted;
+        
+        public event System.EventHandler<SetAmbientalLightColorCompletedEventArgs> SetAmbientalLightColorCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -1143,8 +1239,8 @@ namespace EveWindowsPhone.RelayServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginGetLights(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetLights(callback, asyncState);
+        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginGetLights(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetLights(details, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1153,7 +1249,8 @@ namespace EveWindowsPhone.RelayServiceReference {
         }
         
         private System.IAsyncResult OnBeginGetLights(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginGetLights(callback, asyncState);
+            EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details = ((EveWindowsPhone.RelayServiceReference.ServiceRequestDetails)(inValues[0]));
+            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginGetLights(details, callback, asyncState);
         }
         
         private object[] OnEndGetLights(System.IAsyncResult result) {
@@ -1169,11 +1266,11 @@ namespace EveWindowsPhone.RelayServiceReference {
             }
         }
         
-        public void GetLightsAsync() {
-            this.GetLightsAsync(null);
+        public void GetLightsAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details) {
+            this.GetLightsAsync(details, null);
         }
         
-        public void GetLightsAsync(object userState) {
+        public void GetLightsAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, object userState) {
             if ((this.onBeginGetLightsDelegate == null)) {
                 this.onBeginGetLightsDelegate = new BeginOperationDelegate(this.OnBeginGetLights);
             }
@@ -1183,12 +1280,63 @@ namespace EveWindowsPhone.RelayServiceReference {
             if ((this.onGetLightsCompletedDelegate == null)) {
                 this.onGetLightsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetLightsCompleted);
             }
-            base.InvokeAsync(this.onBeginGetLightsDelegate, null, this.onEndGetLightsDelegate, this.onGetLightsCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetLightsDelegate, new object[] {
+                        details}, this.onEndGetLightsDelegate, this.onGetLightsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginGetAmbientalLights(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetAmbientalLights(callback, asyncState);
+        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginSetLightState(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetLightState(details, id, state, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool EveWindowsPhone.RelayServiceReference.IEveAPIService.EndSetLightState(System.IAsyncResult result) {
+            return base.Channel.EndSetLightState(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetLightState(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details = ((EveWindowsPhone.RelayServiceReference.ServiceRequestDetails)(inValues[0]));
+            int id = ((int)(inValues[1]));
+            bool state = ((bool)(inValues[2]));
+            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginSetLightState(details, id, state, callback, asyncState);
+        }
+        
+        private object[] OnEndSetLightState(System.IAsyncResult result) {
+            bool retVal = ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).EndSetLightState(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSetLightStateCompleted(object state) {
+            if ((this.SetLightStateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetLightStateCompleted(this, new SetLightStateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetLightStateAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state) {
+            this.SetLightStateAsync(details, id, state, null);
+        }
+        
+        public void SetLightStateAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state, object userState) {
+            if ((this.onBeginSetLightStateDelegate == null)) {
+                this.onBeginSetLightStateDelegate = new BeginOperationDelegate(this.OnBeginSetLightState);
+            }
+            if ((this.onEndSetLightStateDelegate == null)) {
+                this.onEndSetLightStateDelegate = new EndOperationDelegate(this.OnEndSetLightState);
+            }
+            if ((this.onSetLightStateCompletedDelegate == null)) {
+                this.onSetLightStateCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetLightStateCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetLightStateDelegate, new object[] {
+                        details,
+                        id,
+                        state}, this.onEndSetLightStateDelegate, this.onSetLightStateCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginGetAmbientalLights(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAmbientalLights(details, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1197,7 +1345,8 @@ namespace EveWindowsPhone.RelayServiceReference {
         }
         
         private System.IAsyncResult OnBeginGetAmbientalLights(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginGetAmbientalLights(callback, asyncState);
+            EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details = ((EveWindowsPhone.RelayServiceReference.ServiceRequestDetails)(inValues[0]));
+            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginGetAmbientalLights(details, callback, asyncState);
         }
         
         private object[] OnEndGetAmbientalLights(System.IAsyncResult result) {
@@ -1213,11 +1362,11 @@ namespace EveWindowsPhone.RelayServiceReference {
             }
         }
         
-        public void GetAmbientalLightsAsync() {
-            this.GetAmbientalLightsAsync(null);
+        public void GetAmbientalLightsAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details) {
+            this.GetAmbientalLightsAsync(details, null);
         }
         
-        public void GetAmbientalLightsAsync(object userState) {
+        public void GetAmbientalLightsAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, object userState) {
             if ((this.onBeginGetAmbientalLightsDelegate == null)) {
                 this.onBeginGetAmbientalLightsDelegate = new BeginOperationDelegate(this.OnBeginGetAmbientalLights);
             }
@@ -1227,7 +1376,114 @@ namespace EveWindowsPhone.RelayServiceReference {
             if ((this.onGetAmbientalLightsCompletedDelegate == null)) {
                 this.onGetAmbientalLightsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAmbientalLightsCompleted);
             }
-            base.InvokeAsync(this.onBeginGetAmbientalLightsDelegate, null, this.onEndGetAmbientalLightsDelegate, this.onGetAmbientalLightsCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetAmbientalLightsDelegate, new object[] {
+                        details}, this.onEndGetAmbientalLightsDelegate, this.onGetAmbientalLightsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginSetAmbientalLightState(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetAmbientalLightState(details, id, state, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool EveWindowsPhone.RelayServiceReference.IEveAPIService.EndSetAmbientalLightState(System.IAsyncResult result) {
+            return base.Channel.EndSetAmbientalLightState(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetAmbientalLightState(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details = ((EveWindowsPhone.RelayServiceReference.ServiceRequestDetails)(inValues[0]));
+            int id = ((int)(inValues[1]));
+            bool state = ((bool)(inValues[2]));
+            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginSetAmbientalLightState(details, id, state, callback, asyncState);
+        }
+        
+        private object[] OnEndSetAmbientalLightState(System.IAsyncResult result) {
+            bool retVal = ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).EndSetAmbientalLightState(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSetAmbientalLightStateCompleted(object state) {
+            if ((this.SetAmbientalLightStateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetAmbientalLightStateCompleted(this, new SetAmbientalLightStateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetAmbientalLightStateAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state) {
+            this.SetAmbientalLightStateAsync(details, id, state, null);
+        }
+        
+        public void SetAmbientalLightStateAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state, object userState) {
+            if ((this.onBeginSetAmbientalLightStateDelegate == null)) {
+                this.onBeginSetAmbientalLightStateDelegate = new BeginOperationDelegate(this.OnBeginSetAmbientalLightState);
+            }
+            if ((this.onEndSetAmbientalLightStateDelegate == null)) {
+                this.onEndSetAmbientalLightStateDelegate = new EndOperationDelegate(this.OnEndSetAmbientalLightState);
+            }
+            if ((this.onSetAmbientalLightStateCompletedDelegate == null)) {
+                this.onSetAmbientalLightStateCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetAmbientalLightStateCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetAmbientalLightStateDelegate, new object[] {
+                        details,
+                        id,
+                        state}, this.onEndSetAmbientalLightStateDelegate, this.onSetAmbientalLightStateCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EveWindowsPhone.RelayServiceReference.IEveAPIService.BeginSetAmbientalLightColor(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, byte r, byte g, byte b, byte a, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetAmbientalLightColor(details, id, r, g, b, a, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool EveWindowsPhone.RelayServiceReference.IEveAPIService.EndSetAmbientalLightColor(System.IAsyncResult result) {
+            return base.Channel.EndSetAmbientalLightColor(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetAmbientalLightColor(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details = ((EveWindowsPhone.RelayServiceReference.ServiceRequestDetails)(inValues[0]));
+            int id = ((int)(inValues[1]));
+            byte r = ((byte)(inValues[2]));
+            byte g = ((byte)(inValues[3]));
+            byte b = ((byte)(inValues[4]));
+            byte a = ((byte)(inValues[5]));
+            return ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).BeginSetAmbientalLightColor(details, id, r, g, b, a, callback, asyncState);
+        }
+        
+        private object[] OnEndSetAmbientalLightColor(System.IAsyncResult result) {
+            bool retVal = ((EveWindowsPhone.RelayServiceReference.IEveAPIService)(this)).EndSetAmbientalLightColor(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSetAmbientalLightColorCompleted(object state) {
+            if ((this.SetAmbientalLightColorCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetAmbientalLightColorCompleted(this, new SetAmbientalLightColorCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetAmbientalLightColorAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, byte r, byte g, byte b, byte a) {
+            this.SetAmbientalLightColorAsync(details, id, r, g, b, a, null);
+        }
+        
+        public void SetAmbientalLightColorAsync(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, byte r, byte g, byte b, byte a, object userState) {
+            if ((this.onBeginSetAmbientalLightColorDelegate == null)) {
+                this.onBeginSetAmbientalLightColorDelegate = new BeginOperationDelegate(this.OnBeginSetAmbientalLightColor);
+            }
+            if ((this.onEndSetAmbientalLightColorDelegate == null)) {
+                this.onEndSetAmbientalLightColorDelegate = new EndOperationDelegate(this.OnEndSetAmbientalLightColor);
+            }
+            if ((this.onSetAmbientalLightColorCompletedDelegate == null)) {
+                this.onSetAmbientalLightColorCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetAmbientalLightColorCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetAmbientalLightColorDelegate, new object[] {
+                        details,
+                        id,
+                        r,
+                        g,
+                        b,
+                        a}, this.onEndSetAmbientalLightColorDelegate, this.onSetAmbientalLightColorCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -1386,8 +1642,9 @@ namespace EveWindowsPhone.RelayServiceReference {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetLights(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
+            public System.IAsyncResult BeginGetLights(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = details;
                 System.IAsyncResult _result = base.BeginInvoke("GetLights", _args, callback, asyncState);
                 return _result;
             }
@@ -1398,8 +1655,24 @@ namespace EveWindowsPhone.RelayServiceReference {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetAmbientalLights(System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginSetLightState(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = details;
+                _args[1] = id;
+                _args[2] = state;
+                System.IAsyncResult _result = base.BeginInvoke("SetLightState", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndSetLightState(System.IAsyncResult result) {
                 object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("SetLightState", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetAmbientalLights(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = details;
                 System.IAsyncResult _result = base.BeginInvoke("GetAmbientalLights", _args, callback, asyncState);
                 return _result;
             }
@@ -1407,6 +1680,39 @@ namespace EveWindowsPhone.RelayServiceReference {
             public System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight> EndGetAmbientalLights(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight> _result = ((System.Collections.ObjectModel.ObservableCollection<EveWindowsPhone.RelayServiceReference.AmbientalLight>)(base.EndInvoke("GetAmbientalLights", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSetAmbientalLightState(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, bool state, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = details;
+                _args[1] = id;
+                _args[2] = state;
+                System.IAsyncResult _result = base.BeginInvoke("SetAmbientalLightState", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndSetAmbientalLightState(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("SetAmbientalLightState", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSetAmbientalLightColor(EveWindowsPhone.RelayServiceReference.ServiceRequestDetails details, int id, byte r, byte g, byte b, byte a, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[6];
+                _args[0] = details;
+                _args[1] = id;
+                _args[2] = r;
+                _args[3] = g;
+                _args[4] = b;
+                _args[5] = a;
+                System.IAsyncResult _result = base.BeginInvoke("SetAmbientalLightColor", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndSetAmbientalLightColor(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("SetAmbientalLightColor", _args, result)));
                 return _result;
             }
         }

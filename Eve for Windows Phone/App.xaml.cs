@@ -25,6 +25,7 @@ namespace EveWindowsPhone {
 		protected const int DefaultActivateZoomOnTouchValue = 200;
 		protected const bool DefaultActivateZoomOnKeyboard = true;
 		protected const int DefaultActivateZoomOnKeyboardValue = 200;
+		protected const int DefaultLightRefreshRate = 1000;
 
 		/// <summary>
 		/// Provides easy access to the root frame of the Phone Application.
@@ -84,6 +85,11 @@ namespace EveWindowsPhone {
 		private void SetDefaultSettings() {
 			var isolatedStorageServiceFacade = new IsolatedStorageServiceFacade();
 
+			// Client settings
+			isolatedStorageServiceFacade.SetDefault(
+				String.Empty,
+				IsolatedStorageServiceFacade.ClientIDKey);
+
 			// Favorites settings
 			isolatedStorageServiceFacade.SetDefault(
 				DefaultFavoriteRows,
@@ -106,6 +112,16 @@ namespace EveWindowsPhone {
 			isolatedStorageServiceFacade.SetDefault(
 				DefaultActivateZoomOnKeyboardValue,
 				IsolatedStorageServiceFacade.ActivateZoomOnKeyboardValueKey);
+
+			// Lights settings
+			isolatedStorageServiceFacade.SetDefault(
+				DefaultLightRefreshRate,
+				IsolatedStorageServiceFacade.LightsRefreshRateKey);
+
+			// Ambiental settings
+			isolatedStorageServiceFacade.SetDefault(
+				DefaultLightRefreshRate,
+				IsolatedStorageServiceFacade.AmbientalRefreshRateKey);
 		}
 
 		// Code to execute when the application is activated (brought to foreground)

@@ -9,6 +9,7 @@ using Eve.API.Services.Contracts;
 using Eve.Diagnostics.Logging;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Modules;
+using EveWindowsPhone.Pages.AdvancedSettings;
 using EveWindowsPhone.RelayServiceReference;
 using EveWindowsPhone.ViewModels;
 using Microsoft.Phone.Controls;
@@ -243,6 +244,10 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 				this.relayServiceFacade.Proxy.Relay.SetZoomAsync(
 					this.relayServiceFacade.Proxy.ActiveDetails, 100);
 			}
+		}
+
+		public void AdvancedSettings() {
+			AdvancedSettingsView.NavigateWithIndex(this.navigationServiceFacade, 2);
 		}
 	}
 }

@@ -9,7 +9,7 @@ using EveWindowsPhone.ViewModels;
 
 namespace EveWindowsPhone.Pages.Modules.Vision {
 	[Module("MVision", "Vision",
-		"/Resources/Images/",
+		"/Resources/Images/Webcam.png",
 		"/Pages/Modules/Vision/VisionView.xaml")]
 	public class VisionViewModel : NotificationObject {
 		private readonly Log.LogInstance log =

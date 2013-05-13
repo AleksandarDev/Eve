@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Eve.Diagnostics.Logging;
+using EveWindowsPhone.Adapters;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
@@ -33,6 +34,24 @@ namespace EveWindowsPhone.Pages.AdvancedSettings {
 
 				this.log.Info("Changing view to page {0}", index);
 			}
+		}
+
+		private void ClearFavoriteModules(object sender, RoutedEventArgs e) {
+			this.ViewModel.ClearFavoriteModules();
+		}
+
+		protected override void OnNavigatedTo(NavigationEventArgs e) {
+			base.OnNavigatedTo(e);
+
+			// Update settings on reload
+			this.ViewModel.LoadSettings();
+		}
+
+		public static void NavigateWithIndex(INavigationServiceFacade navigationServiceFacede, int landOnPageIndex = 0) {
+			navigationServiceFacede.Navigate(
+				new Uri(
+					"/Pages/AdvancedSettings/AdvancedSettingsView.xaml?Index=" +
+					landOnPageIndex, UriKind.Relative));
 		}
 
 		#region Properties

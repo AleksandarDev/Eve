@@ -24,8 +24,8 @@ using Size = System.Drawing.Size;
 
 namespace EveControl.Windows.Vision {
 	public partial class VisionView : MetroWindow {
-		private readonly Log.LogInstance log = new
-			Log.LogInstance(typeof(VisionView));
+		private readonly Eve.Diagnostics.Logging.Log.LogInstance log = new
+			Eve.Diagnostics.Logging.Log.LogInstance(typeof(VisionView));
 
 		private Size videoPlayerSize = new Size(320, 240);
 		private VideoSourcePlayer videoSourcePlayer;

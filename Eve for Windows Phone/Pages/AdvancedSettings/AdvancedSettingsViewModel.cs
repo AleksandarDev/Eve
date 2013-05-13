@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using EveWindowsPhone.Adapters;
+using EveWindowsPhone.Modules;
 using EveWindowsPhone.ViewModels;
 
 namespace EveWindowsPhone.Pages.AdvancedSettings {
@@ -9,12 +10,14 @@ namespace EveWindowsPhone.Pages.AdvancedSettings {
 		private readonly INavigationServiceFacade navigationServiceFacade;
 		private readonly IIsolatedStorageServiceFacade isolatedStorageServiceFacade;
 
+		private string clientID;
 		private int favoriteRows;
 		private bool activateZoomOnTouch;
 		private int activateZoomOnTouchValue;
 		private bool activateZoomOnKeyboard;
 		private int activateZoomOnKeyboardValue;
-
+		private int lightsRefreshRateValue;
+		private int ambientalRefreshRateValue;
 
 		public AdvancedSettingsViewModel(
 			INavigationServiceFacade navigationServiceFacade,
@@ -38,10 +41,23 @@ namespace EveWindowsPhone.Pages.AdvancedSettings {
 				4
 			};
 
+			// Generate refresh rates
+			this.RefreshRatesList = new List<int>() {
+				200,
+				500,
+				1000,
+				5000
+			};
+
 			this.LoadSettings();
 		}
 
-		private void LoadSettings() {
+		public void LoadSettings() {
+			// CLientID settings
+			this.ClientID =
+				this.isolatedStorageServiceFacade.GetSetting<string>(
+					IsolatedStorageServiceFacade.ClientIDKey);
+
 			// Favorites settings
 			this.FavoriteRows =
 				this.isolatedStorageServiceFacade.GetSetting<int>(
@@ -64,9 +80,34 @@ namespace EveWindowsPhone.Pages.AdvancedSettings {
 			this.activateZoomOnKeyboardValue =
 				this.isolatedStorageServiceFacade.GetSetting<int>(
 					IsolatedStorageServiceFacade.ActivateZoomOnKeyboardValueKey);
+
+			// Lights settings
+			this.LightsRefreshRateValue =
+				this.isolatedStorageServiceFacade.GetSetting<int>(
+					IsolatedStorageServiceFacade.LightsRefreshRateKey);
+
+			// Ambiental settings
+			this.AmbientalsRefreshRateValue =
+				this.isolatedStorageServiceFacade.GetSetting<int>(
+					IsolatedStorageServiceFacade.AmbientalRefreshRateKey);
+		}
+
+		public void ClearFavoriteModules() {
+			// Saves empty list of favorites (clears facorites)
+			this.isolatedStorageServiceFacade.SaveFavoriteModules(new FavoriteModules());
 		}
 
 		#region Properties
+
+		public string ClientID {
+			get { return this.clientID; }
+			set { this.clientID = value;
+				RaisePropertyChanged("ClientID");
+				this.isolatedStorageServiceFacade.SetSetting(
+					this.clientID,
+					IsolatedStorageServiceFacade.ClientIDKey);
+			}
+		}
 
 		public int FavoriteRows {
 			get { return this.favoriteRows; }
@@ -124,7 +165,30 @@ namespace EveWindowsPhone.Pages.AdvancedSettings {
 		}
 
 		public List<int> ActivateZoomValuesList { get; protected set; }
-		public List<int> FavoriteRowsList { get; protected set; } 
+		public List<int> FavoriteRowsList { get; protected set; }
+
+		public List<int> RefreshRatesList { get; protected set; }
+
+		public int LightsRefreshRateValue {
+			get { return this.lightsRefreshRateValue; }
+			set { this.lightsRefreshRateValue = value;
+				RaisePropertyChanged("LightsRefreshRateValue");
+				this.isolatedStorageServiceFacade.SetSetting(
+					this.lightsRefreshRateValue,
+					IsolatedStorageServiceFacade.LightsRefreshRateKey);
+			}
+		}
+
+		public int AmbientalsRefreshRateValue {
+			get { return this.ambientalRefreshRateValue; }
+			set {
+				this.ambientalRefreshRateValue = value;
+				RaisePropertyChanged("AmbientalsRefreshRateValue");
+				this.isolatedStorageServiceFacade.SetSetting(
+					this.ambientalRefreshRateValue,
+					IsolatedStorageServiceFacade.AmbientalRefreshRateKey);
+			}
+		}
 
 		#endregion
 	}

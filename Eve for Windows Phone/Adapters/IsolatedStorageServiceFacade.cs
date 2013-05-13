@@ -12,6 +12,9 @@ namespace EveWindowsPhone.Adapters {
 		public const string ActivateZoomOnKeyboardValueKey = "ActivateZoomOnKeyboardValue";
 		public const string FavoriteModulesKey = "FavoriteModules";
 		public const string FavoriteRowsKey = "FavoriteRowsNumber";
+		public const string ClientIDKey = "ClientUID";
+		public const string LightsRefreshRateKey = "LightsRefreshRate";
+		public const string AmbientalRefreshRateKey = "AmbientalRefreshRate";
 
 		protected readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(IsolatedStorageServiceFacade));

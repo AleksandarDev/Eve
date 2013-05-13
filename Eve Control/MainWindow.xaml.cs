@@ -24,7 +24,6 @@ using System.Windows.Shapes;
 using Eve.API;
 using Eve.API.Process;
 using Eve.API.Scripting;
-using Eve.API.Services.Common;
 using Eve.API.Speech;
 using Eve.API.Text;
 using Eve.API.Touch;
@@ -34,6 +33,7 @@ using Eve.Core.Kinect;
 using Eve.Diagnostics.Logging;
 using EveControl.Communication;
 using EveControl.RelayServiceReference;
+using EveControl.Windows.Log;
 using EveControl.Windows.Vision;
 using Fleck2;
 using Fleck2.Interfaces;
@@ -60,6 +60,10 @@ namespace EveControl {
 		}
 
 		private async void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
+			// Open log window
+			var logView = new LogView();
+			logView.Show();
+
 			if (!ProviderManager.IsInitialized)
 				ProviderManager.OnInitialized += async () => await this.MainWindowOnProvidersInitializedAsync();
 			else await this.MainWindowOnProvidersInitializedAsync();
@@ -162,8 +166,10 @@ namespace EveControl {
 			//				  this.chromeServer.ServerLocation), typeof(MainWindow).Name);
 
 			// Relay proxy
-			this.serviceClientData = new ServiceClient("Aleksandar Toplek Laptop",
-													   "AleksandarPC");
+			this.serviceClientData = new ServiceClient() {
+				Alias = "Aleksandar Toplek Laptop",
+				ID = "AleksandarPC"
+			};
 			this.callbackHandler = new RelayServiceCallbackHandler();
 			this.relay = new RelayProxy(callbackHandler);
 			this.relay.ConnectionChanged += this.HandleRelayConnectionChanged;

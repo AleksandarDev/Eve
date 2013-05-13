@@ -7,6 +7,7 @@ using System.Windows;
 using Eve.Diagnostics.Logging;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Modules;
+using EveWindowsPhone.Pages.AdvancedSettings;
 using EveWindowsPhone.ViewModels;
 
 namespace EveWindowsPhone.Pages.Main {
@@ -19,6 +20,7 @@ namespace EveWindowsPhone.Pages.Main {
 
 		private bool isEditingFavorites;
 		private int tileRows;
+		private string clientID;
 
 
 		public MainViewModel(INavigationServiceFacade navigationServiceFacade,
@@ -44,9 +46,12 @@ namespace EveWindowsPhone.Pages.Main {
 		public void LoadSettings() {
 			this.tileRows = this.isolatedStorageServiceFacade.GetSetting<int>(
 				IsolatedStorageServiceFacade.FavoriteRowsKey);
+
+			this.ClientID = this.isolatedStorageServiceFacade.GetSetting<string>(
+				IsolatedStorageServiceFacade.ClientIDKey);
 		}
 
-		private void LoadModules() {
+		public void LoadModules() {
 			// Get modules locator object
 			var modulesLocator =
 				Application.Current.Resources["ModulesLocator"] as ModulesLocator;
@@ -104,11 +109,15 @@ namespace EveWindowsPhone.Pages.Main {
 				new Uri("/Pages/ChangeClient/CreateClientView.xaml", UriKind.Relative));
 		}
 
-		public void AdvancedSettings(int landOnPageIndex = 0) {
-			this.navigationServiceFacade.Navigate(
-				new Uri(
-					"/Pages/AdvancedSettings/AdvancedSettingsView.xaml?Index=" +
-					landOnPageIndex, UriKind.Relative));
+		public void AdvancedSettings() {
+			AdvancedSettingsView.NavigateWithIndex(this.navigationServiceFacade, 1);
+		}
+
+		public void NavigateTo(Module module) {
+			// Navigate to module view
+			if (!this.navigationServiceFacade.Navigate(
+				new Uri(module.View, UriKind.Relative)))
+				this.log.Warn("Couldn't navigate to \"{0}\" module's view", module.Name);
 		}
 
 		#region Properties
@@ -128,13 +137,17 @@ namespace EveWindowsPhone.Pages.Main {
 			get { return this.tileRows; }
 		}
 
-		#endregion
-
-		public void NavigateTo(Module module) {
-			// Navigate to module view
-			if (!this.navigationServiceFacade.Navigate(
-				new Uri(module.View, UriKind.Relative)))
-				this.log.Warn("Couldn't navigate to \"{0}\" module's view", module.Name);
+		public string ClientID {
+			get { return this.clientID; }
+			set {
+				this.clientID = value;
+				this.RaisePropertyChanged("ClientID");
+				this.isolatedStorageServiceFacade.SetSetting(
+					this.clientID,
+					IsolatedStorageServiceFacade.ClientIDKey);
+			}
 		}
+
+		#endregion
 	}
 }

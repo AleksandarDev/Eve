@@ -5,6 +5,7 @@ using System.Text;
 using Eve.Diagnostics.Logging;
 using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Modules;
+using EveWindowsPhone.Pages.AdvancedSettings;
 using EveWindowsPhone.ViewModels;
 
 namespace EveWindowsPhone.Pages.Modules.Play {
@@ -33,6 +34,10 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			this.navigationServiceFacade = navigationServiceFacade;
 			this.isolatedStorageServiceFacade = isolatedStorageServiceFacade;
 			this.relayServiceFacade = relayServiceFacade;
+		}
+
+		public void AdvancedSettings() {
+			AdvancedSettingsView.NavigateWithIndex(this.navigationServiceFacade, 6);
 		}
 	}
 }

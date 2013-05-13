@@ -130,6 +130,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Log\LogView.xaml.cs">
+      <DependentUpon>LogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Vision\VisionView.xaml.cs">
       <DependentUpon>VisionView.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\Log\LogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Vision\VisionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -184,10 +191,6 @@
     <None Include="Service References\RelayServiceReference\ClientRelayService.wsdl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Eve.API.Services.Common\Eve.API.Services.Common.csproj">
-      <Project>{911D7554-7905-4AA6-906F-5E73E5788E47}</Project>
-      <Name>Eve.API.Services.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Eve.API\Eve.API.csproj">
       <Project>{09f82341-e1f6-42d0-8d98-a76ecd27bc89}</Project>
       <Name>Eve.API</Name>

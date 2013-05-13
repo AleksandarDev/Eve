@@ -87,24 +87,43 @@ namespace Eve.API.Services.Relay {
 
 		#region Lights implementation
 
-		public Light[] GetLights() {
-			// TODO Implement
-			return new Light[] {
-				new Light(0, "Living Room", true),
-				new Light(1, "Bedroom", true)
-			};
+		public Light[] GetLights(ServiceRequestDetails details) {
+			var callback = this.GetCallback(details);
+			if (callback == null) return null;
+
+			return callback.GetLights(details);
+		}
+
+		public bool SetLightState(ServiceRequestDetails details, int id, bool state) {
+			var callback = this.GetCallback(details);
+			if (callback == null) return false;
+
+			return callback.SetLightState(details, id, state);
 		}
 
 		#endregion
 
 		#region Ambiental implementation
 
-		public AmbientalLight[] GetAmbientalLights() {
-			return new AmbientalLight[] {
-				new AmbientalLight(0, "Living Room Ceiling", true, 0, 255, 255, 255),
-				new AmbientalLight(0, "Bedroom Ceiling", true, 255, 55, 55, 255),
-				new AmbientalLight(0, "Kitchen", true, 255, 255, 255, 255)
-			};
+		public AmbientalLight[] GetAmbientalLights(ServiceRequestDetails details) {
+			var callback = this.GetCallback(details);
+			if (callback == null) return null;
+
+			return callback.GetAmbientalLights(details);
+		}
+
+		public bool SetAmbientalLightState(ServiceRequestDetails details, int id, bool state) {
+			var callback = this.GetCallback(details);
+			if (callback == null) return false;
+
+			return callback.SetAmbientalLightState(details, id, state);
+		}
+
+		public bool SetAmbientalLightColor(ServiceRequestDetails details, int id, byte r, byte g, byte b, byte a) {
+			var callback = this.GetCallback(details);
+			if (callback == null) return false;
+
+			return callback.SetAmbientalLightColor(details, id, r, g, b, a);
 		}
 
 		#endregion

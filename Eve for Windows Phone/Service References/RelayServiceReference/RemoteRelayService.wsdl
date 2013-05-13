@@ -93,25 +93,80 @@
       </xs:element>
       <xs:element name="GetLights">
         <xs:complexType>
-          <xs:sequence />
+          <xs:sequence>
+            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q9:ServiceRequestDetails" />
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="GetLightsResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" minOccurs="0" name="GetLightsResult" nillable="true" type="q9:ArrayOfLight" />
+            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" minOccurs="0" name="GetLightsResult" nillable="true" type="q10:ArrayOfLight" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetLightState">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q11:ServiceRequestDetails" />
+            <xs:element minOccurs="0" name="id" type="xs:int" />
+            <xs:element minOccurs="0" name="state" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetLightStateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="SetLightStateResult" type="xs:boolean" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="GetAmbientalLights">
         <xs:complexType>
-          <xs:sequence />
+          <xs:sequence>
+            <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q12:ServiceRequestDetails" />
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="GetAmbientalLightsResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Ambiental" minOccurs="0" name="GetAmbientalLightsResult" nillable="true" type="q10:ArrayOfAmbientalLight" />
+            <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Ambiental" minOccurs="0" name="GetAmbientalLightsResult" nillable="true" type="q13:ArrayOfAmbientalLight" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetAmbientalLightState">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q14:ServiceRequestDetails" />
+            <xs:element minOccurs="0" name="id" type="xs:int" />
+            <xs:element minOccurs="0" name="state" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetAmbientalLightStateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="SetAmbientalLightStateResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetAmbientalLightColor">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common" minOccurs="0" name="details" nillable="true" type="q15:ServiceRequestDetails" />
+            <xs:element minOccurs="0" name="id" type="xs:int" />
+            <xs:element minOccurs="0" name="r" type="xs:unsignedByte" />
+            <xs:element minOccurs="0" name="g" type="xs:unsignedByte" />
+            <xs:element minOccurs="0" name="b" type="xs:unsignedByte" />
+            <xs:element minOccurs="0" name="a" type="xs:unsignedByte" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetAmbientalLightColorResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="SetAmbientalLightColorResult" type="xs:boolean" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -377,11 +432,29 @@
   <wsdl:message name="IEveAPIService_GetLights_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetLightsResponse" />
   </wsdl:message>
+  <wsdl:message name="IEveAPIService_SetLightState_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetLightState" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SetLightState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetLightStateResponse" />
+  </wsdl:message>
   <wsdl:message name="IEveAPIService_GetAmbientalLights_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAmbientalLights" />
   </wsdl:message>
   <wsdl:message name="IEveAPIService_GetAmbientalLights_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAmbientalLightsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SetAmbientalLightState_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetAmbientalLightState" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SetAmbientalLightState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetAmbientalLightStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SetAmbientalLightColor_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetAmbientalLightColor" />
+  </wsdl:message>
+  <wsdl:message name="IEveAPIService_SetAmbientalLightColor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetAmbientalLightColorResponse" />
   </wsdl:message>
   <wsdl:portType name="IEveAPIService">
     <wsdl:operation name="SignIn">
@@ -412,9 +485,21 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/GetLights" message="tns:IEveAPIService_GetLights_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/GetLightsResponse" message="tns:IEveAPIService_GetLights_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SetLightState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SetLightState" message="tns:IEveAPIService_SetLightState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SetLightStateResponse" message="tns:IEveAPIService_SetLightState_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetAmbientalLights">
       <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/GetAmbientalLights" message="tns:IEveAPIService_GetAmbientalLights_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/GetAmbientalLightsResponse" message="tns:IEveAPIService_GetAmbientalLights_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetAmbientalLightState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SetAmbientalLightState" message="tns:IEveAPIService_SetAmbientalLightState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SetAmbientalLightStateResponse" message="tns:IEveAPIService_SetAmbientalLightState_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetAmbientalLightColor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEveAPIService/SetAmbientalLightColor" message="tns:IEveAPIService_SetAmbientalLightColor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEveAPIService/SetAmbientalLightColorResponse" message="tns:IEveAPIService_SetAmbientalLightColor_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEveAPIService" type="tns:IEveAPIService">
@@ -482,8 +567,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SetLightState">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SetLightState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetAmbientalLights">
       <soap:operation soapAction="http://tempuri.org/IEveAPIService/GetAmbientalLights" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetAmbientalLightState">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SetAmbientalLightState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetAmbientalLightColor">
+      <soap:operation soapAction="http://tempuri.org/IEveAPIService/SetAmbientalLightColor" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

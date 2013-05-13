@@ -5,14 +5,23 @@
 	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
 	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
 	xmlns:viewModels="clr-namespace:EveWindowsPhone.ViewModels" 
-	xmlns:modules="clr-namespace:EveWindowsPhone.Modules">
+	xmlns:modules="clr-namespace:EveWindowsPhone.Modules"
+	xmlns:converters="clr-namespace:Coding4Fun.Toolkit.Controls.Converters;assembly=Coding4Fun.Toolkit.Controls"
+	xmlns:convertersLocal="clr-namespace:EveWindowsPhone.Converters"
+	xmlns:controlsc4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls">
 
 	<!--Application Resources-->
 	<Application.Resources>
 		<ResourceDictionary>
+			<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+			<convertersLocal:AmbientalLightToColorConverter x:Key="AmbientalLightToColorConverter" />
+			<convertersLocal:AmbientalLightToSolidBrushConverter x:Key="AmbientalLightToSolidBrushConverter" />
+			
 			<!-- Locators -->
 			<viewModels:ViewModelLocator x:Key="ViewModelLocator"/>
 			<modules:ModulesLocator x:Key="ModulesLocator" />
+			
+			
 		</ResourceDictionary>
 	</Application.Resources>
 
