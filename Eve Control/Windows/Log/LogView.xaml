@@ -2,10 +2,34 @@
 					  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-					  Title="Eve - Eve.Diagnostics.Log" Height="700" Width="400"
+					  Title="Eve - Eve.Diagnostics.Log" Height="700" Width="800"
+					  GlowBrush="{DynamicResource AccentColorBrush}" 
 					  DataContext="{Binding RelativeSource={RelativeSource Self}}"
 					  SaveWindowPosition="True">
-	<Grid>
-		<ListBox x:Name="LogList" ItemsSource="{Binding Messages}" Margin="12" />
+	<Grid Margin="12">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<TreeView x:Name="LogInstanceTypesListBox" MinWidth="240" />
+		<Grid Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<StackPanel Orientation="Horizontal" Margin="5,3">
+				<ToggleButton Content="Auto-Scroll" IsChecked="{Binding IsAutoScroll}" Margin="5,3" />
+				<CheckBox Content="WriteLine" IsChecked="{Binding ShowWriteMessages}" Margin="5,3" VerticalAlignment="Center" />
+				<CheckBox Content="Debug" IsChecked="{Binding ShowDebugMessages}" Margin="5,3" VerticalAlignment="Center" />
+				<CheckBox Content="Info" IsChecked="{Binding ShowInfoMessages}" Margin="5,3" VerticalAlignment="Center" />
+				<CheckBox Content="Warning" IsChecked="{Binding ShowWarnMessages}" Margin="5,3" VerticalAlignment="Center" />
+				<CheckBox Content="Error" IsChecked="{Binding ShowErrorMessages}" Margin="5,3" VerticalAlignment="Center" />
+			</StackPanel>
+			<TabControl x:Name="LogInstances" Grid.Row="1">
+				<TabItem Header="All">
+					<ListBox ItemsSource="{Binding Messages}" />
+				</TabItem>
+			</TabControl>
+		</Grid>
 	</Grid>
 </controls:MetroWindow>

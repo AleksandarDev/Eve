@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.IO.Ports;
 using Eve.Diagnostics.Logging;
+using EveControl.Windows.Log;
 using MahApps.Metro;
 
 namespace EveControl {
@@ -40,8 +41,10 @@ namespace EveControl {
 
 			// Enable logging
 			Log.Enabled = true;
-			Log.WriteToDebug = true;
-			Log.WriteToDebugLevel = Log.LogLevels.All;
+			//Log.WriteToDebug = true;
+			//Log.WriteToDebugLevel = Log.LogLevels.All;
+
+			this.Dispatcher.InvokeAsync(() => (new LogView()).Show());
 		}
 	}
 }

@@ -94,7 +94,6 @@
     </Compile>
     <Compile Include="Converters\AmbientalLightToColorConverter.cs" />
     <Compile Include="Converters\AmbientalLightToSolidBrushConverter.cs" />
-    <Compile Include="Effects\TiltEffect.cs" />
     <Compile Include="Modules\FavoriteModule.cs" />
     <Compile Include="Modules\FavoriteModules.cs" />
     <Compile Include="Adapters\IIsolatedStorageServiceFacade.cs" />

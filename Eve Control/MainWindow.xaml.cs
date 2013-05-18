@@ -60,10 +60,6 @@ namespace EveControl {
 		}
 
 		private async void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
-			// Open log window
-			var logView = new LogView();
-			logView.Show();
-
 			if (!ProviderManager.IsInitialized)
 				ProviderManager.OnInitialized += async () => await this.MainWindowOnProvidersInitializedAsync();
 			else await this.MainWindowOnProvidersInitializedAsync();

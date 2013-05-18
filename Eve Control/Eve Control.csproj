@@ -125,6 +125,7 @@
     <Compile Include="Communication\RelayServiceCallbackHandler.cs" />
     <Compile Include="Communication\RelayProxy.cs" />
     <Compile Include="Communication\RelayProxyEventHandler.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service References\RelayServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
