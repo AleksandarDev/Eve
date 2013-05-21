@@ -24,6 +24,7 @@ namespace Eve.API {
 			this.IsRunning = true;
 			this.log.Info("Provider started");
 
+			// BUG this is called twice, first time it's null and removes all events after that for some reason
 			if (this.OnStarted != null)
 				this.OnStarted(this);
 		}

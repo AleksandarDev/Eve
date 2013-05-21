@@ -33,6 +33,7 @@ using Eve.Core.Kinect;
 using Eve.Diagnostics.Logging;
 using EveControl.Communication;
 using EveControl.RelayServiceReference;
+using EveControl.Windows.FaceController;
 using EveControl.Windows.Log;
 using EveControl.Windows.Vision;
 using Fleck2;
@@ -77,6 +78,10 @@ namespace EveControl {
 					new SpeechPrompt("Speech provider started..."));
 				await ProviderManager.SpeechProvider.SpeakAsync(
 					new SpeechPrompt("Welcome!"));
+			};
+
+			ProviderManager.FaceControllerProvider.OnStarted += p => {
+				(new FaceControllerView()).Show();
 			};
 
 			//SpeechProvider.OnRecognitionAccepted += args => {
