@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -17,6 +20,8 @@ using EveWindowsPhone.Modules;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using EveWindowsPhone.RelayServiceReference;
+using Microsoft.Phone.Tasks;
+using Microsoft.Phone.UserData;
 
 namespace EveWindowsPhone.Pages.Main {
 	public partial class MainView : PhoneApplicationPage {
@@ -46,37 +51,17 @@ namespace EveWindowsPhone.Pages.Main {
 
 
 		private void MainViewLoaded(object sender, RoutedEventArgs e) {
-			// Update settings on reload
-			this.ViewModel.LoadSettings();
-
 			this.LoadApplicationBar();
 			this.LoadFavoriteModules();
+		}
 
-			// TODO Testing only Remove
-#if DEBUG
+		protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e) {
+			base.OnNavigatedTo(e);
 
-			this.log.Info("Connecting to relay service...");
-			var client = new EveAPIServiceClient();
-			client.OpenAsync();
-			client.OpenCompleted += (o, args) => {
-				this.log.Info("Connected to relay service");
-				this.log.Info("Pinging service...");
-				client.PingAsync("Windows Phone");
-				client.PingCompleted +=
-					(s, ea) => {
-						this.log.Info("Got result from ping: \n" + ea.Result);
-						this.Title = ea.Result;
-
-						client.GetAvailableClientsAsync();
-						client.GetAvailableClientsCompleted += (sender1, eventArgs) => {
-							foreach (var serviceClient in eventArgs.Result) {
-								this.log.Info(serviceClient.ID);
-							}
-						};
-					};
-			};
-
-#endif
+			// Update settings on reload
+			this.ViewModel.LoadSettings();
+			this.ViewModel.LoadModules();
+			this.LoadFavoriteModules();
 		}
 
 		private void PanoramaSelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -97,17 +82,23 @@ namespace EveWindowsPhone.Pages.Main {
 		}
 
 		private void PopulateApplicationBar() {
+			// Favorite modules page
+			var favoriteModulesPage = new ApplicationBarPage(ApplicationBarMode.Default);
+			favoriteModulesPage.AddIconButton("settings...",
+											  new Uri("/Resources/Images/Settings-02.png", UriKind.Relative), this.ViewModel.AdvancedSettings);
+			this.applicationBarController.AddPage("favorite", favoriteModulesPage);
+
 			// All Modules page
 			var allModuesPage = new ApplicationBarPage(ApplicationBarMode.Default);
 			allModuesPage.AddIconButton("edit favorites", new Uri("/Resources/Images/Heart.png", UriKind.Relative),
-										() => { this.SetEditFavoriteModules(!this.isEditingFavoriteModules); });
+										() => this.SetEditFavoriteModules(!this.isEditingFavoriteModules));
 			allModuesPage.AddIconButton("get more", new Uri("/Resources/Images/Shopping Bag.png", UriKind.Relative), () => { });
 			this.applicationBarController.AddPage("all modules", allModuesPage);
 
 			// Options page
 			var optionsPage = new ApplicationBarPage(ApplicationBarMode.Default);
 			optionsPage.AddIconButton("about", new Uri("/Resources/Images/About.png", UriKind.Relative),
-									  () => { this.ShowAboutPrompt(); });
+									  this.ShowAboutPrompt);
 			this.applicationBarController.AddPage("options", optionsPage);
 		}
 
@@ -124,17 +115,25 @@ namespace EveWindowsPhone.Pages.Main {
 		#region Favorite modules
 
 		private void LoadFavoriteModules() {
+			if (this.FavoriteModulesGrid.ActualHeight == 0) return;
+
 			// Initial variable values
-			this.tileHeight = this.FavoriteModulesGrid.ActualHeight/this.ViewModel.TileRows - 2*TileMargins;
+			this.tileHeight =
+				(this.FavoriteModulesGrid.ActualHeight -
+				 this.FavoriteModulesGrid.Margin.Bottom -
+				 this.FavoriteModulesGrid.Margin.Top) / this.ViewModel.TileRows -
+				2 * TileMargins;
 
 			// Attach on favorite modules collection changed
-			this.ViewModel.FavoriteModules.CollectionChanged += (sender, args) => { this.UpdateFavoriteModulesLayout(); };
+			this.ViewModel.FavoriteModules.CollectionChanged += (sender, args) => this.UpdateFavoriteModulesLayout();
 
 			// Initial layout for favorite modules
 			this.UpdateFavoriteModulesLayout();
 		}
 
 		private void UpdateFavoriteModulesLayout() {
+			if (this.ViewModel.FavoriteModules.Count == 0) return;
+
 			// Clear all previous data
 			this.FavoriteModulesGrid.Children.Clear();
 			this.FavoriteModulesGrid.RowDefinitions.Clear();
@@ -146,11 +145,11 @@ namespace EveWindowsPhone.Pages.Main {
 			// Generate row and column definitions
 			for (int index = 0; index < this.ViewModel.TileRows; index++) {
 				this.FavoriteModulesGrid.RowDefinitions.Add(
-					new RowDefinition() { Height = new GridLength(tileHeight + 2 * TileMargins) });
+					new RowDefinition() { Height = new GridLength(this.tileHeight + 2 * TileMargins) });
 			}
 			for (int index = 0; index < numColumns; index++) {
 				this.FavoriteModulesGrid.ColumnDefinitions.Add(
-					new ColumnDefinition() { Width = new GridLength(tileHeight + 2 * TileMargins) });
+					new ColumnDefinition() { Width = new GridLength(this.tileHeight + 2 * TileMargins) });
 			}
 
 			// Generate tiles
@@ -180,7 +179,7 @@ namespace EveWindowsPhone.Pages.Main {
 
 		public void SetEditFavoriteModules(bool mode) {
 			this.isEditingFavoriteModules = mode;
-			this.ViewModel.SetModulesIsEditing(mode);
+			this.ViewModel.SetModulesEditMode(mode);
 			if (!mode) this.ViewModel.SaveFavorites();
 		}
 
@@ -205,12 +204,19 @@ namespace EveWindowsPhone.Pages.Main {
 		}
 
 		private void ShowAboutPrompt() {
+			this.LayoutRoot.SetValue(Panorama.SelectedIndexProperty, 0);
+			this.LayoutRoot.Measure(new Size());
+
 			var aboutPrompt = new AboutPrompt() {
 				Title = "SyncUp for Eve",
 				VersionNumber = "Version 0.1 Alpha",
 				Footer = "Visit us at http://eve.toplek.net"
 			};
 			aboutPrompt.Show();
+		}
+
+		private void AdvancedSettingOnClick(object sender, RoutedEventArgs e) {
+			this.ViewModel.AdvancedSettings();
 		}
 
 		#endregion
@@ -220,9 +226,5 @@ namespace EveWindowsPhone.Pages.Main {
 		public MainViewModel ViewModel { get; private set; }
 
 		#endregion
-
-		private void AdvancedSettingOnClick(object sender, RoutedEventArgs e) {
-			this.ViewModel.AdvancedSettings();
-		}
 	}
 }

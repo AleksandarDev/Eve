@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
 using System.Media;
+using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Speech.Synthesis;
 using System.Text;
@@ -19,27 +21,37 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Eve.API;
+using Eve.API.Process;
 using Eve.API.Scripting;
 using Eve.API.Speech;
+using Eve.API.Text;
 using Eve.API.Touch;
 using Eve.API.Vision;
 using Eve.Core.Chrome;
 using Eve.Core.Kinect;
-using Eve.Core.Loging;
+using Eve.Diagnostics.Logging;
 using EveControl.Communication;
-using Eve_Control.Windows.Vision;
+using EveControl.RelayServiceReference;
+using EveControl.Windows.Log;
+using EveControl.Windows.Vision;
 using Fleck2;
 using Fleck2.Interfaces;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 
-namespace Eve_Control {
+namespace EveControl {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : MetroWindow {
+		// TODO Open magnifier when using touch option
+		// TODO Chrome server to provider
+
 		private readonly Log.LogInstance log = new Log.LogInstance(typeof(MainWindow));
 		private RelayProxy relay;
+		private RelayServiceCallbackHandler callbackHandler;
+		private ServiceClient serviceClientData;
 		private ChromeServer chromeServer;
 
 
@@ -48,16 +60,24 @@ namespace Eve_Control {
 		}
 
 		private async void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
-			//await KinectService.Start();
-			//await SpeechProvider.Start();
-			//await TouchProvider.Start();
-			//await ScriptingProvider.Start();
-			this.Closing += async (s, es) => { await StopServices(); };
+			if (!ProviderManager.IsInitialized)
+				ProviderManager.OnInitialized += async () => await this.MainWindowOnProvidersInitializedAsync();
+			else await this.MainWindowOnProvidersInitializedAsync();
+		}
 
-			System.Diagnostics.Debug.WriteLine("All Services started...", "Eve Control");
+		private async Task MainWindowOnProvidersInitializedAsync() {
+			// Start providers
+			this.ShowCloseButton = false;
+			await ProviderManager.StartAsync();
+			this.ShowCloseButton = true;
 
-			//await SpeechProvider.Speak(new Prompt("Services initialized..."));
-			//await SpeechProvider.Speak(new Prompt("Welcome!"));
+			// SpeechProvider hello message
+			ProviderManager.SpeechProvider.OnStarted += async p => {
+				await ProviderManager.SpeechProvider.SpeakAsync(
+					new SpeechPrompt("Speech provider started..."));
+				await ProviderManager.SpeechProvider.SpeakAsync(
+					new SpeechPrompt("Welcome!"));
+			};
 
 			//SpeechProvider.OnRecognitionAccepted += args => {
 			//	if (args.Result.Semantics.Value.ToString() == "NextSong") {
@@ -135,40 +155,27 @@ namespace Eve_Control {
 			//	}));
 			//};
 
-			// Setup speech service
-			//this.speechServiceHost = new ServiceHost(
-			//	typeof (SpeechService), 
-			//	new Uri("http://AleksandarPC:41250/"));
-			//this.speechServiceHost.AddServiceEndpoint(
-			//	typeof (Eve.API.Services.Speech.ISpeechService),
-			//	new BasicHttpBinding(), "/API/Speech/");
-			//this.speechServiceHost.Open();
-			//System.Diagnostics.Debug.WriteLine("SpeechService opened.", typeof (MainWindow).Name);
+			// Chrome server
+			//this.chromeServer = new ChromeServer();
+			//System.Diagnostics.Debug.WriteLine(
+			//	String.Format("WebSocket server started on \"{0}\"",
+			//				  this.chromeServer.ServerLocation), typeof(MainWindow).Name);
 
-			//this.touchServiceHost = new ServiceHost(
-			//	typeof (TouchService),
-			//	new Uri("http://AleksandarPC:41251/"));
-			//this.touchServiceHost.AddServiceEndpoint(
-			//	typeof (Eve.API.Services.Touch.ITouchService),
-			//	new BasicHttpBinding(), "/API/Touch/");
-			//this.touchServiceHost.Open();
-			//System.Diagnostics.Debug.WriteLine("TouchService opened.", typeof (MainWindow).Name);
-
-			this.chromeServer = new ChromeServer();
-			System.Diagnostics.Debug.WriteLine(
-				String.Format("WebSocket server started on \"{0}\"",
-							  this.chromeServer.ServerLocation), typeof(MainWindow).Name);
-
-			var callbackHandler = new RelayServiceCallbackHandler();
+			// Relay proxy
+			this.serviceClientData = new ServiceClient() {
+				Alias = "Aleksandar Toplek Laptop",
+				ID = "AleksandarPC"
+			};
+			this.callbackHandler = new RelayServiceCallbackHandler();
 			this.relay = new RelayProxy(callbackHandler);
 			this.relay.ConnectionChanged += this.HandleRelayConnectionChanged;
 			this.relay.OnOpened += async relayClient => {
-				log.Info("Subscribing to relay service...");
-				await relay.Relay.SubscribeAsync();
-				log.Info("Subscribed to relay service successful");
+				this.log.Info("Subscribing to relay service...");
+				await relay.Relay.SubscribeAsync(this.serviceClientData);
+				this.log.Info("Subscribed to relay service successful");
 			};
-			this.Closing += (s, se) => this.CloseRelayConnection();
-			await this.relay.OpenAsync();
+
+			this.relay.OpenAsync();
 		}
 
 		private void HandleRelayConnectionChanged(RelayProxy proxy) {
@@ -178,33 +185,43 @@ namespace Eve_Control {
 													proxy.IsConnected ? "Connected" : "Connecting...");
 		}
 
-		private async void CloseRelayConnection() {
+		private async Task CloseRelayConnectionAsync() {
+			if (this.relay == null) {
+				this.log.Warn("Couldn't close connection. Relay not yet instanciated");
+				return;
+			}
+
 			// Unsubscribe from service
-			log.Info("Unsubscribing from relay service...");
-			await relay.Relay.UnsibscribeAsync();
+			this.log.Info("Unsubscribing from relay service...");
+			if (this.relay.Relay.State == CommunicationState.Opened)
+				await this.relay.Relay.UnsibscribeAsync(this.serviceClientData);
 
 			// Try closing service connection
-			log.Info("Closing connection to relay service...");
-			bool closedSuccessful = await relay.CloseAsync();
+			this.log.Info("Closing connection to relay service...");
+			bool closedSuccessful = this.relay.Close();
 			if (!closedSuccessful) {
 				// Force connection close to service
-				log.Info("Forcing connection close to relay service...");
-				closedSuccessful = await relay.CloseAsync(forceClose: true);
+				this.log.Info("Forcing connection close to relay service...");
+				closedSuccessful = await this.relay.CloseAsync(forceClose: true);
 				if (!closedSuccessful)
-					log.Error<Exception>(new Exception("Couldn't close connection"),
+					this.log.Error<Exception>(new Exception("Couldn't close connection"),
 										 "Couldn't close connection to relay service!");
 			}
-			log.Info("Connection to relay service closed");
-		}
-
-		private async Task StopServices() {
-			await ScriptingProvider.Stop();
-			await SpeechProvider.Stop();
-			await KinectService.Stop();
+			this.log.Info("Connection to relay service closed");
 		}
 
 		private void VisionViewOnClick(object sender, RoutedEventArgs e) {
 			(new VisionView()).Show();
+		}
+
+		private async void MainWindowClosing(object sender, CancelEventArgs e) {
+			if (ProviderManager.IsStarted)
+				e.Cancel = true;
+
+			await this.CloseRelayConnectionAsync();
+			await ProviderManager.StopAsync();
+
+			this.Close();
 		}
 	}
 }

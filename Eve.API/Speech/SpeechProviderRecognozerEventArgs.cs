@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Speech.Recognition;
+using System.Speech.Recognition;
 
 namespace Eve.API.Speech {
 	public class SpeechProviderRecognozerEventArgs : EventArgs {

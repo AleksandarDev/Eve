@@ -7,9 +7,12 @@ using EveWindowsPhone.Adapters;
 using EveWindowsPhone.Pages.AdvancedSettings;
 using EveWindowsPhone.Pages.ChangeClient;
 using EveWindowsPhone.Pages.Main;
+using EveWindowsPhone.Pages.Modules.Ambiental;
+using EveWindowsPhone.Pages.Modules.Keyboard;
 using EveWindowsPhone.Pages.Modules.Lights;
 using EveWindowsPhone.Pages.Modules.Play;
 using EveWindowsPhone.Pages.Modules.Touch;
+using EveWindowsPhone.Pages.Modules.Vision;
 using Funq;
 
 namespace EveWindowsPhone.Services {
@@ -28,6 +31,8 @@ namespace EveWindowsPhone.Services {
 				c => new NavigationServiceFacade(((App) Application.Current).RootFrame));
 			this.Container.Register<IIsolatedStorageServiceFacade>(
 				c => new IsolatedStorageServiceFacade());
+			this.Container.Register<IRelayServiceFacade>(
+				c => new RelayServiceFacade());
 
 			// Application Pages
 			this.Container.Register(
@@ -50,18 +55,39 @@ namespace EveWindowsPhone.Services {
 			this.Container.Register(
 				c => new TouchViewModel(
 					     c.Resolve<INavigationServiceFacade>(),
-						 c.Resolve<IIsolatedStorageServiceFacade>()
+						 c.Resolve<IIsolatedStorageServiceFacade>(),
+						 c.Resolve<IRelayServiceFacade>()
 					     )).ReusedWithin(ReuseScope.None);
 			this.Container.Register(
 				c => new LightsViewModel(
 					     c.Resolve<INavigationServiceFacade>(),
-					     c.Resolve<IIsolatedStorageServiceFacade>()
+						 c.Resolve<IIsolatedStorageServiceFacade>(),
+						 c.Resolve<IRelayServiceFacade>()
 					     )).ReusedWithin(ReuseScope.None);
 			this.Container.Register(
 				c => new PlayViewModel(
 					     c.Resolve<INavigationServiceFacade>(),
-					     c.Resolve<IIsolatedStorageServiceFacade>()
+						 c.Resolve<IIsolatedStorageServiceFacade>(),
+						 c.Resolve<IRelayServiceFacade>()
 					     )).ReusedWithin(ReuseScope.None);
+			this.Container.Register(
+				c => new AmbientalViewModel(
+						 c.Resolve<INavigationServiceFacade>(),
+						 c.Resolve<IIsolatedStorageServiceFacade>(),
+						 c.Resolve<IRelayServiceFacade>()
+						 )).ReusedWithin(ReuseScope.None);
+			this.Container.Register(
+				c => new KeyboardViewModel(
+						 c.Resolve<INavigationServiceFacade>(),
+						 c.Resolve<IIsolatedStorageServiceFacade>(),
+						 c.Resolve<IRelayServiceFacade>()
+						 )).ReusedWithin(ReuseScope.None);
+			this.Container.Register(
+				c => new VisionViewModel(
+						 c.Resolve<INavigationServiceFacade>(),
+						 c.Resolve<IIsolatedStorageServiceFacade>(),
+						 c.Resolve<IRelayServiceFacade>()
+						 )).ReusedWithin(ReuseScope.None);
 		}
 
 		#region Properties

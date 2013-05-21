@@ -10,5 +10,6 @@ namespace EveWindowsPhone.Adapters {
 		bool ContainsSetting(string settingKey);
 		T GetSetting<T>(string settingKey);
 		void SetSetting<T>(T value, string settingKey);
+		void SetDefault<T>(T defaultValue, string key);
 	}
 }

@@ -6,8 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Eve.API.Services.Contracts;
+using EveWindowsPhone.RelayServiceReference;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Microsoft.Phone.Tasks;
 
 namespace EveWindowsPhone.Pages.Modules.Touch {
 	public partial class TouchView : PhoneApplicationPage {
@@ -26,6 +28,12 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 		private void TouchViewLoaded(object sender, RoutedEventArgs e) {
 			this.AssignGestures();
+		}
+
+		protected override void OnNavigatedFrom(NavigationEventArgs e) {
+			this.ViewModel.NavigatedFrom(e);
+			
+			base.OnNavigatedFrom(e);
 		}
 
 		private void AssignGestures() {
@@ -79,5 +87,15 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 		public TouchViewModel ViewModel { get; private set; }
 
 		#endregion
+
+		private void SettingsClick(object sender, EventArgs e) {
+			this.ViewModel.AdvancedSettings();
+		}
+
+		private void HelpClick(object sender, EventArgs e) {
+			(new WebBrowserTask() {
+				Uri = new Uri("http://eve.toplek.net/help/module/touch/", UriKind.Absolute)
+			}).Show();
+		}
 	}
 }

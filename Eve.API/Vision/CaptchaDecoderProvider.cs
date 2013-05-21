@@ -6,9 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Eve.API.Vision {
-	public static class CaptchaDecoderProvider {
-		public static string Decore(ref Bitmap image) {
+	[ProviderDescription("Captcha Decoder Provider")]
+	public class CaptchaDecoderProvider : ProviderBase<CaptchaDecoderProvider> {
+		protected override void Initialize() { }
+		protected override void Uninitialize() { }
+		
+		public string Decode(Bitmap image) {
 			throw new NotImplementedException();
 		}
+
+		#region Properties
+
+		#endregion
 	}
 }

@@ -6,9 +6,8 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Text;
+using Eve.API.Services.Common;
 using Eve.API.Services.Contracts;
-using Eve.API.Services.Contracts.Services;
-using Eve.API.Services.Contracts.Services.Interfaces;
 
 namespace Eve.API.Services.Relay {
 	[AspNetCompatibilityRequirements(
@@ -17,28 +16,20 @@ namespace Eve.API.Services.Relay {
 		InstanceContextMode = InstanceContextMode.Single,
 		ConcurrencyMode = ConcurrencyMode.Reentrant, 
 		UseSynchronizationContext = false)]
-	public class RelayService : IRelayService {
-		public RelayService() {}
+	public class ClientRelayService : IClientRelayService {
+		#region IClientRelayService implementation
 
-
-		#region IRelayService implementation
-
-		public void Subscribe() {
-			RelayManager.RegisterClient(new ServiceClient("SampleClient", "SampleClient") {
-				Callback =
-					OperationContext.Current.GetCallbackChannel<IRelayCallbackContract>()
-			});
+		public bool Subscribe(ServiceClient clientData) {
+			clientData.Callback =
+				OperationContext.Current.GetCallbackChannel<IEveAPIService>();
+			return RelayManager.RegisterClient(clientData);
 		}
 
-		public void Unsibscribe() {
-			throw new NotImplementedException();
+		public bool Unsibscribe(ServiceClient clientData) {
+			return RelayManager.UnregisterClient(clientData.ID);
 		}
 
-		public bool UpdateClientState(ClientState state) {
-			throw new NotImplementedException();
-		}
-
-		public string Ping(string yourName) {
+		public string ClientPing(string yourName) {
 			return "Hello " + yourName;
 		}
 

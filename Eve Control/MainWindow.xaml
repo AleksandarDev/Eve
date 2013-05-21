@@ -1,10 +1,11 @@
-﻿<mahapps:MetroWindow x:Class="Eve_Control.MainWindow"
+﻿<mahapps:MetroWindow x:Class="EveControl.MainWindow"
 					 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 					 xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+					 xmlns:providersStatus="clr-namespace:EveControl.Controls.ProvidersStatus"
 					 Title="Eve Control" Height="400" Width="700" Icon="/Eve256.ico"
 					 SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}" 
-					 Loaded="MainWindowOnLoaded">
+					 Loaded="MainWindowOnLoaded" Closing="MainWindowClosing">
 	<mahapps:MetroWindow.WindowCommands>
 		<mahapps:WindowCommands>
 			<Button Content="settings" />
@@ -28,6 +29,8 @@
 			<TextBox x:Name="EveVoiceRecognition" IsReadOnly="True" FontSize="16" Padding="3" Margin="5" />
 			
 			<Button Content="VisionView" Grid.Row="1" Click="VisionViewOnClick" />
+			
+			<providersStatus:ProvidersStatusView Grid.Row="2" />
 		</Grid>
 		
 		<!-- Status bar -->

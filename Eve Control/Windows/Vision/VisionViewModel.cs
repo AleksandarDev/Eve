@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Eve.Core.ViewModels;
 
-namespace Eve_Control.Windows.Vision {
+namespace EveControl.Windows.Vision {
 	public class VisionViewModel : NotificationObject {}
 }

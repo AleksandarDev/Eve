@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c65d13d1-aad7-4925-9186-d75e3e0fd9bd" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="280637ad-9d0f-4268-8f46-4bf99973f561" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,7 +22,7 @@
     <MetadataSource Address="http://192.168.1.101:64410/eve/relay/ClientRelayService.svc?singleWsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="RelayService.wsdl" MetadataType="Wsdl" ID="3b60b430-57fa-44d5-a06e-bf475930f625" SourceId="1" SourceUrl="http://192.168.1.101:64410/eve/relay/ClientRelayService.svc?singleWsdl" />
+    <MetadataFile FileName="ClientRelayService.wsdl" MetadataType="Wsdl" ID="990d0c9c-4249-47de-940f-23053e700b04" SourceId="1" SourceUrl="http://192.168.1.101:64410/eve/relay/ClientRelayService.svc?singleWsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

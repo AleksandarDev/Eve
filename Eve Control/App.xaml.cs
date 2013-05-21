@@ -6,10 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.IO.Ports;
-using Eve.Core.Loging;
+using Eve.Diagnostics.Logging;
+using EveControl.Windows.Log;
 using MahApps.Metro;
 
-namespace Eve_Control {
+namespace EveControl {
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>
@@ -22,6 +23,9 @@ namespace Eve_Control {
 		/// Runs initialization asynchronously 
 		/// </summary>
 		public App() {
+			// Close all windows on closing main window
+			Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+	
 			Task.Run(() => this.Initialize());
 		}
 
@@ -37,8 +41,10 @@ namespace Eve_Control {
 
 			// Enable logging
 			Log.Enabled = true;
-			Log.WriteToDebug = true;
-			Log.WriteToDebugLevel = Log.LogLevels.All;
+			//Log.WriteToDebug = true;
+			//Log.WriteToDebugLevel = Log.LogLevels.All;
+
+			this.Dispatcher.InvokeAsync(() => (new LogView()).Show());
 		}
 	}
 }

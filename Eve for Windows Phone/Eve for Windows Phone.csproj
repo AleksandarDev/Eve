@@ -77,6 +77,23 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\IRelayServiceFacade.cs" />
+    <Compile Include="Adapters\RelayServiceFacade.cs" />
+    <Compile Include="Communication\RelayProxy.cs" />
+    <Compile Include="Communication\RelayProxyEventHandler.cs" />
+    <Compile Include="Controls\AmbientalLightViewControl.xaml.cs">
+      <DependentUpon>AmbientalLightViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AmbientalLightViewControlEventHandler.cs" />
+    <Compile Include="Controls\LightViewControl.xaml.cs">
+      <DependentUpon>LightViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LightViewControlEvetnHandler.cs" />
+    <Compile Include="Controls\ModuleHeader.xaml.cs">
+      <DependentUpon>ModuleHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\AmbientalLightToColorConverter.cs" />
+    <Compile Include="Converters\AmbientalLightToSolidBrushConverter.cs" />
     <Compile Include="Modules\FavoriteModule.cs" />
     <Compile Include="Modules\FavoriteModules.cs" />
     <Compile Include="Adapters\IIsolatedStorageServiceFacade.cs" />
@@ -106,10 +123,20 @@
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Main\MainViewModel.cs" />
+    <Compile Include="Pages\Modules\Ambiental\AmbientalView.xaml.cs">
+      <DependentUpon>AmbientalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Modules\Ambiental\AmbientalViewModel.cs" />
+    <Compile Include="Pages\Modules\Ambiental\AmbientalViewModelEventHandler.cs" />
+    <Compile Include="Pages\Modules\Keyboard\KeyboardView.xaml.cs">
+      <DependentUpon>KeyboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Modules\Keyboard\KeyboardViewModel.cs" />
     <Compile Include="Pages\Modules\Lights\LightsView.xaml.cs">
       <DependentUpon>LightsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Modules\Lights\LightsViewModel.cs" />
+    <Compile Include="Pages\Modules\Lights\LightsViewModelEventHandler.cs" />
     <Compile Include="Pages\Modules\Play\PlayView.xaml.cs">
       <DependentUpon>PlayView.xaml</DependentUpon>
     </Compile>
@@ -118,6 +145,10 @@
       <DependentUpon>TouchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Modules\Touch\TouchViewModel.cs" />
+    <Compile Include="Pages\Modules\Vision\VisionView.xaml.cs">
+      <DependentUpon>VisionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Modules\Vision\VisionViewModel.cs" />
     <Compile Include="Service References\RelayServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -134,6 +165,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\AmbientalLightViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LightViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ModuleHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AdvancedSettings\AdvancedSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +186,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Main\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Modules\Ambiental\AmbientalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Modules\Keyboard\KeyboardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,6 +209,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Modules\Vision\VisionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -166,23 +221,37 @@
     <None Include="Properties\DataSources\Eve.API.Services.Contracts.Services.ServiceClient.datasource" />
     <None Include="Properties\WMAppManifest.xml" />
     <Content Include="Resources\Images\About.png" />
+    <Content Include="Resources\Images\Color Picker.png" />
     <Content Include="Resources\Images\Heart.png" />
+    <Content Include="Resources\Images\Keyboard.png" />
+    <Content Include="Resources\Images\Light-Bulb-Ambiental.png" />
+    <Content Include="Resources\Images\Settings-02.png" />
     <Content Include="Resources\Images\Shopping Bag.png" />
     <Content Include="Resources\Images\TileImage.png" />
     <Content Include="Resources\Images\View.png" />
+    <None Include="Service References\RelayServiceReference\EveWindowsPhone.RelayServiceReference.AmbientalLight.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\RelayServiceReference\EveWindowsPhone.RelayServiceReference.Light.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\RelayServiceReference\EveWindowsPhone.RelayServiceReference.ServiceClient.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\RelayServiceReference\RemoteRelayService.wsdl" />
+    <Content Include="Resources\Images\Webcam.png" />
+    <Content Include="ServiceReferences.ClientConfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Images\IPod.png" />
+    <Content Include="Resources\Images\Light Bulb.png" />
+    <Content Include="Resources\Images\Touch screens.png" />
     <None Include="Service References\RelayServiceReference\configuration91.svcinfo" />
     <None Include="Service References\RelayServiceReference\configuration.svcinfo" />
     <None Include="Service References\RelayServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
-    <None Include="Service References\RelayServiceReference\RemoteRelayService.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Images\IPod.png" />
-    <Content Include="Resources\Images\Light Bulb.png" />
-    <Content Include="Resources\Images\Touch screens.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +270,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\RelayServiceReference\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

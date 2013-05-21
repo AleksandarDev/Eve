@@ -33,24 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="EveAPIServicesContracts.cd" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IEveAPIService.cs" />
+    <Compile Include="IClientRelayService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButtonMessage.cs" />
-    <Compile Include="Orientation.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ClientState.cs" />
-    <Compile Include="Services\Interfaces\IClientState.cs" />
-    <Compile Include="Services\Interfaces\IClientStateTouch.cs" />
-    <Compile Include="Services\Interfaces\IEveAPIService.cs" />
-    <Compile Include="Services\Interfaces\IRelayCallbackContract.cs" />
-    <Compile Include="Services\Interfaces\IRelayService.cs" />
-    <Compile Include="Services\Interfaces\ITouchService.cs" />
-    <Compile Include="Services\ServiceRequestDetails.cs" />
-    <Compile Include="Services\ServiceClient.cs" />
-    <Compile Include="Services\ServiceUser.cs" />
-    <Compile Include="TrackPadMessage.cs" />
+    <ProjectReference Include="..\Eve.API.Services.Common\Eve.API.Services.Common.csproj">
+      <Project>{911D7554-7905-4AA6-906F-5E73E5788E47}</Project>
+      <Name>Eve.API.Services.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
