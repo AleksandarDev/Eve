@@ -5,15 +5,17 @@
 					  Title="Eve - Eve.Diagnostics.Log" Height="700" Width="800"
 					  GlowBrush="{DynamicResource AccentColorBrush}" 
 					  DataContext="{Binding RelativeSource={RelativeSource Self}}"
-					  SaveWindowPosition="True">
+					  SaveWindowPosition="True"
+					  Loaded="LogViewLoaded">
 	<Grid Margin="12">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-		<TreeView x:Name="LogInstanceTypesListBox" MinWidth="240" />
+		<ListBox x:Name="LogInstanceTypesListBox" SelectionMode="Multiple" MinWidth="240" SelectionChanged="LogInstanceTypesTreeView_OnSelected" />
 		<Grid Grid.Column="1">
 			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
@@ -25,11 +27,8 @@
 				<CheckBox Content="Warning" IsChecked="{Binding ShowWarnMessages}" Margin="5,3" VerticalAlignment="Center" />
 				<CheckBox Content="Error" IsChecked="{Binding ShowErrorMessages}" Margin="5,3" VerticalAlignment="Center" />
 			</StackPanel>
-			<TabControl x:Name="LogInstances" Grid.Row="1">
-				<TabItem Header="All">
-					<ListBox ItemsSource="{Binding Messages}" />
-				</TabItem>
-			</TabControl>
+			<Label Content="{Binding TypeSelected}" FontSize="26" Grid.Row="1" />
+			<ListBox x:Name="MessagesListBox" ItemsSource="{Binding Messages}" Grid.Row="2" />
 		</Grid>
 	</Grid>
 </controls:MetroWindow>

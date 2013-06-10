@@ -12,7 +12,8 @@ using EveWindowsPhone.ViewModels;
 namespace EveWindowsPhone.Pages.Modules.Lights {
 	[Module("MLights", "Lights", 
 		"/Resources/Images/Light Bulb.png",
-		"/Pages/Modules/Lights/LightsView.xaml")]
+		"/Pages/Modules/Lights/LightsView.xaml", 
+		isInternal: false, isEnabled: true)]
 	public class LightsViewModel : NotificationObject {
 		private readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(LightsViewModel));

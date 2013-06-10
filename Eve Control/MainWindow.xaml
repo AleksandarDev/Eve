@@ -28,7 +28,12 @@
 			
 			<TextBox x:Name="EveVoiceRecognition" IsReadOnly="True" FontSize="16" Padding="3" Margin="5" />
 			
-			<Button Content="VisionView" Grid.Row="1" Click="VisionViewOnClick" />
+			<StackPanel Grid.Row="1" Orientation="Horizontal">
+				<Button Content="Vision" Margin="3"  Padding="15,8,15,8" Click="VisionViewOnClick" />
+				<Button Content="Face Controller" Margin="3"  Padding="15,8,15,8" Click="FaceControllerViewOnClick"></Button>
+				<Button Content="Fridge Manager" Margin="3" Padding="15,8,15,8" Click="FridgeManagerViewOnClick" />
+				<Button Content="Chrome" Margin="3" Padding="15,8,15,8" Click="ChromeViewOnClick" />
+			</StackPanel>
 			
 			<providersStatus:ProvidersStatusView Grid.Row="2" />
 		</Grid>

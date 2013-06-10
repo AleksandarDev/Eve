@@ -131,8 +131,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Chrome\ChromeView.xaml.cs">
+      <DependentUpon>ChromeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\FaceController\FaceControllerView.xaml.cs">
       <DependentUpon>FaceControllerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FridgeManager\FridgeManagerView.xaml.cs">
+      <DependentUpon>FridgeManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Log\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
@@ -157,7 +163,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\Chrome\ChromeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\FaceController\FaceControllerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\FridgeManager\FridgeManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,6 +275,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Google Chrome.png" />
+    <Resource Include="Resources\Icons\Refrigerator-01.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

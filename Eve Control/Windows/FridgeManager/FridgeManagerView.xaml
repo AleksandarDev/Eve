@@ -1,0 +1,10 @@
+﻿<controls:MetroWindow x:Class="EveControl.Windows.FridgeManager.FridgeManagerView"
+					  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+					  Title="Eve - Fridge Manager" Height="300" Width="300"
+					  SaveWindowPosition="True" GlowBrush="{StaticResource AccentColorBrush}">
+	<Grid>
+		
+	</Grid>
+</controls:MetroWindow>

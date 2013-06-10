@@ -59,6 +59,7 @@ namespace EveWindowsPhone.Pages.Main {
 				throw new NullReferenceException("Can't find ModulesLocator");
 
 			this.AvailableModules = modulesLocator.AvailableModules;
+			this.OwnedModules = modulesLocator.OwnedModules;
 
 			this.LoadFavoriteModules();
 		}
@@ -73,7 +74,7 @@ namespace EveWindowsPhone.Pages.Main {
 
 				// Add each module to the favorite list
 				foreach (var module in savedFavorites.Modules) {
-					var available = this.AvailableModules.First(m => m.Module.ID == module.ID);
+					var available = this.AvailableModules.First(m => m.ModuleAttribute.ID == module.ID);
 					available.IsFavorite = true;
 					this.FavoriteModules.Add(available);
 				}
@@ -94,7 +95,7 @@ namespace EveWindowsPhone.Pages.Main {
 			// Populate favorite modules list
 			var favoriteModules = new FavoriteModules();
 			foreach (var favorited in this.AvailableModules.Where(m => m.IsFavorite)) {
-				favoriteModules.Modules.Add(new FavoriteModule() {ID = favorited.Module.ID});
+				favoriteModules.Modules.Add(new FavoriteModule() {ID = favorited.ModuleAttribute.ID});
 			}
 
 			// Save list
@@ -110,20 +111,26 @@ namespace EveWindowsPhone.Pages.Main {
 		}
 
 		public void AdvancedSettings() {
+			AdvancedSettingsView.NavigateWithIndex(this.navigationServiceFacade, 0);
+		}
+
+		public void AdvancedSettingsFavorites() {
 			AdvancedSettingsView.NavigateWithIndex(this.navigationServiceFacade, 1);
 		}
 
-		public void NavigateTo(Module module) {
+		public void NavigateTo(ModuleAttribute moduleAttribute) {
 			// Navigate to module view
 			if (!this.navigationServiceFacade.Navigate(
-				new Uri(module.View, UriKind.Relative)))
-				this.log.Warn("Couldn't navigate to \"{0}\" module's view", module.Name);
+				new Uri(moduleAttribute.View, UriKind.Relative)))
+				this.log.Warn("Couldn't navigate to \"{0}\" module's view", moduleAttribute.Name);
 		}
 
 		#region Properties
 
+		// TODO FavoriteModules collection is redundant, remove it
 		public ObservableCollection<ModuleModel> FavoriteModules { get; private set; }
 		public ObservableCollection<ModuleModel> AvailableModules { get; private set; }
+		public ObservableCollection<ModuleModel> OwnedModules { get; private set; } 
 
 		public bool IsEditingFavorites {
 			get { return this.isEditingFavorites; }

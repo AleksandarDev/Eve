@@ -22,50 +22,102 @@ namespace EveControl.Windows.Log {
 	/// Interaction logic for LogView.xaml
 	/// </summary>
 	public partial class LogView : MetroWindow, INotifyPropertyChanged {
-		private List<Eve.Diagnostics.Logging.Log.LogMessage> messages; 
+		private List<Eve.Diagnostics.Logging.Log.LogMessage> messages;
+		private List<string> selectedTypes;
 
 		public LogView() {
 			this.messages =
 				new List<Eve.Diagnostics.Logging.Log.LogMessage>();
-			Eve.Diagnostics.Logging.Log.OnMessage +=
-				(instance, message) => this.Dispatcher.InvokeAsync(() => {
-					this.messages.Add(message);
-					OnPropertyChanged("Messages");
+			this.selectedTypes = new List<string>();
 
-					// Add to info messages
-					//if (message.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Information))
-					//	this.InfoMessage.Add(message);
-					if (this.IsAutoScroll) {
-						var selectedTab = this.LogInstances.SelectedItem as TabItem;
-						if (selectedTab != null) {
-							var messagesListBox = selectedTab.FindChildren<ListBox>();
-							foreach (var listBox in messagesListBox) {
-								if (!listBox.Items.IsEmpty)
-									listBox.ScrollIntoView(listBox.Items.GetItemAt(listBox.Items.Count - 1));
-							}
-						}
-					}
-				});
+			// For testing only
+			// TODO Implement save settings
+			this.ShowDebugMessages = true;
+			this.ShowErrorMessages = true;
+			this.ShowInfoMessages = true;
+			this.ShowWarnMessages = true;
+			this.ShowWriteMessages = true;
+			this.IsAutoScroll = true;
+
+			Eve.Diagnostics.Logging.Log.OnMessage += this.OnMessage;
 
 			InitializeComponent();
 		}
 
+		~LogView() {
+			Eve.Diagnostics.Logging.Log.OnMessage -= this.OnMessage;
+		}
+
+		private void LogViewLoaded(object sender, RoutedEventArgs e) {
+			
+		}
+
+		private void OnMessage(Eve.Diagnostics.Logging.Log.LogInstance instance,
+							   Eve.Diagnostics.Logging.Log.LogMessage message) {
+			this.Dispatcher.InvokeAsync(() => {
+				// Add message to the list
+				this.messages.Add(message);
+
+				// Check groups
+				bool typeSaved = false;
+				for (int index = 0; index < this.LogInstanceTypesListBox.Items.Count; index++) {
+					var listBoxItem = this.LogInstanceTypesListBox.Items.GetItemAt(index) as ListBoxItem;
+					if (listBoxItem == null) continue;
+
+					if (listBoxItem.Content.ToString() == message.SenderType.ToString()) {
+						typeSaved = true;
+						break;
+					}
+				}
+				if (!typeSaved) {
+					this.LogInstanceTypesListBox.Items.Add(new ListBoxItem() {
+						Content = message.SenderType
+					});
+				}
+
+				// Trigger messages changed
+				OnPropertyChanged("Messages");
+
+				// Auto scroll
+				if (this.IsAutoScroll && this.MessagesListBox.Items.Count > 0) {
+					this.MessagesListBox.ScrollIntoView(
+						this.MessagesListBox.Items.GetItemAt(
+							this.MessagesListBox.Items.Count - 1));
+				}
+			});
+		}
+
+		private void LogInstanceTypesTreeView_OnSelected(object sender, RoutedEventArgs e) {
+			this.selectedTypes.Clear();
+			foreach (var selectedItem in this.LogInstanceTypesListBox.SelectedItems) {
+				this.selectedTypes.Add((selectedItem as ListBoxItem).Content.ToString());
+			}
+
+			if (this.selectedTypes.Count == 0) this.TypeSelected = "All";
+			else if (this.selectedTypes.Count == 1)
+				this.TypeSelected = this.selectedTypes.First();
+			else this.TypeSelected = "*multiple";
+		}
 
 		#region Properties
 
 		public IEnumerable<Eve.Diagnostics.Logging.Log.LogMessage> Messages {
 			get {
-				return this.messages.Where(m =>
-										   (this.ShowWriteMessages &&
-											m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Write)) ||
-										   (this.ShowDebugMessages &&
-											m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Debug)) ||
-										   (this.ShowInfoMessages &&
-											m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Information)) ||
-										   (this.ShowWarnMessages &&
-											m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Warninig)) ||
-										   (this.ShowErrorMessages &&
-											m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Error)));
+				return
+					this.messages.Where(
+						m =>
+						(this.selectedTypes.Count == 0 ||
+						 this.selectedTypes.Contains(m.SenderType.ToString()) &&
+						((this.ShowWriteMessages &&
+						 m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Write)) ||
+						(this.ShowDebugMessages &&
+						 m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Debug)) ||
+						(this.ShowInfoMessages &&
+						 m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Information)) ||
+						(this.ShowWarnMessages &&
+						 m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Warninig)) ||
+						(this.ShowErrorMessages &&
+						 m.Level.HasFlag(Eve.Diagnostics.Logging.Log.LogLevels.Error)))));
 			}
 		}
 
@@ -92,6 +144,15 @@ namespace EveControl.Windows.Log {
 		public static readonly DependencyProperty IsAutoScrollProperty =
 			DependencyProperty.Register("IsAutoScroll", typeof(bool), typeof(LogView),
 													   new PropertyMetadata(default(bool)));
+
+		public static readonly DependencyProperty TypeSelectedProperty =
+			DependencyProperty.Register("TypeSelected", typeof(string), typeof(LogView),
+													   new PropertyMetadata(default(string)));
+
+		public string TypeSelected {
+			get { return (string)GetValue(TypeSelectedProperty); }
+			set { SetValue(TypeSelectedProperty, value); }
+		}
 
 		public bool IsAutoScroll {
 			get { return (bool)GetValue(IsAutoScrollProperty); }

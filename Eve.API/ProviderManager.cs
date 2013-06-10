@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Eve.API.Chrome;
 using Eve.API.Touch;
 using Eve.API.Process;
 using Eve.API.Scripting;
@@ -18,6 +19,7 @@ namespace Eve.API {
 	/// Gives access and manages all available providers
 	/// </summary>
 	public static class ProviderManager {
+		// BUG when provider doesn't have description, and exception occurs
 		private static readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(ProviderManager));
 
@@ -41,6 +43,7 @@ namespace Eve.API {
 			ProviderManager.FaceDetectionProvider = ProviderManager.providers.OfType<FaceDetectionProvider>().First();
 			ProviderManager.FaceControllerProvider = ProviderManager.providers.OfType<FaceControllerProvider>().First();
 			ProviderManager.ScreenViewerProvider = ProviderManager.providers.OfType<ScreenViewerProvider>().First();
+			ProviderManager.ChromeProvider = ProviderManager.providers.OfType<ChromeProvider>().First();
 
 			ProviderManager.IsInitialized = true;
 			if (ProviderManager.OnInitialized != null)
@@ -78,6 +81,8 @@ namespace Eve.API {
 		}
 
 		private static IEnumerable<IProvider> GetSortedProviders() {
+			// TODO Test sort (not tested)
+
 			// Retrieve all providers (distinct)
 			var providerTypes = System.Reflection.Assembly.GetExecutingAssembly()
 									  .GetTypes()
@@ -181,6 +186,7 @@ namespace Eve.API {
 		public static FaceDetectionProvider FaceDetectionProvider { get; private set; }
 		public static FaceControllerProvider FaceControllerProvider { get; private set; }
 		public static ScreenViewerProvider ScreenViewerProvider { get; private set; }
+		public static ChromeProvider ChromeProvider { get; private set; }
 
 		#endregion
 	}

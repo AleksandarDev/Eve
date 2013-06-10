@@ -10,6 +10,7 @@ namespace EveWindowsPhone.Modules {
 	public class ModulesLocator : NotificationObject {
 		public ModulesLocator() {
 			this.AvailableModules = new ObservableCollection<ModuleModel>();
+			this.OwnedModules = new ObservableCollection<ModuleModel>();
 			this.LoadModules();
 		}
 
@@ -24,8 +25,13 @@ namespace EveWindowsPhone.Modules {
 			foreach (var moduleType in availableModuleTypes) {
 				var attributes = Attribute.GetCustomAttributes(moduleType);
 				if (attributes.Any()) {
-					foreach (var attribute in attributes.OfType<Module>()) {
-						this.AvailableModules.Add(new ModuleModel(attribute));
+					foreach (var attribute in attributes.OfType<ModuleAttribute>()) {
+#if !DEBUG
+						if (!attribute.IsInternal) 
+#endif
+							if (attribute.IsEnabled)
+								this.OwnedModules.Add(new ModuleModel(attribute));
+							else this.AvailableModules.Add(new ModuleModel(attribute));
 					}
 				}
 			}
@@ -39,6 +45,7 @@ namespace EveWindowsPhone.Modules {
 		#region Properties
 
 		public ObservableCollection<ModuleModel> AvailableModules { get; private set; }
+		public ObservableCollection<ModuleModel> OwnedModules { get; private set; } 
 
 		#endregion
 	}

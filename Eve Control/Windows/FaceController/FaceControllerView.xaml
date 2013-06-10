@@ -1,7 +1,10 @@
-﻿<Window x:Class="EveControl.Windows.FaceController.FaceControllerView"
+﻿<controls:MetroWindow x:Class="EveControl.Windows.FaceController.FaceControllerView"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		Title="FaceControllerView" Height="400" Width="500">
+					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+					  Title="FaceControllerView" Height="400" Width="500"
+					  SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}"
+					  Loaded="FaceControllerViewOnLoaded" Closing="FaceControllerViewClosing">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0.5*" />
@@ -9,6 +12,7 @@
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<ListBox Grid.Column="0"></ListBox>
@@ -28,18 +32,33 @@
 		</Grid>
 		<Grid Grid.Column="1" Grid.RowSpan="2">
 			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
-				<RowDefinition Height="*" />
-				<RowDefinition Height="*" />
-				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
+
+			<CheckBox Content="Enabled" 
+					  Margin="12" 
+					  Checked="ToggleFaceControllerEnabledCheckBox" />
 			
+			<WindowsFormsHost x:Name="VideoSourcePlayerWindowsFormsHost" Grid.Row="1"
+							  VerticalAlignment="Center" HorizontalAlignment="Center" />
 			
+			<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="3">
+				<Button Content="Callibrate Center" Margin="3" Click="CallibrateCenterOnClick" />
+				<Button Content="Callibrate Scale" Margin="3" />
+			</StackPanel>
 		</Grid>
+
+		<!-- Status bar -->
+		<StackPanel x:Name="StatusBar" Grid.Row="2" Grid.ColumnSpan="2">
+			<StackPanel.Style>
+				<Style TargetType="{x:Type StackPanel}">
+					<Setter Property="Background" Value="{DynamicResource StatusBarBrush}" />
+				</Style>
+			</StackPanel.Style>
+
+			<Label x:Name="StatusLabel" Content="Loading..." />
+		</StackPanel>
 	</Grid>
-</Window>
+</controls:MetroWindow>

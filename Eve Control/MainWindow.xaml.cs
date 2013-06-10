@@ -28,12 +28,14 @@ using Eve.API.Speech;
 using Eve.API.Text;
 using Eve.API.Touch;
 using Eve.API.Vision;
-using Eve.Core.Chrome;
+using Eve.API.Chrome;
 using Eve.Core.Kinect;
 using Eve.Diagnostics.Logging;
 using EveControl.Communication;
 using EveControl.RelayServiceReference;
+using EveControl.Windows.Chrome;
 using EveControl.Windows.FaceController;
+using EveControl.Windows.FridgeManager;
 using EveControl.Windows.Log;
 using EveControl.Windows.Vision;
 using Fleck2;
@@ -53,7 +55,7 @@ namespace EveControl {
 		private RelayProxy relay;
 		private RelayServiceCallbackHandler callbackHandler;
 		private ServiceClient serviceClientData;
-		private ChromeServer chromeServer;
+		private ChromeProvider chromeProvider;
 
 
 		public MainWindow() {
@@ -67,11 +69,6 @@ namespace EveControl {
 		}
 
 		private async Task MainWindowOnProvidersInitializedAsync() {
-			// Start providers
-			this.ShowCloseButton = false;
-			await ProviderManager.StartAsync();
-			this.ShowCloseButton = true;
-
 			// SpeechProvider hello message
 			ProviderManager.SpeechProvider.OnStarted += async p => {
 				await ProviderManager.SpeechProvider.SpeakAsync(
@@ -80,9 +77,14 @@ namespace EveControl {
 					new SpeechPrompt("Welcome!"));
 			};
 
-			ProviderManager.FaceControllerProvider.OnStarted += p => {
-				(new FaceControllerView()).Show();
-			};
+			//ProviderManager.FaceControllerProvider.OnStarted += p => {
+			//	(new FaceControllerView()).Show();
+			//};
+
+			// Start providers
+			this.ShowCloseButton = false;
+			await ProviderManager.StartAsync();
+			this.ShowCloseButton = true;
 
 			//SpeechProvider.OnRecognitionAccepted += args => {
 			//	if (args.Result.Semantics.Value.ToString() == "NextSong") {
@@ -161,10 +163,10 @@ namespace EveControl {
 			//};
 
 			// Chrome server
-			//this.chromeServer = new ChromeServer();
+			//this.ChromeProvider = new ChromeProvider();
 			//System.Diagnostics.Debug.WriteLine(
 			//	String.Format("WebSocket server started on \"{0}\"",
-			//				  this.chromeServer.ServerLocation), typeof(MainWindow).Name);
+			//				  this.ChromeProvider.ServerLocation), typeof(MainWindow).Name);
 
 			// Relay proxy
 			this.serviceClientData = new ServiceClient() {
@@ -227,6 +229,18 @@ namespace EveControl {
 			await ProviderManager.StopAsync();
 
 			this.Close();
+		}
+
+		private void FaceControllerViewOnClick(object sender, RoutedEventArgs e) {
+			(new FaceControllerView()).Show();
+		}
+
+		private void FridgeManagerViewOnClick(object sender, RoutedEventArgs e) {
+			(new FridgeManagerView()).Show();
+		}
+
+		private void ChromeViewOnClick(object sender, RoutedEventArgs e) {
+			(new ChromeView()).Show();
 		}
 	}
 }

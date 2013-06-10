@@ -6,14 +6,14 @@ namespace EveWindowsPhone.Modules {
 		private bool isFavorite;
 
 
-		public ModuleModel(Module module) {
-			this.Module = module;
+		public ModuleModel(ModuleAttribute moduleAttribute) {
+			this.ModuleAttribute = moduleAttribute;
 		}
 
 
 		#region Properties
 
-		public Module Module { get; private set; }
+		public ModuleAttribute ModuleAttribute { get; private set; }
 
 		public bool IsFavorite {
 			get { return this.isFavorite; }
@@ -34,9 +34,9 @@ namespace EveWindowsPhone.Modules {
 		#endregion
 
 		public override string ToString() {
-			if (this.Module == null)
+			if (this.ModuleAttribute == null)
 				return "Unknown";
-			return this.Module.Name;
+			return this.ModuleAttribute.Name;
 		}
 	}
 }

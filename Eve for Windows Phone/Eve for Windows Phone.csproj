@@ -94,6 +94,8 @@
     </Compile>
     <Compile Include="Converters\AmbientalLightToColorConverter.cs" />
     <Compile Include="Converters\AmbientalLightToSolidBrushConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntToLongTimeConverter.cs" />
     <Compile Include="Modules\FavoriteModule.cs" />
     <Compile Include="Modules\FavoriteModules.cs" />
     <Compile Include="Adapters\IIsolatedStorageServiceFacade.cs" />
@@ -108,7 +110,7 @@
     <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageCollection.cs" />
     <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageCollectionEnumerator.cs" />
     <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageEventHandler.cs" />
-    <Compile Include="Modules\Module.cs" />
+    <Compile Include="Modules\ModuleAttribute.cs" />
     <Compile Include="Modules\ModuleModel.cs" />
     <Compile Include="Modules\ModulesLocator.cs" />
     <Compile Include="Pages\AdvancedSettings\AdvancedSettingsView.xaml.cs">

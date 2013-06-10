@@ -13,9 +13,10 @@
 	<!--Application Resources-->
 	<Application.Resources>
 		<ResourceDictionary>
-			<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+			<convertersLocal:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 			<convertersLocal:AmbientalLightToColorConverter x:Key="AmbientalLightToColorConverter" />
 			<convertersLocal:AmbientalLightToSolidBrushConverter x:Key="AmbientalLightToSolidBrushConverter" />
+			<convertersLocal:IntToLongTimeConverter x:Key="IntToLongTimeConverter" />
 			
 			<!-- Locators -->
 			<viewModels:ViewModelLocator x:Key="ViewModelLocator"/>

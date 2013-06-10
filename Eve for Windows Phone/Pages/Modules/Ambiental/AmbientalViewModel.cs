@@ -13,7 +13,8 @@ using EveWindowsPhone.ViewModels;
 namespace EveWindowsPhone.Pages.Modules.Ambiental {
 	[Module("MAmbiental", "Ambiental",
 		"/Resources/Images/Light-Bulb-Ambiental.png", 
-		"/Pages/Modules/Ambiental/AmbientalView.xaml")]
+		"/Pages/Modules/Ambiental/AmbientalView.xaml",
+		isInternal: false, isEnabled: false)]
 	public class AmbientalViewModel : NotificationObject {
 		private readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(AmbientalViewModel));

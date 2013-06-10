@@ -1,0 +1,21 @@
+﻿<controls:MetroWindow x:Class="EveControl.Windows.Chrome.ChromeView"
+					  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+					  Title="Eve - Chrome" Height="400" Width="500"
+					  Icon="../../Resources/Icons/Google Chrome.png"
+					  SaveWindowPosition="True" GlowBrush="{StaticResource AccentColorBrush}">
+	<Grid Margin="3">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="3*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<ListBox x:Name="ClientsListBox" Grid.RowSpan="2" Margin="3" />
+		<TextBox x:Name="Script" Grid.Column="1" Margin="3" />
+		<Button Content="Execute" Grid.Row="1" Grid.Column="1" Margin="3" Padding="15,8,15,8" />
+	</Grid>
+</controls:MetroWindow>

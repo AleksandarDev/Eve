@@ -81,9 +81,11 @@ namespace Eve.Diagnostics.Logging {
 			public string Message { get; set; }
 			public Type ExceptionType { get; set; }
 			public object Exception { get; set; }
+			public int InstanceID { get; set; }
 
 
-			public LogMessage() {
+			public LogMessage(int instance) {
+				this.InstanceID = instance;
 				this.Time = DateTime.UtcNow;
 				this.Level = LogLevels.Write;
 				this.Message = String.Empty;
@@ -121,7 +123,7 @@ namespace Eve.Diagnostics.Logging {
 
 
 			public ILogInstance WriteLine(string format, params object[] args) {
-				Log.AddMessage(this, new LogMessage() {
+				Log.AddMessage(this, new LogMessage(this.GetHashCode()) {
 					SenderType = this.targetType,
 					Level = LogLevels.Write,
 					Message = String.Format(format, args)
@@ -131,7 +133,7 @@ namespace Eve.Diagnostics.Logging {
 			}
 
 			public ILogInstance Info(string format, params object[] args) {
-				Log.AddMessage(this, new LogMessage() {
+				Log.AddMessage(this, new LogMessage(this.GetHashCode()) {
 					SenderType = this.targetType,
 					Level = LogLevels.Information,
 					Message = String.Format(format, args)
@@ -141,7 +143,7 @@ namespace Eve.Diagnostics.Logging {
 			}
 
 			public ILogInstance Warn(string format, params object[] args) {
-				Log.AddMessage(this, new LogMessage() {
+				Log.AddMessage(this, new LogMessage(this.GetHashCode()) {
 					SenderType = this.targetType,
 					Level = LogLevels.Warninig,
 					Message = String.Format(format, args)
@@ -151,7 +153,7 @@ namespace Eve.Diagnostics.Logging {
 			}
 
 			public ILogInstance Error<TException>(TException exception, string format, params object[] args) {
-				Log.AddMessage(this, new LogMessage() {
+				Log.AddMessage(this, new LogMessage(this.GetHashCode()) {
 					SenderType = this.targetType,
 					Level = LogLevels.Error,
 					Message = String.Format(format, args),
@@ -163,7 +165,7 @@ namespace Eve.Diagnostics.Logging {
 			}
 
 			public ILogInstance Debug(string format, params object[] args) {
-				Log.AddMessage(this, new LogMessage() {
+				Log.AddMessage(this, new LogMessage(this.GetHashCode()) {
 					SenderType = this.targetType,
 					Level = LogLevels.Debug,
 					Message = String.Format(format, args)

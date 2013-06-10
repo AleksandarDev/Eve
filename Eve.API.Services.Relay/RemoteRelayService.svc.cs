@@ -27,10 +27,13 @@ namespace Eve.API.Services.Relay {
 		/// Retrieve callback contract of subscribed client
 		/// </summary>
 		/// <param name="details">Details about client to get callback from</param>
-		/// <returns>Returns null if requested client isn't subscribed</returns>
+		/// <returns>Returns null if requested client isn't subscribed or invalid</returns>
+		/// <remarks>This also checks if user and client data is valid, returns null if invalid</remarks>
 		protected IEveAPIService GetCallback(ServiceRequestDetails details) {
-			if (details == null)
-				throw new ArgumentNullException("details");
+			if (details == null) {
+
+				return null;
+			}
 
 			var client = RelayManager.GetClient(details.Client.ID);
 			if (client == null) return null;

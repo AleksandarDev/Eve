@@ -19,30 +19,30 @@ var Background = (function () {
         this.webSocket.onclose = this.WebSocketOnClose.bind(this);
         this.webSocket.onerror = this.WebSocketOnError.bind(this);
     };
-    Background.prototype.WebSocketOnMessage = function (event) {
+    Background.prototype.WebSocketOnMessage = function (message) {
         var _this = this;
         try  {
             console.log("Got message: ");
-            console.log(event);
-            if(event.data == "grooveshark:next-song") {
+            console.log(message);
+            if(message.data == "grooveshark:next-song") {
                 chrome.tabs.query({
                     url: "http://*.grooveshark.com/*"
                 }, function (tab) {
                     _this.ExecuteScript(tab[0].id, '$("#play-next").click();');
                 });
-            } else if(event.data == "grooveshark:prev-song") {
+            } else if(message.data == "grooveshark:prev-song") {
                 chrome.tabs.query({
                     url: "http://*.grooveshark.com/*"
                 }, function (tab) {
                     _this.ExecuteScript(tab[0].id, '$("#play-prev").click();');
                 });
-            } else if(event.data == "grooveshark:pause-song") {
+            } else if(message.data == "grooveshark:pause-song") {
                 chrome.tabs.query({
                     url: "http://*.grooveshark.com/*"
                 }, function (tab) {
                     _this.ExecuteScript(tab[0].id, 'if($("#play-pause").hasClass("playing")) $("#play-pause").click();');
                 });
-            } else if(event.data == "grooveshark:resume-song") {
+            } else if(message.data == "grooveshark:resume-song") {
                 chrome.tabs.query({
                     url: "http://*.grooveshark.com/*"
                 }, function (tab) {

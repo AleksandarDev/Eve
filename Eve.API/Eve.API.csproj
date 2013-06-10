@@ -73,6 +73,10 @@
       <HintPath>..\packages\AForge.Vision.2.2.4\lib\AForge.Vision.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fleck2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fleck2.1.0.4\lib\net45\Fleck2.dll</HintPath>
+    </Reference>
     <Reference Include="InputSimulator">
       <HintPath>..\Libs\InputSimulator.0.1.0.0-bin\Release\InputSimulator.dll</HintPath>
     </Reference>
@@ -96,6 +100,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chrome\ChromeProvider.cs" />
     <Compile Include="IProvider.cs" />
     <Compile Include="Process\ProcessProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
