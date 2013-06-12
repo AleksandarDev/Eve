@@ -12,8 +12,26 @@
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-		<ListBox x:Name="LogInstanceTypesListBox" SelectionMode="Multiple" MinWidth="240" SelectionChanged="LogInstanceTypesTreeView_OnSelected" />
-		<Grid Grid.Column="1">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		
+		<ListBox x:Name="LogInstanceTypesListBox" 
+				 SelectionMode="Extended" 
+				 MinWidth="240" 
+				 SelectionChanged="LogInstanceTypesTreeView_OnSelected" />
+		
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Button Content="Select All" Grid.Column="0" Margin="3" Padding="15,8,15,8" Click="SelectAllOnClick" />
+			<Button Content="Deselect All" Grid.Column="1" Margin="3" Padding="15,8,15,8" Click="DeselectAllOnClick" />
+		</Grid>
+		
+		<Grid Grid.Column="1" Grid.RowSpan="2">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />

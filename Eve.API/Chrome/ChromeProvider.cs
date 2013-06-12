@@ -8,11 +8,12 @@ using Fleck2;
 using Fleck2.Interfaces;
 
 namespace Eve.API.Chrome {
+	// TODO To seperate file
 	public class ChromeProviderClientEventArgs {
-		public WebSocketConnection ClientChanged { get; private set; }
-		public IEnumerable<WebSocketConnection> Clients { get; private set; }
+		public IWebSocketConnection ClientChanged { get; private set; }
+		public IEnumerable<IWebSocketConnection> Clients { get; private set; }
 
-		public ChromeProviderClientEventArgs(WebSocketConnection clientChanged, IEnumerable<WebSocketConnection> clients) {
+		public ChromeProviderClientEventArgs(IWebSocketConnection clientChanged, IEnumerable<IWebSocketConnection> clients) {
 			this.ClientChanged = clientChanged;
 			this.Clients = clients;
 		}
@@ -21,11 +22,13 @@ namespace Eve.API.Chrome {
 	//public delegate void ChromeProviderEventHandler(
 	//	ChromeProvider provider, ChromeProviderEventArgs args);
 
+	// TODO To seperate file
 	public delegate void ChromeProviderClientEventHandler(
 		ChromeProvider provider, ChromeProviderClientEventArgs args);
 
 	[ProviderDescription("ChromeProvider")]
 	public class ChromeProvider : ProviderBase<ChromeProvider> {
+		// TODO Add ability to change server location and port
 		public const string DefaultServerLocation = "ws://localhost";
 		public const int DefaultServerPort = 41258;
 
@@ -92,6 +95,10 @@ namespace Eve.API.Chrome {
 			else {
 				connection.Close();
 				this.clientConnections.Remove(connection);
+
+				if (this.OnClientDisconnected != null)
+					this.OnClientDisconnected(this,
+											  new ChromeProviderClientEventArgs(connection, this.GetClients()));
 			}
 		}
 
@@ -114,7 +121,9 @@ namespace Eve.API.Chrome {
 			
 			this.clientConnections.Add(connection);
 
-			// TODO add event
+			if (this.OnClientConnected != null)
+				this.OnClientConnected(this,
+									   new ChromeProviderClientEventArgs(connection, this.GetClients()));
 		}
 
 		public void Push(string message) {

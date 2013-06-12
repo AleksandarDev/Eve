@@ -24,31 +24,12 @@ var Background = (function () {
         try  {
             console.log("Got message: ");
             console.log(message);
-            if(message.data == "grooveshark:next-song") {
-                chrome.tabs.query({
-                    url: "http://*.grooveshark.com/*"
-                }, function (tab) {
-                    _this.ExecuteScript(tab[0].id, '$("#play-next").click();');
-                });
-            } else if(message.data == "grooveshark:prev-song") {
-                chrome.tabs.query({
-                    url: "http://*.grooveshark.com/*"
-                }, function (tab) {
-                    _this.ExecuteScript(tab[0].id, '$("#play-prev").click();');
-                });
-            } else if(message.data == "grooveshark:pause-song") {
-                chrome.tabs.query({
-                    url: "http://*.grooveshark.com/*"
-                }, function (tab) {
-                    _this.ExecuteScript(tab[0].id, 'if($("#play-pause").hasClass("playing")) $("#play-pause").click();');
-                });
-            } else if(message.data == "grooveshark:resume-song") {
-                chrome.tabs.query({
-                    url: "http://*.grooveshark.com/*"
-                }, function (tab) {
-                    _this.ExecuteScript(tab[0].id, 'if(!$("#play-pause").hasClass("playing")) $("#play-pause").click();');
-                });
-            }
+            chrome.tabs.query({
+            }, function (tabs) {
+                for(var index = 0; index < tabs.length; index++) {
+                    _this.ExecuteScript(tabs[index].id, message.data);
+                }
+            });
         } catch (exception) {
             console.warn(exception);
         }

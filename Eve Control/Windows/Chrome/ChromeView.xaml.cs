@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Eve.API;
 using Eve.API.Chrome;
+using Fleck2.Interfaces;
 using MahApps.Metro.Controls;
 
 namespace EveControl.Windows.Chrome {
@@ -23,13 +24,45 @@ namespace EveControl.Windows.Chrome {
 		public ChromeView() {
 			InitializeComponent();
 
-			ProviderManager.ChromeProvider.OnClientConnected += ChromeProviderOnOnClientConnected;
+			ProviderManager.ChromeProvider.OnClientConnected +=
+				this.ChromeProviderOnOnClientConnectionChanged;
+			ProviderManager.ChromeProvider.OnClientDisconnected +=
+				this.ChromeProviderOnOnClientConnectionChanged;
 		}
 
-		private void ChromeProviderOnOnClientConnected(ChromeProvider provider, ChromeProviderClientEventArgs args) {
-			this.ClientsListBox.Items.Add(String.Format("{0}:{1}",
-														args.ClientChanged.ConnectionInfo.ClientIpAddress,
-														args.ClientChanged.ConnectionInfo.ClientPort));
+		private void ChromeProviderOnOnClientConnectionChanged(
+			ChromeProvider provider,
+			ChromeProviderClientEventArgs args) {
+			this.UpdateClientsListBox(args.Clients);
+		}
+
+		private void UpdateClientsListBox(
+			IEnumerable<IWebSocketConnection> connections) {
+			// Call this methos with dispatcher if not called that way
+			if (!this.Dispatcher.CheckAccess()) {
+				this.Dispatcher.Invoke(() => UpdateClientsListBox(connections));
+				return;
+			}
+
+			// Clear list
+			this.ClientsListBox.Items.Clear();
+
+			// Add connections to list
+			foreach (var connection in connections) {
+				this.ClientsListBox.Items.Add(
+					String.Format("{0} [{1}]",
+								  connection.ConnectionInfo.Host,
+								  connection.ConnectionInfo.Id));
+			}
+		}
+
+		private void ExecuteScriptOnClick(object sender, RoutedEventArgs e) {
+			ProviderManager.ChromeProvider.Push(
+				this.ScriptTextBox.Text
+				.Replace('\n', ' ')
+				.Replace('\t'.ToString(), "   ")
+				.Replace('\r', ' ')
+				.Replace('\v', ' '));
 		}
 	}
 }

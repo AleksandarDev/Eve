@@ -93,10 +93,23 @@ namespace EveControl.Windows.Log {
 				this.selectedTypes.Add((selectedItem as ListBoxItem).Content.ToString());
 			}
 
+			// Change header
 			if (this.selectedTypes.Count == 0) this.TypeSelected = "All";
 			else if (this.selectedTypes.Count == 1)
 				this.TypeSelected = this.selectedTypes.First();
 			else this.TypeSelected = "*multiple";
+
+			// Trigger messages changed
+			OnPropertyChanged("Messages");
+		}
+
+
+		private void SelectAllOnClick(object sender, RoutedEventArgs e) {
+			this.LogInstanceTypesListBox.SelectAll();
+		}
+
+		private void DeselectAllOnClick(object sender, RoutedEventArgs e) {
+			this.LogInstanceTypesListBox.SelectedItems.Clear();
 		}
 
 		#region Properties
