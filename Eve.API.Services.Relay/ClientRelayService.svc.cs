@@ -20,6 +20,7 @@ namespace Eve.API.Services.Relay {
 		#region IClientRelayService implementation
 
 		public bool Subscribe(ServiceClient clientData) {
+			// TODO Unsubscribe client after some amount of time no ping
 			clientData.Callback =
 				OperationContext.Current.GetCallbackChannel<IEveAPIService>();
 			return RelayManager.RegisterClient(clientData);

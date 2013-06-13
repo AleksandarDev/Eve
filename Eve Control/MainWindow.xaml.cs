@@ -37,6 +37,7 @@ using EveControl.Windows.Chrome;
 using EveControl.Windows.FaceController;
 using EveControl.Windows.FridgeManager;
 using EveControl.Windows.Log;
+using EveControl.Windows.MainWindow;
 using EveControl.Windows.Vision;
 using Fleck2;
 using Fleck2.Interfaces;
@@ -52,14 +53,15 @@ namespace EveControl {
 		// TODO Chrome server to provider
 
 		private readonly Log.LogInstance log = new Log.LogInstance(typeof(MainWindow));
-		//private RelayProxy relay;
-		//private RelayServiceCallbackHandler callbackHandler;
-		//private ServiceClient serviceClientData;
-		private ChromeProvider chromeProvider;
 
 
 		public MainWindow() {
 			InitializeComponent();
+
+			// Assign ViewModel
+			if (this.ViewModel == null)
+				if ((this.ViewModel = this.DataContext as MainViewModel) == null)
+					throw new NullReferenceException("Invalid ViewModel");
 		}
 
 		private async void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
@@ -69,24 +71,20 @@ namespace EveControl {
 		}
 
 		private async Task MainWindowOnProvidersInitializedAsync() {
-			// SpeechProvider hello message
+			// Attach to speech provider events
 			ProviderManager.SpeechProvider.OnStarted += async p => {
+				// Say hallo when started
 				await ProviderManager.SpeechProvider.SpeakAsync(
-					new SpeechPrompt("Speech provider started..."));
-				await ProviderManager.SpeechProvider.SpeakAsync(
-					new SpeechPrompt("Welcome!"));
+					new SpeechPrompt("Hello! I'm Eve, what can I do for you?"));
 			};
+			ProviderManager.SpeechProvider.OnRecognitionAccepted +=
+				args => this.ViewModel.SpeechMessage = args.Result.Text;
+			ProviderManager.SpeechProvider.OnRecognitionHypothesized +=
+				args => this.ViewModel.SpeechMessage = args.Result.Text;
+			ProviderManager.SpeechProvider.OnRecognitionRejected +=
+				args => this.ViewModel.SpeechMessage = String.Empty;
 
-			//ProviderManager.FaceControllerProvider.OnStarted += p => {
-			//	(new FaceControllerView()).Show();
-			//};
-
-			// Start providers
-			this.ShowCloseButton = false;
-			await ProviderManager.StartAsync();
-			this.ShowCloseButton = true;
-
-			//SpeechProvider.OnRecognitionAccepted += args => {
+			//ProviderManager.SpeechProvider.OnRecognitionAccepted += args => {
 			//	if (args.Result.Semantics.Value.ToString() == "NextSong") {
 			//		foreach (var connection in this.connections) {
 			//			connection.Send("grooveshark:next-song");
@@ -137,7 +135,8 @@ namespace EveControl {
 			//			System.Diagnostics.Debug.WriteLine("Can't open port COM28");
 			//		}
 			//	}
-
+			// 
+			//  // Clear text after 3 seconds
 			//	this.Dispatcher.BeginInvoke(new Action(() => {
 			//		this.EveVoiceRecognition.Text = args.Result.Text;
 			//	}));
@@ -151,45 +150,15 @@ namespace EveControl {
 			//	};
 			//	timer.Start();
 			//};
-			//SpeechProvider.OnRecognitionHypothesized += args => {
-			//	this.Dispatcher.BeginInvoke(new Action(() => {
-			//		this.EveVoiceRecognition.Text = args.Result.Text;
-			//	}));
-			//};
-			//SpeechProvider.OnRecognitionRejected += args => {
-			//	this.Dispatcher.BeginInvoke(new Action(() => {
-			//		this.EveVoiceRecognition.Text = String.Empty;
-			//	}));
-			//};
 
-			// Chrome server
-			//this.ChromeProvider = new ChromeProvider();
-			//System.Diagnostics.Debug.WriteLine(
-			//	String.Format("WebSocket server started on \"{0}\"",
-			//				  this.ChromeProvider.ServerLocation), typeof(MainWindow).Name);
+			// Start providers
+			this.ViewModel.StatusMessage = "Starting service...";
+			await this.ViewModel.InitializeServices();
 
-			// Relay proxy
-			//this.serviceClientData = new ServiceClient() {
-			//	Alias = "Aleksandar Toplek Laptop",
-			//	ID = "AleksandarPC"
-			//};
-			//this.callbackHandler = new RelayServiceCallbackHandler();
-			//this.relay = new RelayProxy(callbackHandler);
-			//this.relay.ConnectionChanged += this.HandleRelayConnectionChanged;
-			//this.relay.OnOpened += async relayClient => {
-			//	this.log.Info("Subscribing to relay service...");
-			//	await relay.Relay.SubscribeAsync(this.serviceClientData);
-			//	this.log.Info("Subscribed to relay service successful");
-			//};
+			this.ViewModel.StatusMessage = "Connecting to relay service...";
+			await this.ViewModel.InitializeConnection();
 
-			//this.relay.OpenAsync();
-		}
-
-		private void HandleRelayConnectionChanged(RelayProxy proxy) {
-			// Change status label accordingly
-			this.StatusLabel.Dispatcher.InvokeAsync(() =>
-													this.StatusLabel.Content =
-													proxy.IsConnected ? "Connected" : "Connecting...");
+			this.ViewModel.StatusMessage = "Ready";
 		}
 
 		private void VisionViewOnClick(object sender, RoutedEventArgs e) {
@@ -201,7 +170,7 @@ namespace EveControl {
 				e.Cancel = true;
 
 			// TODO close connection on window closing
-			//await this.CloseRelayConnectionAsync();
+			this.ViewModel.Dispose();
 			await ProviderManager.StopAsync();
 
 			this.Close();
@@ -218,5 +187,11 @@ namespace EveControl {
 		private void ChromeViewOnClick(object sender, RoutedEventArgs e) {
 			(new ChromeView()).Show();
 		}
+
+		#region Properties
+
+		public MainViewModel ViewModel { get; private set; }
+
+		#endregion
 	}
 }

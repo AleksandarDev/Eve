@@ -70,12 +70,12 @@ namespace Eve.API.Speech {
 
 			// TODO Change between grammar and dictation
 			// Create a grammar from grammar definition XML file.
-			//using (var stream = File.OpenRead("Speech/Grammars/EveGrammar.xml")) {
-			//	var g = new Grammar(stream);
-			//	this.speechRecognizer.LoadGrammar(g);
-			//}
-			this.speechRecognizer.LoadGrammar(
-					new System.Speech.Recognition.DictationGrammar());
+			using (var stream = new FileStream("Speech/Grammars/EveGrammar.xml", FileMode.Open)) {
+				var g = new Grammar(stream);
+				this.speechRecognizer.LoadGrammar(g);
+			}
+			//this.speechRecognizer.LoadGrammar(
+			//		new System.Speech.Recognition.DictationGrammar());
 
 			// Get audio source
 			// TODO Implement kinect selector from KinectProvider

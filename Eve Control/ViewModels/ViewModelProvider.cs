@@ -37,7 +37,7 @@ namespace EveControl.ViewModels {
 			if (this.isDisposed) return;
 
 			if (disposing) {
-				// TODO Dispose container
+				this.containerService.Dispose();
 			}
 
 			this.isDisposed = true;

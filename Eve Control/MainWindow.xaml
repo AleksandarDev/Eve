@@ -27,7 +27,10 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			
-			<TextBox x:Name="EveVoiceRecognition" IsReadOnly="True" FontSize="16" Padding="3" Margin="5" />
+			<TextBox Text="{Binding SpeechMessage}"
+					 IsReadOnly="True" HorizontalContentAlignment="Center" 
+					 FontSize="16" 
+					 Padding="3" Margin="5" />
 			
 			<StackPanel Grid.Row="1" Orientation="Horizontal">
 				<Button Content="Vision" Margin="3"  Padding="15,8,15,8" Click="VisionViewOnClick" />
@@ -47,7 +50,7 @@
 				</Style>
 			</StackPanel.Style>
 
-			<Label x:Name="StatusLabel" Content="Loading..." />
+			<Label Content="{Binding StatusMessage}" />
 		</StackPanel>
 	</Grid>
 </mahapps:MetroWindow>

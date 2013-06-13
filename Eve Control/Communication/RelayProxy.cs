@@ -16,6 +16,8 @@ namespace EveControl.Communication {
 	/// </summary>
 	public class RelayProxy {
 		// TODO Add firewall exception on initial connection timed out http://msdn.microsoft.com/en-us/library/aa366421(VS.85).aspx
+		// TODO IsSubscribed
+		// TODO LocalProxy
 		protected readonly Log.LogInstance log = new Log.LogInstance(typeof(RelayProxy));
 
 		protected readonly InstanceContext instanceContext;

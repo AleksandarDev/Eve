@@ -81,7 +81,7 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			get { return this.isPlaying; }
 			set {
 				this.isPlaying = value;
-				this.RaisePropertyChanged("IsPlaying");
+				this.RaisePropertyChanged(() => this.IsPlaying);
 			}
 		}
 
@@ -89,7 +89,7 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			get { return this.isShuffleEnabled; }
 			set {
 				this.isShuffleEnabled = value;
-				this.RaisePropertyChanged("IsShuffleEnabled");
+				this.RaisePropertyChanged(() => this.IsShuffleEnabled);
 			}
 		}
 
@@ -97,7 +97,7 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			get { return this.isRepeatEnabled; }
 			set {
 				this.isRepeatEnabled = value;
-				this.RaisePropertyChanged("IsRepeatEnabled");
+				this.RaisePropertyChanged(() => this.IsRepeatEnabled);
 			}
 		}
 
@@ -105,7 +105,7 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			get { return this.songName; }
 			set {
 				this.songName = value;
-				this.RaisePropertyChanged("SongName");
+				this.RaisePropertyChanged(() => this.SongName);
 			}
 		}
 
@@ -113,7 +113,7 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			get { return this.artistName; }
 			set {
 				this.artistName = value;
-				this.RaisePropertyChanged("ArtistName");
+				this.RaisePropertyChanged(() => this.ArtistName);
 			}
 		}
 
@@ -121,7 +121,7 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			get { return this.songLength; }
 			set {
 				this.songLength = value;
-				this.RaisePropertyChanged("SongLength");
+				this.RaisePropertyChanged(() => this.SongLength);
 			}
 		}
 
@@ -129,7 +129,7 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			get { return this.songPosition; }
 			set {
 				this.songPosition = value;
-				this.RaisePropertyChanged("SongPosition");
+				this.RaisePropertyChanged(() => this.SongPosition);
 
 				this.UntilSongEnd = this.SongLength - this.SongPosition;
 				this.SongPositionValue = this.SongPosition / (double)this.SongLength;
@@ -140,7 +140,7 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			get { return this.untilSongEnd; }
 			set {
 				this.untilSongEnd = value;
-				this.RaisePropertyChanged("UntilSongEnd");
+				this.RaisePropertyChanged(() => this.UntilSongEnd);
 			}
 		}
 
@@ -148,7 +148,7 @@ namespace EveWindowsPhone.Pages.Modules.Play {
 			get { return this.songPositionValue; }
 			set {
 				this.songPositionValue = value;
-				this.RaisePropertyChanged("SongPositionValue");
+				this.RaisePropertyChanged(() => this.SongPositionValue);
 			}
 		}
 

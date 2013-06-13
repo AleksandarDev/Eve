@@ -148,7 +148,7 @@ namespace EveWindowsPhone.Pages.Main {
 			get { return this.clientID; }
 			set {
 				this.clientID = value;
-				this.RaisePropertyChanged("ClientID");
+				this.RaisePropertyChanged(() => this.ClientID);
 				this.isolatedStorageServiceFacade.SetSetting(
 					this.clientID,
 					IsolatedStorageServiceFacade.ClientIDKey);

@@ -122,7 +122,7 @@ namespace EveWindowsPhone.Pages.Modules.Lights {
 			get { return this.isLoadingLights; }
 			private set {
 				this.isLoadingLights = value;
-				this.RaisePropertyChanged("IsLoadingLights");
+				this.RaisePropertyChanged(() => this.IsLoadingLights);
 			}
 		}
 

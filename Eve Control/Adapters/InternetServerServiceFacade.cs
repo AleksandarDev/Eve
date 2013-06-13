@@ -17,12 +17,15 @@ namespace EveControl.Adapters {
 
 
 		public InternetServerServiceFacade(IServerCallbackServiceFacade serverCallbackServiceFacade) {
-			if (this.serverCallbackServiceFacade == null)
+			if (serverCallbackServiceFacade == null)
 				throw new ArgumentNullException("serverCallbackServiceFacade");
 			this.serverCallbackServiceFacade = serverCallbackServiceFacade;
 
 			// TODO Load client data
-			this.Client = new ServiceClient();
+			this.Client = new ServiceClient() {
+				Alias = "Aleksandar Toplek's Laptop",
+				ID = "AleksandarPC"
+			};
 
 			// Relay service
 			this.RelayProxy = new RelayProxy(this.serverCallbackServiceFacade);

@@ -53,7 +53,7 @@ namespace EveControl.Services {
 			if (this.isDisposed) return;
 
 			if (disposing) {
-				// TODO Dispose container
+				this.container.Dispose();
 			}
 
 			this.isDisposed = true;

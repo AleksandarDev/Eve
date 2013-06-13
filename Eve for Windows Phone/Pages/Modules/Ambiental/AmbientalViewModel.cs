@@ -153,7 +153,7 @@ namespace EveWindowsPhone.Pages.Modules.Ambiental {
 			get { return this.isLoadingLights; }
 			private set {
 				this.isLoadingLights = value;
-				this.RaisePropertyChanged("IsLoadingLights");
+				this.RaisePropertyChanged(() => this.IsLoadingLights);
 			}
 		}
 
