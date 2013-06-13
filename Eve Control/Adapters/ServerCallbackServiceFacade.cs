@@ -1,22 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Eve.API;
 using Eve.API.Touch;
 using Eve.Diagnostics.Logging;
 using EveControl.RelayServiceReference;
 
-namespace EveControl.Communication {
-	/// <summary>
-	/// Implementation of Relay Service Callback methods
-	/// </summary>
-	public class RelayServiceCallbackHandler : IClientRelayServiceCallback {
+namespace EveControl.Adapters {
+	public class ServerCallbackServiceFacade : IServerCallbackServiceFacade {
+		// TODO Check user credentials
 		private readonly Log.LogInstance log =
-			new Log.LogInstance(typeof(RelayServiceCallbackHandler));
+			new Log.LogInstance(typeof(IServerCallbackServiceFacade));
 
 		public bool SignIn(ServiceUser user) {
+			// TODO Implement
 			throw new System.NotImplementedException();
 		}
 
 		public bool SignOut(ServiceUser user) {
+			// TODO Implement
 			throw new System.NotImplementedException();
 		}
 
@@ -27,7 +31,6 @@ namespace EveControl.Communication {
 		#region Touch implementation
 
 		public bool SendTrackPadMessage(ServiceRequestDetails details, TrackPadMessage message) {
-			// TODO Check user credentials
 			this.log.Info("Handling Touch TrackPad message: {0}", message);
 
 			if (message.Command == TrackPadMessage.TrackPadCommands.DragDelta)
@@ -43,7 +46,6 @@ namespace EveControl.Communication {
 		}
 
 		public bool SendButtonMessage(ServiceRequestDetails details, ButtonMessage message) {
-			// TODO Check user credentials
 			this.log.Info("Handling Touch Button message: {0}", message);
 
 			if (message.Command == ButtonMessage.ButtonCommands.Tap)
@@ -63,14 +65,10 @@ namespace EveControl.Communication {
 		#region Display Enhancements implementation
 
 		public bool SetZoom(ServiceRequestDetails details, int zoomValue) {
-			// TODO Check user credentials
 			this.log.Info("Handling Zoom request. Value: {0}", zoomValue);
 
-			// This can be run async because there is no other 
-			// instruction below this code and returns void
-			#pragma warning disable 4014
-			ProviderManager.DisplayEnhancementsProvider.SetZoomAsync(zoomValue);
-			#pragma warning restore 4014
+			Task.Run(async () =>
+					 await ProviderManager.DisplayEnhancementsProvider.SetZoomAsync(zoomValue));
 
 			return true;
 		}
@@ -82,6 +80,7 @@ namespace EveControl.Communication {
 		public Light[] GetLights(ServiceRequestDetails details) {
 			this.log.Info("Handling request for list of lights");
 
+			// TODO Implement real list
 			return new Light[] {
 				new Light() {
 					ID = 0,
@@ -103,6 +102,7 @@ namespace EveControl.Communication {
 		public bool SetLightState(ServiceRequestDetails details, int id, bool state) {
 			this.log.Info("Handling light [{0}] state set request {1}", id, state);
 
+			// TODO Implement
 			return true;
 		}
 
@@ -113,6 +113,7 @@ namespace EveControl.Communication {
 		public AmbientalLight[] GetAmbientalLights(ServiceRequestDetails details) {
 			this.log.Info("Handling request for list of ambiental lights");
 
+			// TODO Implement real list
 			return new AmbientalLight[] {
 				new AmbientalLight() {
 					ID = 0, Alias = "Living Room Ceiling",
@@ -144,15 +145,17 @@ namespace EveControl.Communication {
 			this.log.Info("Handling ambiental light [{0}] state set request: {1}",
 						  id, state ? "On" : "Off");
 
+			// TODO Implement
 			return true;
 		}
 
-		public bool SetAmbientalLightColor(ServiceRequestDetails details, 
+		public bool SetAmbientalLightColor(ServiceRequestDetails details,
 			int id, byte r, byte g, byte b, byte a) {
 			this.log.Info(
 				"Handling ambiental light [{0}] color set request: RGB:{1:X}{2:X}{3:X} A:{4:X}",
 				id, r, g, b, a);
 
+			// TODO Implement
 			return true;
 		}
 

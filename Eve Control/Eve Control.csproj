@@ -81,9 +81,15 @@
     <Reference Include="Fleck2">
       <HintPath>..\packages\Fleck2.1.0.4\lib\net45\Fleck2.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=0.11.0.9, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="MahApps.Metro, Version=0.11.0.32, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MahApps.Metro.0.11.0.9-ALPHA\lib\net45\MahApps.Metro.dll</HintPath>
+      <HintPath>..\packages\MahApps.Metro.0.11.0.32-ALPHA\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,8 +103,7 @@
     <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MahApps.Metro.0.11.0.9-ALPHA\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\MahApps.Metro.0.11.0.32-ALPHA\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -118,11 +123,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Adapters\InternetServerServiceFacade.cs" />
+    <Compile Include="Adapters\IServerCallbackServiceFacade.cs" />
+    <Compile Include="Adapters\IServerServiceFacade.cs" />
+    <Compile Include="Adapters\ServerCallbackServiceFacade.cs" />
     <Compile Include="Controls\ProvidersStatus\ProvidersStatusView.xaml.cs">
       <DependentUpon>ProvidersStatusView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Communication\RelayServiceCallbackHandler.cs" />
     <Compile Include="Communication\RelayProxy.cs" />
     <Compile Include="Communication\RelayProxyEventHandler.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -131,6 +139,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Services\ViewModelContainerService.cs" />
+    <Compile Include="ViewModels\ViewModelProvider.cs" />
     <Compile Include="Windows\Chrome\ChromeView.xaml.cs">
       <DependentUpon>ChromeView.xaml</DependentUpon>
     </Compile>
@@ -143,6 +153,7 @@
     <Compile Include="Windows\Log\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MainWindow\MainViewModel.cs" />
     <Compile Include="Windows\Vision\VisionView.xaml.cs">
       <DependentUpon>VisionView.xaml</DependentUpon>
     </Compile>

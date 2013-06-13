@@ -96,7 +96,7 @@ namespace EveWindowsPhone.Services {
 
 		#endregion
 
-		#region IDisposabble implementation
+		#region IDisposable implementation
 
 		public void Dispose() {
 			this.Dispose(true);

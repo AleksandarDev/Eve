@@ -49,10 +49,7 @@ namespace EveControl.Windows.Chrome {
 
 			// Add connections to list
 			foreach (var connection in connections) {
-				this.ClientsListBox.Items.Add(
-					String.Format("{0} [{1}]",
-								  connection.ConnectionInfo.Host,
-								  connection.ConnectionInfo.Id));
+				this.ClientsListBox.Items.Add(connection);
 			}
 		}
 

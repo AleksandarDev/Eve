@@ -209,5 +209,13 @@ namespace EveControl.Communication {
 		}
 
 		#endregion
+
+		public async Task<bool> UnsubscribeAsync(ServiceClient client) {
+			return await this.Relay.UnsibscribeAsync(client);
+		}
+
+		public async Task<bool> SubscribeAsync(ServiceClient client) {
+			return await this.Relay.SubscribeAsync(client);
+		}
 	}
 }

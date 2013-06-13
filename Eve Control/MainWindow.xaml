@@ -5,7 +5,8 @@
 					 xmlns:providersStatus="clr-namespace:EveControl.Controls.ProvidersStatus"
 					 Title="Eve Control" Height="400" Width="700" Icon="/Eve256.ico"
 					 SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}" 
-					 Loaded="MainWindowOnLoaded" Closing="MainWindowClosing">
+					 Loaded="MainWindowOnLoaded" Closing="MainWindowClosing"
+					 DataContext="{Binding Source={StaticResource ViewModelProvider}, Path=MainViewModel}">
 	<mahapps:MetroWindow.WindowCommands>
 		<mahapps:WindowCommands>
 			<Button Content="settings" />

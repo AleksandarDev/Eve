@@ -25,6 +25,7 @@ namespace Eve.API.Services.Relay {
 			return RelayManager.RegisterClient(clientData);
 		}
 
+		// TODO rename to Unsubscribe
 		public bool Unsibscribe(ServiceClient clientData) {
 			return RelayManager.UnregisterClient(clientData.ID);
 		}

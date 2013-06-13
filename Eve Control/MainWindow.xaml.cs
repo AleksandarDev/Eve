@@ -52,9 +52,9 @@ namespace EveControl {
 		// TODO Chrome server to provider
 
 		private readonly Log.LogInstance log = new Log.LogInstance(typeof(MainWindow));
-		private RelayProxy relay;
-		private RelayServiceCallbackHandler callbackHandler;
-		private ServiceClient serviceClientData;
+		//private RelayProxy relay;
+		//private RelayServiceCallbackHandler callbackHandler;
+		//private ServiceClient serviceClientData;
 		private ChromeProvider chromeProvider;
 
 
@@ -169,20 +169,20 @@ namespace EveControl {
 			//				  this.ChromeProvider.ServerLocation), typeof(MainWindow).Name);
 
 			// Relay proxy
-			this.serviceClientData = new ServiceClient() {
-				Alias = "Aleksandar Toplek Laptop",
-				ID = "AleksandarPC"
-			};
-			this.callbackHandler = new RelayServiceCallbackHandler();
-			this.relay = new RelayProxy(callbackHandler);
-			this.relay.ConnectionChanged += this.HandleRelayConnectionChanged;
-			this.relay.OnOpened += async relayClient => {
-				this.log.Info("Subscribing to relay service...");
-				await relay.Relay.SubscribeAsync(this.serviceClientData);
-				this.log.Info("Subscribed to relay service successful");
-			};
+			//this.serviceClientData = new ServiceClient() {
+			//	Alias = "Aleksandar Toplek Laptop",
+			//	ID = "AleksandarPC"
+			//};
+			//this.callbackHandler = new RelayServiceCallbackHandler();
+			//this.relay = new RelayProxy(callbackHandler);
+			//this.relay.ConnectionChanged += this.HandleRelayConnectionChanged;
+			//this.relay.OnOpened += async relayClient => {
+			//	this.log.Info("Subscribing to relay service...");
+			//	await relay.Relay.SubscribeAsync(this.serviceClientData);
+			//	this.log.Info("Subscribed to relay service successful");
+			//};
 
-			this.relay.OpenAsync();
+			//this.relay.OpenAsync();
 		}
 
 		private void HandleRelayConnectionChanged(RelayProxy proxy) {
@@ -190,31 +190,6 @@ namespace EveControl {
 			this.StatusLabel.Dispatcher.InvokeAsync(() =>
 													this.StatusLabel.Content =
 													proxy.IsConnected ? "Connected" : "Connecting...");
-		}
-
-		private async Task CloseRelayConnectionAsync() {
-			if (this.relay == null) {
-				this.log.Warn("Couldn't close connection. Relay not yet instanciated");
-				return;
-			}
-
-			// Unsubscribe from service
-			this.log.Info("Unsubscribing from relay service...");
-			if (this.relay.Relay.State == CommunicationState.Opened)
-				await this.relay.Relay.UnsibscribeAsync(this.serviceClientData);
-
-			// Try closing service connection
-			this.log.Info("Closing connection to relay service...");
-			bool closedSuccessful = this.relay.Close();
-			if (!closedSuccessful) {
-				// Force connection close to service
-				this.log.Info("Forcing connection close to relay service...");
-				closedSuccessful = await this.relay.CloseAsync(forceClose: true);
-				if (!closedSuccessful)
-					this.log.Error<Exception>(new Exception("Couldn't close connection"),
-										 "Couldn't close connection to relay service!");
-			}
-			this.log.Info("Connection to relay service closed");
 		}
 
 		private void VisionViewOnClick(object sender, RoutedEventArgs e) {
@@ -225,7 +200,8 @@ namespace EveControl {
 			if (ProviderManager.IsStarted)
 				e.Cancel = true;
 
-			await this.CloseRelayConnectionAsync();
+			// TODO close connection on window closing
+			//await this.CloseRelayConnectionAsync();
 			await ProviderManager.StopAsync();
 
 			this.Close();
