@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EveControl.Windows.Main;
 using Microsoft.Practices.Unity;
 using EveControl.Services;
-using EveControl.Windows.MainWindow;
 
 namespace EveControl.ViewModels {
 	public class ViewModelProvider : IDisposable {

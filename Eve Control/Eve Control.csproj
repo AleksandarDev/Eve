@@ -164,7 +164,7 @@
     <Compile Include="Windows\Log\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MainWindow\MainViewModel.cs" />
+    <Compile Include="Windows\Main\MainViewModel.cs" />
     <Compile Include="Windows\Vision\VisionView.xaml.cs">
       <DependentUpon>VisionView.xaml</DependentUpon>
     </Compile>
@@ -177,7 +177,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\Main\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -185,8 +185,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Windows\Main\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\Chrome\ChromeView.xaml">

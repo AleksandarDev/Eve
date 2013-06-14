@@ -37,7 +37,7 @@ using EveControl.Windows.Chrome;
 using EveControl.Windows.FaceController;
 using EveControl.Windows.FridgeManager;
 using EveControl.Windows.Log;
-using EveControl.Windows.MainWindow;
+using EveControl.Windows.Main;
 using EveControl.Windows.Vision;
 using Fleck2;
 using Fleck2.Interfaces;
@@ -46,17 +46,17 @@ using MahApps.Metro.Controls;
 
 namespace EveControl {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Interaction logic for MainView.xaml
 	/// </summary>
-	public partial class MainWindow : MetroWindow {
+	public partial class MainView : MetroWindow {
 		// TODO Open magnifier when using touch option
 		// TODO Chrome server to provider
 
 		private readonly Log.LogInstance log = 
-			new Log.LogInstance(typeof(MainWindow));
+			new Log.LogInstance(typeof(MainView));
 
 
-		public MainWindow() {
+		public MainView() {
 			InitializeComponent();
 
 			// Assign ViewModel
@@ -121,20 +121,6 @@ namespace EveControl {
 			//			System.Diagnostics.Debug.WriteLine("Can't open port COM28");
 			//		}
 			//	}
-			// 
-			//  // Clear text after 3 seconds
-			//	this.Dispatcher.BeginInvoke(new Action(() => {
-			//		this.EveVoiceRecognition.Text = args.Result.Text;
-			//	}));
-			//	System.Timers.Timer timer = new System.Timers.Timer();
-			//	timer.Interval = 3000;
-			//	timer.Elapsed += (s, es) => {
-			//		timer.Stop();
-			//		this.Dispatcher.BeginInvoke(new Action(() => {
-			//			this.EveVoiceRecognition.Text = String.Empty;
-			//		}));
-			//	};
-			//	timer.Start();
 			//};
 		}
 

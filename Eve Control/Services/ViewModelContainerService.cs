@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EveControl.Adapters;
-using EveControl.Windows.MainWindow;
+using EveControl.Windows.Main;
 using Microsoft.Practices.Unity;
 
 namespace EveControl.Services {

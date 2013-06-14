@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Eve.API;
 using Eve.API.Speech;
 using EveControl.Adapters;
 using Microsoft.Practices.Prism.ViewModel;
 
-namespace EveControl.Windows.MainWindow {
+namespace EveControl.Windows.Main {
 	public class MainViewModel : NotificationObject, IDisposable {
 		private readonly IServerServiceFacade serverServiceFacade;
 
