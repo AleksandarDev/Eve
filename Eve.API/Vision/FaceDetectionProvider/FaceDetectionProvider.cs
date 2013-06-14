@@ -113,9 +113,8 @@ namespace Eve.API.Vision {
 			// Check if the face has been steady for 5 frames in a row
 			if (this.detector != null && this.detector.Steady > 5) {
 				// Create face tracker for each of detected regions
-				foreach (var region in regions) {
-					this.CreateFaceTracker(region, xScale, yScale, ref image);
-				}
+				for (int index = 0; regions != null && index < regions.Length; index++) 
+					this.CreateFaceTracker(regions.ElementAt(index), xScale, yScale, ref image);
 			}
 
 			this.isDetectingInProgress = false;
@@ -168,13 +167,14 @@ namespace Eve.API.Vision {
 			if (!this.CheckIsRunning()) return;
 
 			// Do tracking for all trackers
-			foreach (var tracker in this.trackers)
-				this.TrackFace(tracker, ref image);
+			for (int index = 0; this.trackers != null && index < this.trackers.Count; index++)
+				this.TrackFace(this.trackers.ElementAt(index), ref image);
 
 			// Remove not active face trackers
-			var nonActive = this.trackers.Where(t => !t.IsActive).ToList();
-			foreach (var faceTracker in nonActive) {
-				this.trackers.Remove(faceTracker);
+			if (this.trackers != null) {
+				var nonActive = this.trackers.Where(t => !t.IsActive).ToList();
+				for (int index = 0; index < nonActive.Count; index++) 
+					this.trackers.Remove(nonActive.ElementAt(index));
 			}
 		}
 
