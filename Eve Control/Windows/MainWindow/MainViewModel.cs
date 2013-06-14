@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Eve.API;
+using Eve.API.Speech;
 using EveControl.Adapters;
 using Microsoft.Practices.Prism.ViewModel;
 
@@ -21,15 +23,46 @@ namespace EveControl.Windows.MainWindow {
 				throw new ArgumentNullException("serverServiceFacade");
 
 			this.serverServiceFacade = serverServiceFacade;
+
+			// Call initialize if ProviderManager is ready
+			if (!ProviderManager.IsInitialized)
+				ProviderManager.OnInitialized += this.Initialize;
+			else this.Initialize();
 		}
 
+		public async void Initialize() {
+			// Attach to speech provider events
+			ProviderManager.SpeechProvider.OnRecognitionAccepted +=
+				this.OnRecognitionAccepted;
+			ProviderManager.SpeechProvider.OnRecognitionHypothesized +=
+				this.OnRecognitionHypothesized;
+			ProviderManager.SpeechProvider.OnRecognitionRejected +=
+				this.OnRecognitionRejected;
 
-		public async Task InitializeServices() {
+			this.StatusMessage = "Starting service...";
 			await ProviderManager.StartAsync();
+
+			this.StatusMessage = "Connecting to relay service...";
+			await this.serverServiceFacade.OpenRelayConnectionAsync();
+
+			this.StatusMessage = "Ready";
 		}
 
-		public async Task InitializeConnection() {
-			await this.serverServiceFacade.OpenRelayConnectionAsync();
+		private void OnRecognitionAccepted(SpeechProviderRecognozerEventArgs args) {
+			this.SpeechMessage = args.Result.Text;
+
+			Task.Run(() => {
+				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
+				this.SpeechMessage = String.Empty;
+			});
+		}
+
+		private void OnRecognitionHypothesized(SpeechProviderRecognozerEventArgs args) {
+			this.SpeechMessage = args.Result.Text;
+		}
+
+		private void OnRecognitionRejected(SpeechProviderRecognozerEventArgs args) {
+			this.SpeechMessage = args.Result.Text;
 		}
 
 		#region Properties

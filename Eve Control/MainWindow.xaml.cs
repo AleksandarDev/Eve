@@ -52,7 +52,8 @@ namespace EveControl {
 		// TODO Open magnifier when using touch option
 		// TODO Chrome server to provider
 
-		private readonly Log.LogInstance log = new Log.LogInstance(typeof(MainWindow));
+		private readonly Log.LogInstance log = 
+			new Log.LogInstance(typeof(MainWindow));
 
 
 		public MainWindow() {
@@ -64,26 +65,11 @@ namespace EveControl {
 					throw new NullReferenceException("Invalid ViewModel");
 		}
 
-		private async void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
-			if (!ProviderManager.IsInitialized)
-				ProviderManager.OnInitialized += async () => await this.MainWindowOnProvidersInitializedAsync();
-			else await this.MainWindowOnProvidersInitializedAsync();
+		private void MainWindowOnLoaded(object sender, RoutedEventArgs e) {
+
 		}
 
 		private async Task MainWindowOnProvidersInitializedAsync() {
-			// Attach to speech provider events
-			ProviderManager.SpeechProvider.OnStarted += async p => {
-				// Say hallo when started
-				await ProviderManager.SpeechProvider.SpeakAsync(
-					new SpeechPrompt("Hello! I'm Eve, what can I do for you?"));
-			};
-			ProviderManager.SpeechProvider.OnRecognitionAccepted +=
-				args => this.ViewModel.SpeechMessage = args.Result.Text;
-			ProviderManager.SpeechProvider.OnRecognitionHypothesized +=
-				args => this.ViewModel.SpeechMessage = args.Result.Text;
-			ProviderManager.SpeechProvider.OnRecognitionRejected +=
-				args => this.ViewModel.SpeechMessage = String.Empty;
-
 			//ProviderManager.SpeechProvider.OnRecognitionAccepted += args => {
 			//	if (args.Result.Semantics.Value.ToString() == "NextSong") {
 			//		foreach (var connection in this.connections) {
@@ -150,15 +136,6 @@ namespace EveControl {
 			//	};
 			//	timer.Start();
 			//};
-
-			// Start providers
-			this.ViewModel.StatusMessage = "Starting service...";
-			await this.ViewModel.InitializeServices();
-
-			this.ViewModel.StatusMessage = "Connecting to relay service...";
-			await this.ViewModel.InitializeConnection();
-
-			this.ViewModel.StatusMessage = "Ready";
 		}
 
 		private void VisionViewOnClick(object sender, RoutedEventArgs e) {

@@ -55,7 +55,10 @@ namespace EveControl.Controls.ProvidersStatus {
 
 			var statusImage = new Image() {
 				Source = image,
-				Visibility = System.Windows.Visibility.Hidden
+				Visibility =
+					provider.IsRunning
+						? System.Windows.Visibility.Visible
+						: System.Windows.Visibility.Hidden
 			};
 
 			provider.OnStarted += p => statusImage.Visibility =

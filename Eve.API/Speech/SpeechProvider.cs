@@ -88,11 +88,11 @@ namespace Eve.API.Speech {
 				}
 
 				// Try to get Kinect as audio source
-				kinectAudioSource.EchoCancellationMode =
-					EchoCancellationMode.CancellationAndSuppression;
-				kinectAudioSource.NoiseSuppression = true;
+				//kinectAudioSource.EchoCancellationMode =
+				//	EchoCancellationMode.CancellationAndSuppression;
+				//kinectAudioSource.NoiseSuppression = true;
 				kinectAudioSource.AutomaticGainControlEnabled = true;
-
+				
 				this.audioSource = kinectAudioSource.Start();
 
 				// Set audio source as speech recognizer input stream
