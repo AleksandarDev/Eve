@@ -4,7 +4,8 @@
 					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 					  Title="FaceControllerView" Height="400" Width="500"
 					  SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}"
-					  Loaded="FaceControllerViewOnLoaded" Closing="FaceControllerViewClosing">
+					  Loaded="FaceControllerViewOnLoaded" Closing="FaceControllerViewClosing"
+					  DataContext="{Binding Source={StaticResource ViewModelProvider}, Path=FaceControllerViewModel}">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0.5*" />

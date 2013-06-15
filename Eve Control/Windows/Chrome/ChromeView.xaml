@@ -5,7 +5,8 @@
 					  xmlns:websockets="clr-namespace:Fleck2.Interfaces;assembly=Fleck2"
 					  Title="Eve - Chrome" Height="400" Width="500"
 					  Icon="../../Resources/Icons/Google Chrome.png"
-					  SaveWindowPosition="True" GlowBrush="{StaticResource AccentColorBrush}">
+					  SaveWindowPosition="True" GlowBrush="{StaticResource AccentColorBrush}"
+					  DataContext="{Binding Source={StaticResource ViewModelProvider}, Path=ChromeViewModel}">
 	<Grid Margin="3">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />

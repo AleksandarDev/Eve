@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EveControl.Windows.Main;
+using EveControl.Windows.Chrome;
+using EveControl.Windows.FaceController;
+using EveControl.Windows.FridgeManager;
+using EveControl.Windows.Log;
+using EveControl.Windows.Vision;
 using Microsoft.Practices.Unity;
 using EveControl.Services;
 
@@ -22,6 +27,26 @@ namespace EveControl.ViewModels {
 
 		public MainViewModel MainViewModel {
 			get { return this.containerService.Container.Resolve<MainViewModel>(); }
+		}
+
+		public FaceControllerViewModel FaceControllerViewModel {
+			get { return this.containerService.Container.Resolve<FaceControllerViewModel>(); }
+		}
+
+		public FridgeManagerViewModel FridgeManagerViewModel {
+			get { return this.containerService.Container.Resolve<FridgeManagerViewModel>(); }
+		}
+
+		public LogViewModel LogViewModel {
+			get { return this.containerService.Container.Resolve<LogViewModel>(); }
+		}
+
+		public VisionViewModel VisionViewModel {
+			get { return this.containerService.Container.Resolve<VisionViewModel>(); }
+		}
+
+		public ChromeViewModel ChromeViewModel {
+			get { return this.containerService.Container.Resolve<ChromeViewModel>(); }
 		}
 
 		#endregion

@@ -4,9 +4,9 @@
 					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 					  Title="Eve - Eve.Diagnostics.Log" Height="700" Width="800"
 					  GlowBrush="{DynamicResource AccentColorBrush}" 
-					  DataContext="{Binding RelativeSource={RelativeSource Self}}"
 					  SaveWindowPosition="True"
-					  Loaded="LogViewLoaded">
+					  Loaded="LogViewLoaded"
+					  DataContext="{Binding Source={StaticResource ViewModelProvider}, Path=LogViewModel}">
 	<Grid Margin="12">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
@@ -16,11 +16,12 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		
+
 		<ListBox x:Name="LogInstanceTypesListBox" 
+				 ItemsSource="{Binding Types}"
 				 SelectionMode="Extended" 
 				 MinWidth="240" 
-				 SelectionChanged="LogInstanceTypesTreeView_OnSelected" />
+				 SelectionChanged="LogInstanceTypesListBoxOnSelectionChanged"/>
 		
 		<Grid Grid.Row="1">
 			<Grid.ColumnDefinitions>
@@ -46,7 +47,9 @@
 				<CheckBox Content="Error" IsChecked="{Binding ShowErrorMessages}" Margin="5,3" VerticalAlignment="Center" />
 			</StackPanel>
 			<Label Content="{Binding TypeSelected}" FontSize="26" Grid.Row="1" />
-			<ListBox x:Name="MessagesListBox" ItemsSource="{Binding Messages}" Grid.Row="2" />
+			<ListBox x:Name="MessagesListBox" 
+					 ItemsSource="{Binding Messages}" 
+					 Grid.Row="2" />
 		</Grid>
 	</Grid>
 </controls:MetroWindow>

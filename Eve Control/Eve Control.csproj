@@ -155,15 +155,19 @@
     <Compile Include="Windows\Chrome\ChromeView.xaml.cs">
       <DependentUpon>ChromeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Chrome\ChromeViewModel.cs" />
     <Compile Include="Windows\FaceController\FaceControllerView.xaml.cs">
       <DependentUpon>FaceControllerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\FaceController\FaceControllerViewModel.cs" />
     <Compile Include="Windows\FridgeManager\FridgeManagerView.xaml.cs">
       <DependentUpon>FridgeManagerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\FridgeManager\FridgeManagerViewModel.cs" />
     <Compile Include="Windows\Log\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Log\LogViewModel.cs" />
     <Compile Include="Windows\Main\MainViewModel.cs" />
     <Compile Include="Windows\Vision\VisionView.xaml.cs">
       <DependentUpon>VisionView.xaml</DependentUpon>

@@ -4,7 +4,8 @@
 					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 					  Title="Eve - Vision" Height="400" Width="340"
 					  SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}"
-					  Loaded="VisionViewOnLoaded" Closing="VisionViewClosing">
+					  Loaded="VisionViewOnLoaded" Closing="VisionViewClosing"
+					  DataContext="{Binding Source={StaticResource ViewModelProvider}, Path=VisionViewModel}">
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />

@@ -103,7 +103,7 @@ namespace Eve.API.Chrome {
 		}
 
 		private void OnError(Exception exception) {
-			this.log.Error<Exception>(exception, "An error occured WebSocketServer\n{0}",
+			this.log.Error<Exception>(exception, "An error occurred WebSocketServer\n{0}",
 									  exception.Message);
 			// TODO Add event
 		}

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Eve.Core.ViewModels;
 using EveControl.Adapters;
+using Microsoft.Practices.Prism.ViewModel;
 
-namespace EveControl.Windows.Vision {
-	public class VisionViewModel : NotificationObject, IDisposable {
+namespace EveControl.Windows.FaceController {
+	public class FaceControllerViewModel : NotificationObject, IDisposable {
 		private readonly IServerServiceFacade serverServiceFacade;
-		
-		public VisionViewModel(IServerServiceFacade serverServiceFacade) {
+
+		public FaceControllerViewModel(IServerServiceFacade serverServiceFacade) {
 			if (serverServiceFacade == null)
 				throw new ArgumentNullException("serverServiceFacade");
 
