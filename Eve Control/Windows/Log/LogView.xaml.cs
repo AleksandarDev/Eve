@@ -18,9 +18,6 @@ using EveControl.Annotations;
 using MahApps.Metro.Controls;
 
 namespace EveControl.Windows.Log {
-	/// <summary>
-	/// Interaction logic for LogView.xaml
-	/// </summary>
 	public partial class LogView : MetroWindow {
 		public LogView() {
 			InitializeComponent();

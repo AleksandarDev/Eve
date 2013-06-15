@@ -33,6 +33,7 @@
 					 Padding="3" Margin="5" />
 			
 			<StackPanel Grid.Row="1" Orientation="Horizontal">
+				<Button Content="Log" Margin="3" Padding="15,8,15,8" Click="LogViewOnClick"></Button>
 				<Button Content="Vision" Margin="3"  Padding="15,8,15,8" Click="VisionViewOnClick" />
 				<Button Content="Face Controller" Margin="3"  Padding="15,8,15,8" Click="FaceControllerViewOnClick"></Button>
 				<Button Content="Fridge Manager" Margin="3" Padding="15,8,15,8" Click="FridgeManagerViewOnClick" />

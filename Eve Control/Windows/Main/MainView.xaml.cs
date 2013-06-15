@@ -124,10 +124,6 @@ namespace EveControl {
 			//};
 		}
 
-		private void VisionViewOnClick(object sender, RoutedEventArgs e) {
-			(new VisionView()).Show();
-		}
-
 		private async void MainWindowClosing(object sender, CancelEventArgs e) {
 			if (ProviderManager.IsStarted)
 				e.Cancel = true;
@@ -137,6 +133,14 @@ namespace EveControl {
 			await ProviderManager.StopAsync();
 
 			this.Close();
+		}
+
+		private void LogViewOnClick(object sender, RoutedEventArgs e) {
+			(new LogView()).Show();
+		}
+
+		private void VisionViewOnClick(object sender, RoutedEventArgs e) {
+			(new VisionView()).Show();
 		}
 
 		private void FaceControllerViewOnClick(object sender, RoutedEventArgs e) {

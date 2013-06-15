@@ -150,6 +150,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Services\ServiceFacadeContainerService.cs" />
     <Compile Include="Services\ViewModelContainerService.cs" />
     <Compile Include="ViewModels\ViewModelProvider.cs" />
     <Compile Include="Windows\Chrome\ChromeView.xaml.cs">
@@ -262,9 +263,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Eve256.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ReadMe.Coding4Fun.Toolkit.txt" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
