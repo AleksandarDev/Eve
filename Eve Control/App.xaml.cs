@@ -37,7 +37,7 @@ namespace EveControl {
 			var eveGreenDictionary = new Uri(EveGreenDictionaryPath,
 											 UriKind.RelativeOrAbsolute);
 			var eveGreenAccent = new Accent("EveGreen", eveGreenDictionary);
-			ThemeManager.ChangeTheme(this, eveGreenAccent, Theme.Dark);
+			ThemeManager.ChangeAppTheme(this, "Dark Green");
 
 			// Enable logging
 			Log.Enabled = true;

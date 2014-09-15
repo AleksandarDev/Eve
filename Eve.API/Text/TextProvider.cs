@@ -21,7 +21,8 @@ namespace Eve.API.Text {
 		/// </summary>
 		/// <param name="key">Key to PRESS</param>
 		/// <remarks>This method uses inputsimulator.codeplex.com library</remarks>
-		public void SimulateKeyPress(TextProvider.VirtualKeyCode key) {
+		public void SimulateKeyPress(TextProvider.VirtualKeyCode key)
+		{
 			InputSimulator.SimulateKeyPress((WindowsInput.VirtualKeyCode)key);
 		}
 

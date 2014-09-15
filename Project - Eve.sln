@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Devices", "Devices", "{1CBDAAC6-AC23-4A6E-8708-1A916A5BB944}"
 EndProject
@@ -47,26 +47,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve for Windows Phone", "Ev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.API.Services.Contracts", "Eve.API.Services.Contracts\Eve.API.Services.Contracts.csproj", "{B472F1C3-1ED7-460A-B48F-325E89557EC9}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome", "http://localhost:8001/EveForChrome", "{947D3030-BF9D-49B9-A5C6-CE42480CA963}"
-	ProjectSection(WebsiteProperties) = preProject
-		UseIISExpress = "false"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		Debug.AspNetCompiler.VirtualPath = "/EveForChrome"
-		Debug.AspNetCompiler.PhysicalPath = "Web\EveForChrome\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\EveForChrome\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/EveForChrome"
-		Release.AspNetCompiler.PhysicalPath = "Web\EveForChrome\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\EveForChrome\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "Web\EveForChrome\"
-	EndProjectSection
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveForChrome", "http://localhost:8001/EveForChrome", "{947D3030-BF9D-49B9-A5C6-CE42480CA963}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
@@ -87,26 +68,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome", "http://loca
 		SlnRelativePath = "Web\EveForChrome\"
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveHome", "http://localhost:8001/EveHome", "{9A2C715B-BE52-438B-B2A4-1E16EE3651C2}"
-	ProjectSection(WebsiteProperties) = preProject
-		UseIISExpress = "false"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/EveHome"
-		Debug.AspNetCompiler.PhysicalPath = "Web\EveHome\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\EveHome\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/EveHome"
-		Release.AspNetCompiler.PhysicalPath = "Web\EveHome\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\EveHome\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "Web\EveHome\"
-	EndProjectSection
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EveForChrome-Site/EveHome", "http://localhost:8001/EveHome", "{9A2C715B-BE52-438B-B2A4-1E16EE3651C2}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
@@ -132,6 +94,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.Diagnostics", "Eve.Diagnostics\Eve.Diagnostics.csproj", "{B111BA92-F366-4ADA-B0CA-402FEC001711}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eve.API.Services.Common", "Eve.API.Services.Common\Eve.API.Services.Common.csproj", "{911D7554-7905-4AA6-906F-5E73E5788E47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CF80BEE3-97B1-4A87-8077-D9EF69C8A891}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -357,17 +326,17 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F} = {1CBDAAC6-AC23-4A6E-8708-1A916A5BB944}
-		{6D212EFD-E93A-49E3-9949-19F65E007F3A} = {4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F}
-		{AC713C21-2FB3-49B0-B763-97FBB075BA31} = {4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F}
-		{947D3030-BF9D-49B9-A5C6-CE42480CA963} = {C784F483-1AF9-4066-B925-3F47784D64C0}
-		{9A2C715B-BE52-438B-B2A4-1E16EE3651C2} = {C784F483-1AF9-4066-B925-3F47784D64C0}
 		{30B3B19E-D5B3-4188-B35B-22B088D94F15} = {A7B49DEA-FF08-4079-A7BD-CB473C4E4A70}
-		{071C4AB6-4343-472D-8BFE-5AB30562B428} = {A81FF1CE-835F-4619-B4D8-305868B46662}
 		{E3E59183-DBC6-4093-864C-47CE568458D8} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
 		{09F82341-E1F6-42D0-8D98-A76ECD27BC89} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
 		{2A424A38-2993-4A46-9B67-DB23967D8B1B} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
 		{F3765869-0059-4B36-BDAA-D85AFD87D0C9} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
+		{6D212EFD-E93A-49E3-9949-19F65E007F3A} = {4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F}
+		{AC713C21-2FB3-49B0-B763-97FBB075BA31} = {4B1F42D5-1CBC-4392-B86E-BF70EDA6F88F}
+		{071C4AB6-4343-472D-8BFE-5AB30562B428} = {A81FF1CE-835F-4619-B4D8-305868B46662}
 		{B472F1C3-1ED7-460A-B48F-325E89557EC9} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
+		{947D3030-BF9D-49B9-A5C6-CE42480CA963} = {C784F483-1AF9-4066-B925-3F47784D64C0}
+		{9A2C715B-BE52-438B-B2A4-1E16EE3651C2} = {C784F483-1AF9-4066-B925-3F47784D64C0}
 		{B74D5BA1-F746-472C-A9A9-85346CC0B93A} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
 		{B111BA92-F366-4ADA-B0CA-402FEC001711} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}
 		{911D7554-7905-4AA6-906F-5E73E5788E47} = {9B0632F8-AE5C-4EB6-8330-645867F075C3}

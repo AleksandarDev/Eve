@@ -6,11 +6,11 @@
 					 Title="Eve Control" Height="400" Width="700" Icon="/Eve256.ico"
 					 SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}" 
 					 Loaded="MainWindowOnLoaded" Closing="MainWindowClosing">
-	<mahapps:MetroWindow.WindowCommands>
+	<mahapps:MetroWindow.RightWindowCommands>
 		<mahapps:WindowCommands>
 			<Button Content="settings" />
 		</mahapps:WindowCommands>
-	</mahapps:MetroWindow.WindowCommands>
+	</mahapps:MetroWindow.RightWindowCommands>
 	
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
