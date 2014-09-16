@@ -26,28 +26,41 @@ namespace Eve.API.Services.Relay {
 		/// <summary>
 		/// Retrieve callback contract of subscribed client
 		/// </summary>
-		/// <param name="details">Details about client to get callback from</param>
-		/// <returns>Returns null if requested client isn't subscribed</returns>
-		protected IEveAPIService GetCallback(ServiceRequestDetails details) {
-			if (details == null)
-				throw new ArgumentNullException("details");
+		/// <param name="client">Client ID for which to get callback</param>
+		/// <returns>Returns null if requested client isn't subscribed or invalid</returns>
+		/// <remarks>This also checks if user and client data is valid, returns null if invalid</remarks>
+		protected IEveAPIService GetCallback(string client) {
+			if (String.IsNullOrEmpty(client))
+				return null;
 
-			var client = RelayManager.GetClient(details.Client.ID);
-			if (client == null) return null;
+			var clientObject = RelayManager.GetClient(client);
+			if (clientObject == null) return null;
 
-			return client.Callback as IEveAPIService;
+			return clientObject.Callback as IEveAPIService;
 		}
 
 		#region IEveAPIService implementation
 
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "user/signin")]
 		public bool SignIn(ServiceUser user) {
-			throw new NotImplementedException();
+			if (user.UserName == "admin" &&
+				user.PasswordHash == "1234")
+				return true;
+			return false;
 		}
 
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "user/signout")]
 		public bool SignOut(ServiceUser user) {
 			throw new NotImplementedException();
 		}
 
+		[WebGet(UriTemplate = "clients/")]
 		public ServiceClient[] GetAvailableClients() {
 			return RelayManager.GetClients().ToArray();
 		}
@@ -56,74 +69,106 @@ namespace Eve.API.Services.Relay {
 
 		#region Touch implementation
 
-		public bool SendTrackPadMessage(ServiceRequestDetails details,
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "modules/touch/trackpad")]
+		public bool SendTrackPadMessage(string client,
 										TrackPadMessage message) {
-			var callback = this.GetCallback(details);
+			var callback = this.GetCallback(client);
 			if (callback == null) return false;
 
-			return callback.SendTrackPadMessage(details, message);
+			return callback.SendTrackPadMessage(client, message);
 		}
 
-		public bool SendButtonMessage(ServiceRequestDetails details,
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "modules/touch/button")]
+		public bool SendButtonMessage(string client,
 									  ButtonMessage message) {
-			var callback = this.GetCallback(details);
+			var callback = this.GetCallback(client);
 			if (callback == null) return false;
 
-			return callback.SendButtonMessage(details, message);
+			return callback.SendButtonMessage(client, message);
 		}
 
 		#endregion
 
 		#region DisplayEnhancements implementation
 
-		public bool SetZoom(ServiceRequestDetails details, int zoomValue) {
-			var callback = this.GetCallback(details);
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "modules/displayenhancements")]
+		public bool SetZoom(string client, int zoomValue) {
+			var callback = this.GetCallback(client);
 			if (callback == null) return false;
 
-			return callback.SetZoom(details, zoomValue);
+			return callback.SetZoom(client, zoomValue);
 		}
 
 		#endregion
 
 		#region Lights implementation
 
-		public Light[] GetLights(ServiceRequestDetails details) {
-			var callback = this.GetCallback(details);
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "modules/lights/all")]
+		public Light[] GetLights(string client) {
+			var callback = this.GetCallback(client);
 			if (callback == null) return null;
 
-			return callback.GetLights(details);
+			return callback.GetLights(client);
 		}
 
-		public bool SetLightState(ServiceRequestDetails details, int id, bool state) {
-			var callback = this.GetCallback(details);
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "modules/lights")]
+		public bool SetLightState(string client, int id, bool state) {
+			var callback = this.GetCallback(client);
 			if (callback == null) return false;
 
-			return callback.SetLightState(details, id, state);
+			return callback.SetLightState(client, id, state);
 		}
 
 		#endregion
 
 		#region Ambiental implementation
 
-		public AmbientalLight[] GetAmbientalLights(ServiceRequestDetails details) {
-			var callback = this.GetCallback(details);
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "modules/ambiental/all")]
+		public AmbientalLight[] GetAmbientalLights(string client) {
+			var callback = this.GetCallback(client);
 			if (callback == null) return null;
 
-			return callback.GetAmbientalLights(details);
+			return callback.GetAmbientalLights(client);
 		}
 
-		public bool SetAmbientalLightState(ServiceRequestDetails details, int id, bool state) {
-			var callback = this.GetCallback(details);
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "modules/ambiental/state")]
+		public bool SetAmbientalLightState(string client, int id, bool state) {
+			var callback = this.GetCallback(client);
 			if (callback == null) return false;
 
-			return callback.SetAmbientalLightState(details, id, state);
+			return callback.SetAmbientalLightState(client, id, state);
 		}
 
-		public bool SetAmbientalLightColor(ServiceRequestDetails details, int id, byte r, byte g, byte b, byte a) {
-			var callback = this.GetCallback(details);
+		[WebInvoke(
+			BodyStyle = WebMessageBodyStyle.Wrapped,
+			Method = "POST",
+			UriTemplate = "modules/ambiental/color")]
+		public bool SetAmbientalLightColor(string client, int id, byte r, byte g, byte b, byte a) {
+			var callback = this.GetCallback(client);
 			if (callback == null) return false;
 
-			return callback.SetAmbientalLightColor(details, id, r, g, b, a);
+			return callback.SetAmbientalLightColor(client, id, r, g, b, a);
 		}
 
 		#endregion

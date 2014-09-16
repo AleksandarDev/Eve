@@ -47,7 +47,6 @@
     <Compile Include="Modules\Orientation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceClient.cs" />
-    <Compile Include="ServiceRequestDetails.cs" />
     <Compile Include="ServiceUser.cs" />
     <Compile Include="Modules\Touch\TrackPadMessage.cs" />
   </ItemGroup>

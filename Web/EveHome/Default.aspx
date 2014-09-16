@@ -4,6 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 		<meta charset="utf-8"/>
 		<title>Eve</title>
 		<link href="DefaultStyle.css" type="text/css" rel="stylesheet" />
@@ -15,6 +17,7 @@
 		
 		<meta property="og:image" content="http://eve.toplek.net/Resources/Images/Eve256.png" />
 	<body>
+		<!-- Page Header -->
 		<div class="Header">
 			<a href="https://github.com/AleksandarDev/Eve"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 			<div class="CenteredLogo">
@@ -25,18 +28,22 @@
 			</div>
 		</div>
 		<div class="HeaderShadow"></div>
+		
+		<!-- Page Content -->
 		<div class="Content">
 			<div class="Post">
+				<a href="https://www.lucidchart.com/publicSegments/view/5155a328-a718-4cd2-a71d-78c10a0045e5/image.png" target="_blank">
+					<img class="PostImage" src="Resources/Images/Post1Layers.png" title="Eve Messaging Layers" width="251" />
+				</a>
 				<div class="PostText">
 					Schematic diagram showing basic message exchange mechanism and available application layers.<br/>
 					<div class="PostFooter">Aleksandar Toplek, 29.3.2013.</div>
 				</div>
-				<a href="https://www.lucidchart.com/publicSegments/view/5155a328-a718-4cd2-a71d-78c10a0045e5/image.png" target="_blank">
-					<img class="PostImage" src="Resources/Images/Post1Layers.png" title="Eve Messaging Layers" width="251" height="330" />
-				</a>
 			</div>
 		</div>
-		<div class="FooterShadow"></div>
+		
+		<!-- Page Footer -->
+		<!--<div class="FooterShadow"></div>-->
 		<div class="Footer">
 			<div class="SponsorLinks">
 				<div>
@@ -47,6 +54,9 @@
 				<div>
 					<a href="http://www.windowsphone.com/"><img src="Resources/Images/WindowsPhone.png" /></a>
 					<a href="http://www.xbox.com/en-US/kinect"><img src="Resources/Images/KinectLogo.png" /></a>
+				</div>
+				<div>
+					<a target="_blank" href="https://affiliate.godaddy.com/redirect/EA78984805C2FE02A65D7C73113C40CC5002E4F98CBE44155FE80ADA72091B4AA121C7B25C403B9B2639B3BD98416D6D5B339A6E92F4C6D822CBCB53366B2B1C"><img src="https://affiliate.godaddy.com/ads/EA78984805C2FE02A65D7C73113C40CC5002E4F98CBE44155FE80ADA72091B4AA121C7B25C403B9B2639B3BD98416D6D5B339A6E92F4C6D822CBCB53366B2B1C" border="0" width="200"  height="200" alt="50% of Hosting for your Website at GoDaddy.com!"/></a>
 				</div>
 			</div>
 			<label class="FooterEnd">&#169; 2013 <a href="http://toplek.net/" target="_blank">Aleksandar Toplek</a> | App Start Contest 2013.</label>

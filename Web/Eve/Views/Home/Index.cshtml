@@ -1,0 +1,11 @@
+﻿@{
+	ViewBag.Title = "Home";
+}
+
+@section scripts {
+	@Scripts.Render("~/Scripts/Home/IndexScript.js");
+}
+
+@for (int index = 0; index < 9; index++) {
+	<p>Paragraph @index</p>
+}

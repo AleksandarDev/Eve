@@ -4,15 +4,35 @@
 					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 					  Title="Eve - Eve.Diagnostics.Log" Height="700" Width="800"
 					  GlowBrush="{DynamicResource AccentColorBrush}" 
-					  DataContext="{Binding RelativeSource={RelativeSource Self}}"
-					  SaveWindowPosition="True">
+					  SaveWindowPosition="True"
+					  Loaded="LogViewLoaded"
+					  DataContext="{Binding Source={StaticResource ViewModelProvider}, Path=LogViewModel}">
 	<Grid Margin="12">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-		<TreeView x:Name="LogInstanceTypesListBox" MinWidth="240" />
-		<Grid Grid.Column="1">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<ListBox x:Name="LogInstanceTypesListBox" 
+				 ItemsSource="{Binding Types}"
+				 SelectionMode="Extended" 
+				 MinWidth="240" 
+				 SelectionChanged="LogInstanceTypesListBoxOnSelectionChanged"/>
+		
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Button Content="Select All" Grid.Column="0" Margin="3" Padding="15,8,15,8" Click="SelectAllOnClick" />
+			<Button Content="Deselect All" Grid.Column="1" Margin="3" Padding="15,8,15,8" Click="DeselectAllOnClick" />
+		</Grid>
+		
+		<Grid Grid.Column="1" Grid.RowSpan="2">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
@@ -25,11 +45,9 @@
 				<CheckBox Content="Warning" IsChecked="{Binding ShowWarnMessages}" Margin="5,3" VerticalAlignment="Center" />
 				<CheckBox Content="Error" IsChecked="{Binding ShowErrorMessages}" Margin="5,3" VerticalAlignment="Center" />
 			</StackPanel>
-			<TabControl x:Name="LogInstances" Grid.Row="1">
-				<TabItem Header="All">
-					<ListBox ItemsSource="{Binding Messages}" />
-				</TabItem>
-			</TabControl>
+			<ListBox x:Name="MessagesListBox" 
+					 ItemsSource="{Binding Messages}" 
+					 Grid.Row="1" />
 		</Grid>
 	</Grid>
 </controls:MetroWindow>

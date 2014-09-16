@@ -54,7 +54,7 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			if (this.isZoomEnabled) {
 				// TODO SetZoom relay request
 				this.relayServiceFacade.Proxy.Relay.SetZoomAsync(
-					this.relayServiceFacade.Proxy.ActiveDetails, this.zoomAmount);
+					this.relayServiceFacade.Proxy.ActiveClient, this.zoomAmount);
 				this.log.Info("Zoom set to {0}", this.zoomAmount);
 			}
 
@@ -87,7 +87,7 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			if (this.trackPadDragDeltaMessage != null) {
 				// Send message
 				this.relayServiceFacade.Proxy.Relay.SendTrackPadMessageAsync(
-					this.relayServiceFacade.Proxy.ActiveDetails, this.trackPadDragDeltaMessage);
+					this.relayServiceFacade.Proxy.ActiveClient, this.trackPadDragDeltaMessage);
 
 				this.log.Info("Sending track pad message: {0}",
 							  this.trackPadDragDeltaMessage.ToString());
@@ -124,7 +124,7 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 				// Send request for track pad message to client
 				this.relayServiceFacade.Proxy.Relay.SendTrackPadMessageAsync(
-					this.relayServiceFacade.Proxy.ActiveDetails, message);
+					this.relayServiceFacade.Proxy.ActiveClient, message);
 			}
 		}
 
@@ -136,7 +136,7 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 
 			// Send request for button message to client
 			this.relayServiceFacade.Proxy.Relay.SendButtonMessageAsync(
-				this.relayServiceFacade.Proxy.ActiveDetails, message);
+				this.relayServiceFacade.Proxy.ActiveClient, message);
 		}
 
 
@@ -242,7 +242,7 @@ namespace EveWindowsPhone.Pages.Modules.Touch {
 			// Deactivate zoom 
 			if (this.isZoomEnabled) {
 				this.relayServiceFacade.Proxy.Relay.SetZoomAsync(
-					this.relayServiceFacade.Proxy.ActiveDetails, 100);
+					this.relayServiceFacade.Proxy.ActiveClient, 100);
 			}
 		}
 

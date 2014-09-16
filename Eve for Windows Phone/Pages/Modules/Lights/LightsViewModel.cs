@@ -12,7 +12,8 @@ using EveWindowsPhone.ViewModels;
 namespace EveWindowsPhone.Pages.Modules.Lights {
 	[Module("MLights", "Lights", 
 		"/Resources/Images/Light Bulb.png",
-		"/Pages/Modules/Lights/LightsView.xaml")]
+		"/Pages/Modules/Lights/LightsView.xaml", 
+		isInternal: false, isEnabled: false)]
 	public class LightsViewModel : NotificationObject {
 		private readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(LightsViewModel));
@@ -80,7 +81,7 @@ namespace EveWindowsPhone.Pages.Modules.Lights {
 		public void RefreshLightsListAsync() {
 			this.relayServiceFacade.Proxy.Relay.GetLightsCompleted += RelayGetLightsCompleted;
 			this.relayServiceFacade.Proxy.Relay.GetLightsAsync(
-				this.relayServiceFacade.Proxy.ActiveDetails);
+				this.relayServiceFacade.Proxy.ActiveClient);
 
 			this.log.Info("Requested for available lights list");
 		}
@@ -108,7 +109,7 @@ namespace EveWindowsPhone.Pages.Modules.Lights {
 			// Check if we need to change state
 			if (light.State != isChecked.Value) {
 				this.relayServiceFacade.Proxy.Relay.SetLightStateAsync(
-					this.relayServiceFacade.Proxy.ActiveDetails, id, isChecked.Value);
+					this.relayServiceFacade.Proxy.ActiveClient, id, isChecked.Value);
 
 				this.log.Info("Sending light [{0}] state request [{0}]",
 							  id, isChecked.Value ? "On" : "Off");
@@ -121,7 +122,7 @@ namespace EveWindowsPhone.Pages.Modules.Lights {
 			get { return this.isLoadingLights; }
 			private set {
 				this.isLoadingLights = value;
-				this.RaisePropertyChanged("IsLoadingLights");
+				this.RaisePropertyChanged(() => this.IsLoadingLights);
 			}
 		}
 

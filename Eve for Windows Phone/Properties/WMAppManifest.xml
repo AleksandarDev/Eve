@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="" />
-  <App xmlns="" ProductID="{2875aafd-26f1-4763-a228-6d65958cff7a}" Title="SyncUp" RuntimeType="Silverlight" Version="0.1.0.0" Genre="apps.normal" Author="Aleksandar Toplek" Description="SyncUp - Eve for Windows Phone" Publisher="Aleksandar Toplek" BitsPerPixel="32" PublisherID="{11af46b5-96bb-4625-8c68-f78ab9a72965}">
+  <App xmlns="" ProductID="{071c4ab6-4343-472d-8bfe-5ab30562b428}" Title="SyncUp" RuntimeType="Silverlight" Version="0.1.0.0" Genre="apps.normal" Author="Aleksandar Toplek" Description="SyncUp - Eve for Windows Phone" Publisher="Aleksandar Toplek" BitsPerPixel="32" PublisherID="{9f2d4c7a-e46d-4c15-9542-7535a9dd92fd}">
     <IconPath IsRelative="true" IsResource="false">Resources\Images\View.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />

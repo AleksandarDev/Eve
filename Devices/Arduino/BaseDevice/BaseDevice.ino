@@ -14,9 +14,9 @@
 //
 // Pins
 //
-#define		OnBoardLED	13
-#define		RadioCE		48
-#define		RadioCSN	49
+#define		OnBoardLED	8
+#define		RadioCE		10
+#define		RadioCSN	9
 
 // 
 // Definitions
@@ -107,13 +107,17 @@ void loop(void) {
 	}
 	
 	// Execute command if available
-	/*if (isCurrentCommandReady)
-		HandleCommand();*/
-
+/*
+	if (isCurrentCommandReady)
+		HandleCommand();
+*/
 	while(Serial.available() >= 3) {
 		Serial.print("Sending...");
 		RF24NetworkHeader header(1);
-		SetColorMessage data = { Serial.read(), Serial.read(), Serial.read() }; 
+                byte bInput = Serial.read();
+                byte gInput = Serial.read();
+                byte rInput = Serial.read();
+		SetColorMessage data = { rInput, gInput, bInput }; 
 		bool success = network.write(header, &data, sizeof(SetColorMessage));
 		if (success) Serial.println("ok");
 		else Serial.println("fail");

@@ -38,7 +38,8 @@ namespace EveWindowsPhone.Services {
 			this.Container.Register(
 				c => new MainViewModel(
 					     c.Resolve<INavigationServiceFacade>(),
-						 c.Resolve<IIsolatedStorageServiceFacade>()
+						 c.Resolve<IIsolatedStorageServiceFacade>(),
+						 c.Resolve<IRelayServiceFacade>()
 						 )).ReusedWithin(ReuseScope.None);
 			this.Container.Register(
 				c => new CreateClientViewModel(
@@ -96,7 +97,7 @@ namespace EveWindowsPhone.Services {
 
 		#endregion
 
-		#region IDisposabble implementation
+		#region IDisposable implementation
 
 		public void Dispose() {
 			this.Dispose(true);

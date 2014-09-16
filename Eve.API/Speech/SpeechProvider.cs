@@ -4,12 +4,11 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Eve.Core.Kinect;
-using Eve.Diagnostics.Logging;
-using Microsoft.Kinect;
 using System.Speech.AudioFormat;
 using System.Speech.Recognition;
 using System.Speech.Synthesis;
+using Eve.Core.Kinect;
+using Microsoft.Kinect;
 
 namespace Eve.API.Speech {
 	[ProviderDescription("Speech Provider")]
@@ -70,12 +69,10 @@ namespace Eve.API.Speech {
 
 			// TODO Change between grammar and dictation
 			// Create a grammar from grammar definition XML file.
-			//using (var stream = File.OpenRead("Speech/Grammars/EveGrammar.xml")) {
-			//	var g = new Grammar(stream);
-			//	this.speechRecognizer.LoadGrammar(g);
-			//}
-			this.speechRecognizer.LoadGrammar(
-					new System.Speech.Recognition.DictationGrammar());
+			using (var stream = new FileStream("Speech/Grammars/EveGrammar.xml", FileMode.Open)) {
+				var g = new Grammar(stream);
+				this.speechRecognizer.LoadGrammar(g);
+			}
 
 			// Get audio source
 			// TODO Implement kinect selector from KinectProvider
@@ -92,7 +89,7 @@ namespace Eve.API.Speech {
 					EchoCancellationMode.CancellationAndSuppression;
 				kinectAudioSource.NoiseSuppression = true;
 				kinectAudioSource.AutomaticGainControlEnabled = true;
-
+				
 				this.audioSource = kinectAudioSource.Start();
 
 				// Set audio source as speech recognizer input stream
@@ -140,8 +137,7 @@ namespace Eve.API.Speech {
 
 				System.Diagnostics.Debug.WriteLine("Speech request executing...",
 					typeof(SpeechProvider).Name);
-				await
-					Task.Run(() => this.speechSynthesizer.Speak(speechPrompt.Prompt));
+				await Task.Run(() => this.speechSynthesizer.Speak(speechPrompt.Prompt));
 				System.Diagnostics.Debug.WriteLine("Speech request executed",
 					typeof(SpeechProvider).Name);
 
@@ -226,7 +222,7 @@ namespace Eve.API.Speech {
 			var kinectMatches =
 				recognizersAvailable.Where(
 					r => r.AdditionalInfo.Values.Contains("Kinect") &&
-						r.Culture.Name.Equals("en-US",
+						r.Culture.Name.Equals("en-GB",
 							StringComparison.OrdinalIgnoreCase));
 
 			// Check if list contains any matches

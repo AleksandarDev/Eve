@@ -37,6 +37,13 @@
 							   ImageSourcePath="/Resources/Images/Keyboard.png" />
 
 		<controlsMicrosoft:Pivot x:Name="GroupsPivot" Grid.Row="2" SelectionChanged="KeyboardGroupsSelectionChanged">
+			<controlsMicrosoft:Pivot.Resources>
+				<Style TargetType="controlsc4f:Tile" x:Key="TileStyle">
+					<Setter Property="Margin" Value="3" />
+					<Setter Property="Foreground" Value="White" />
+				</Style>
+			</controlsMicrosoft:Pivot.Resources>
+			
 			<!-- General keyboard keys -->
 			<controlsMicrosoft:PivotItem Header="General">
 				<Grid x:Name="GeneralContent" VerticalAlignment="Top" toolkit:TiltEffect.IsTiltEnabled="True">
@@ -52,31 +59,31 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<controlsc4f:Tile Click="GeneralTileClick" Margin="3" Grid.Row="0" Grid.Column="0">
+					<controlsc4f:Tile Click="GeneralTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">shift</TextBlock>
 					</controlsc4f:Tile>
 
-					<controlsc4f:Tile Click="GeneralTileClick" Margin="3" Grid.Row="0" Grid.Column="1">
+					<controlsc4f:Tile Click="GeneralTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">insert</TextBlock>
 					</controlsc4f:Tile>
 
-					<controlsc4f:Tile Click="GeneralTileClick" Margin="3" Grid.Row="0" Grid.Column="2">
+					<controlsc4f:Tile Click="GeneralTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">delete</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="GeneralTileClick" Margin="3" Grid.Row="0" Grid.Column="3">
+					<controlsc4f:Tile Click="GeneralTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="3">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">num lock</TextBlock>
 					</controlsc4f:Tile>
 
-					<controlsc4f:Tile Click="GeneralTileClick" Margin="3" Grid.Row="1" Grid.Column="0">
+					<controlsc4f:Tile Click="GeneralTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">ctrl</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="GeneralTileClick" Margin="3" Grid.Row="1" Grid.Column="1">
+					<controlsc4f:Tile Click="GeneralTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">alt</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="GeneralTileClick" Margin="3" Grid.Row="1" Grid.Column="2">
+					<controlsc4f:Tile Click="GeneralTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">win</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="GeneralTileClick" Margin="3" Grid.Row="1" Grid.Column="3">
+					<controlsc4f:Tile Click="GeneralTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="3">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">tab</TextBlock>
 					</controlsc4f:Tile>
 
@@ -114,81 +121,81 @@
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="0" Grid.Column="0">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="0">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F1</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="0" Grid.Column="1">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="1">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F2</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="0" Grid.Column="2">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="2">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F3</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="0" Grid.Column="3">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="3">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F4</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="0" Grid.Column="4">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="4">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F5</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="0" Grid.Column="5">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="5">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F6</TextBlock>
 						</controlsc4f:Tile>
 
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="1" Grid.Column="0">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="0">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F7</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="1" Grid.Column="1">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="1">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F8</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="1" Grid.Column="2">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="2">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F9</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="1" Grid.Column="3">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="3">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F10</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="1" Grid.Column="4">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="4">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F11</TextBlock>
 						</controlsc4f:Tile>
-						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Margin="3" Grid.Row="1" Grid.Column="5">
+						<controlsc4f:Tile Click="AdditionalFunctionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="5">
 							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">F12</TextBlock>
 						</controlsc4f:Tile>
 					</Grid>
 					
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="1" Grid.Column="0">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">home</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="1" Grid.Column="1">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">end</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="1" Grid.Column="2">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">pg up</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="1" Grid.Column="3">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="3">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">pg dn</TextBlock>
 					</controlsc4f:Tile>
 
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="2" Grid.Column="0">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="2" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">prt sc</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="2" Grid.Column="1">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="2" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">sys rq</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="2" Grid.Column="2">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="2" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">pause</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="2" Grid.Column="3">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="2" Grid.Column="3">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">break</TextBlock>
 					</controlsc4f:Tile>
 
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="3" Grid.Column="0">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="3" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">esc</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="3" Grid.Column="1">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="3" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">caps lock</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="3" Grid.Column="2">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="3" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">alt gr</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="AdditionalTileClick" Margin="3" Grid.Row="3" Grid.Column="3">
+					<controlsc4f:Tile Click="AdditionalTileClick" Style="{StaticResource TileStyle}" Grid.Row="3" Grid.Column="3">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">scroll</TextBlock>
 					</controlsc4f:Tile>
 				</Grid>
@@ -211,56 +218,56 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="3" Grid.Column="0">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="3" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">1</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="3" Grid.Column="1">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="3" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">2</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="3" Grid.Column="2">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="3" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">3</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="2" Grid.Column="0">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="2" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">4</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="2" Grid.Column="1">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="2" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">5</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="2" Grid.Column="2">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="2" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">6</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="1" Grid.Column="0">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">7</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="1" Grid.Column="1">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">8</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="1" Grid.Column="2">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">9</TextBlock>
 					</controlsc4f:Tile>
 
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="4" Grid.Column="2">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="4" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">,</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">enter</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="1" Grid.Column="3" Grid.RowSpan="2">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="3" Grid.RowSpan="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">+</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="0" Grid.Column="3">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="3">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">-</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="0" Grid.Column="2">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">*</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="0" Grid.Column="1">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">/</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="NumPadTileClick" Margin="3" Grid.Row="0" Grid.Column="0">
+					<controlsc4f:Tile Click="NumPadTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">esc</TextBlock>
 					</controlsc4f:Tile>
 				</Grid>
@@ -279,16 +286,16 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<controlsc4f:Tile Click="ArrowTileClick" Margin="3" Grid.Row="1" Grid.Column="0">
+					<controlsc4f:Tile Click="ArrowTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="0">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Webdings" FontSize="{StaticResource PhoneFontSizeExtraLarge}">&#51;</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="ArrowTileClick" Margin="3" Grid.Row="1" Grid.Column="2">
+					<controlsc4f:Tile Click="ArrowTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="2">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Webdings" FontSize="{StaticResource PhoneFontSizeExtraLarge}">&#52;</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="ArrowTileClick" Margin="3" Grid.Row="0" Grid.Column="1">
+					<controlsc4f:Tile Click="ArrowTileClick" Style="{StaticResource TileStyle}" Grid.Row="0" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Webdings" FontSize="{StaticResource PhoneFontSizeExtraLarge}">&#53;</TextBlock>
 					</controlsc4f:Tile>
-					<controlsc4f:Tile Click="ArrowTileClick" Margin="3" Grid.Row="1" Grid.Column="1">
+					<controlsc4f:Tile Click="ArrowTileClick" Style="{StaticResource TileStyle}" Grid.Row="1" Grid.Column="1">
 						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Webdings" FontSize="{StaticResource PhoneFontSizeExtraLarge}">&#54;</TextBlock>
 					</controlsc4f:Tile>
 				</Grid>

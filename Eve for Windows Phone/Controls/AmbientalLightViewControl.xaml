@@ -18,6 +18,7 @@
 							  IsChecked="{Binding Light.State, Mode=TwoWay}"
 							  Checked="ToggleSwitchOnChecked"/>
 		<controls:ColorSlider x:Name="ColorSlider" 
+							  Margin="0,-24,0,24"
 							  Visibility="{Binding Light.State, Converter={StaticResource BooleanToVisibilityConverter}}" 
 							  ColorChanged="OnColorSliderChangeColor"
 							  Orientation="Horizontal"

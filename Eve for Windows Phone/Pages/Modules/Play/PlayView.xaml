@@ -57,15 +57,26 @@
 							<ColumnDefinition Width="*" />
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
-						
-						<TextBlock Text="Sample song by Someone" Grid.Column="0" TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}" />
-						<TextBlock Text="(00:00:00)" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="{StaticResource PhoneSubtleBrush}" />
+
+						<StackPanel Orientation="Horizontal" Grid.Column="0" >
+							<TextBlock Text="{Binding SongName}" 
+									   TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}" />
+							<TextBlock Text=" by " 
+									   TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}" />
+							<TextBlock Text="{Binding ArtistName}" 
+									   TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}" />
+						</StackPanel>
+						<StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+							<TextBlock Text="(" Foreground="{StaticResource PhoneSubtleBrush}" />
+							<TextBlock Text="{Binding SongLength, Converter={StaticResource IntToLongTimeConverter}}" Foreground="{StaticResource PhoneSubtleBrush}" />
+							<TextBlock Text=")" Foreground="{StaticResource PhoneSubtleBrush}" />
+						</StackPanel>
 					</Grid>
 				</StackPanel>
 			</Grid>
 
-			<StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="4" Margin="0,28,0,0">
-				<ProgressBar Value="50" Margin="0" />
+			<StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="4">
+				<ProgressBar Value="{Binding SongPositionValue}" Maximum="1" />
 				<Grid Margin="12, 8">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -73,9 +84,9 @@
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
-					<TextBlock Text="00:00:00" Grid.Column="0" HorizontalAlignment="Left" Foreground="{StaticResource PhoneSubtleBrush}" />
+					<TextBlock Text="{Binding SongPosition, Converter={StaticResource IntToLongTimeConverter}}" Grid.Column="0" HorizontalAlignment="Left" Foreground="{StaticResource PhoneSubtleBrush}" />
 					<TextBlock Text="-" Grid.Column="2" HorizontalAlignment="Right" Foreground="{StaticResource PhoneSubtleBrush}" />
-					<TextBlock Text="99:99:99" Grid.Column="3" HorizontalAlignment="Right" Foreground="{StaticResource PhoneSubtleBrush}" />
+					<TextBlock Text="{Binding UntilSongEnd, Converter={StaticResource IntToLongTimeConverter}}" Grid.Column="3" HorizontalAlignment="Right" Foreground="{StaticResource PhoneSubtleBrush}" />
 				</Grid>
 			</StackPanel>
 
@@ -95,7 +106,9 @@
 					<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">shuffle</TextBlock>
 				</controlsc4f:Tile>
 				<controlsc4f:Tile Click="NavigationTileClick" Margin="3" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
-					<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Webdings" FontSize="{StaticResource PhoneFontSizeLarge}">&#52;&#59;</TextBlock>
+					<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+							   FontFamily="Webdings" FontSize="{StaticResource PhoneFontSizeLarge}"
+							   Text="&#59;" />
 				</controlsc4f:Tile>
 				<controlsc4f:Tile Click="NavigationTileClick" Margin="3" Grid.Row="0" Grid.Column="3">
 					<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">repeat</TextBlock>

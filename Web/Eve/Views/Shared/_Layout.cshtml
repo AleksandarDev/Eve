@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>@ViewBag.Title - Eve</title>
+		<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+		<meta name="viewport" content="width=device-width" />
+		@Styles.Render("~/Content/css")
+		@Scripts.Render("~/bundles/modernizr")
+	</head>
+	<body>
+		<!-- Header -->
+		<header>
+			<div class="centered">
+				<div>
+					<p class="site-title">
+						<img src="@Url.Content("~/Content/images/Eve128.png")" width="64" height="64" />
+						@Html.ActionLink("Eve", "Index", "Home")
+					</p>
+				</div>
+				<div>
+					<section id="accountContainer">
+						@Html.Partial("_LoginPartial")
+					</section>
+					<nav>
+						<ul id="menu">
+							<li><a class='@((string)ViewContext.Controller.ValueProvider.GetValue("action").RawValue == "Index" ? "menuSelection" : String.Empty)' href='@Url.Action("Index", "Home")'>Home</a></li>
+							<li><a class='@((string)ViewContext.Controller.ValueProvider.GetValue("action").RawValue == "About" ? "menuSelection" : String.Empty)' href='@Url.Action("About", "Home")'>About</a></li>
+							<li><a class='@((string)ViewContext.Controller.ValueProvider.GetValue("action").RawValue == "Contact" ? "menuSelection" : String.Empty)' href='@Url.Action("Contact", "Home")'>Contact</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		
+		<!-- Body -->
+		<div id="body">
+			<section class="centered clear-fix">
+				@RenderBody()
+			</section>
+		</div>
+		
+		<!-- Footer -->
+		<footer>
+			<div class="centered">
+				<div>
+					<p>&copy; @(DateTime.Now.Year > 2013 ?"2013 - " + DateTime.Now.Year.ToString() : DateTime.Now.Year.ToString()) Aleksandar Toplek</p>
+				</div>
+			</div>
+		</footer>
+
+		@Scripts.Render("~/bundles/jquery")
+		@RenderSection("scripts", required: false)
+	</body>
+</html>

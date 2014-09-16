@@ -1,4 +1,4 @@
-﻿#include <RF24Network.h>
+#include <RF24Network.h>
 #include <RF24.h>
 #include <SPI.h>
 #include <Timer.h>
@@ -16,8 +16,8 @@
 //
 // Reserved Pins
 //
-#define		OnBoardLED	13
-#define		RadioCE		8
+#define		OnBoardLED	8
+#define		RadioCE		10
 #define		RadioCSN	9
 
 //
@@ -101,7 +101,7 @@ void setup(void) {
 	// Setup pins
 	pinMode(OnBoardLED, OUTPUT);
 
-	timer.every(1, DoFade);
+	timer.every(1, DoFade, (void*)0);
 	//timer.every(1000, TestSend);
 }
 
@@ -148,7 +148,7 @@ void Solid(byte r, byte g, byte b) {
 //maximum value of fade time = 30 seconds before gradient values
 //get too small for floating point math to work? replace floats
 //with doubles to remedy this?
-void DoFade() {
+void DoFade(void* context) {
 	if (isFading) {
 		fadeCounter++;
 		if (fadeCounter > fadeT) {

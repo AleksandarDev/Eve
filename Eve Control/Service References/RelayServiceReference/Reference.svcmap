@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="280637ad-9d0f-4268-8f46-4bf99973f561" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5110c27f-970f-45fa-b616-e02cd4972a01" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,10 +19,17 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://192.168.1.101:64410/eve/relay/ClientRelayService.svc?singleWsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://evevm.cloudapp.net:64410/eve/relay/ClientRelayService.svc/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ClientRelayService.wsdl" MetadataType="Wsdl" ID="990d0c9c-4249-47de-940f-23053e700b04" SourceId="1" SourceUrl="http://192.168.1.101:64410/eve/relay/ClientRelayService.svc?singleWsdl" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="0b02e26f-dcbd-483f-98a1-a0b5fe7a4377" SourceId="1" SourceUrl="http://evevm.cloudapp.net:64410/eve/relay/ClientRelayService.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="3aac1129-9421-4fe4-86c6-57d3145e1aa5" SourceId="1" SourceUrl="http://evevm.cloudapp.net:64410/eve/relay/ClientRelayService.svc/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="894f9ddc-94e4-4fad-b942-764f06da8510" SourceId="1" SourceUrl="http://evevm.cloudapp.net:64410/eve/relay/ClientRelayService.svc/mex" />
+    <MetadataFile FileName="Eve.API.Services.Common.xsd" MetadataType="Schema" ID="2214fffa-fd34-45f9-9e23-08164129408e" SourceId="1" SourceUrl="http://evevm.cloudapp.net:64410/eve/relay/ClientRelayService.svc/mex" />
+    <MetadataFile FileName="Eve.API.Services.Common.Modules.Touch.xsd" MetadataType="Schema" ID="6e9c2f09-91bc-4dd3-802d-f9c3f59693a1" SourceId="1" SourceUrl="http://evevm.cloudapp.net:64410/eve/relay/ClientRelayService.svc/mex" />
+    <MetadataFile FileName="Eve.API.Services.Common.Modules.xsd" MetadataType="Schema" ID="457f7af0-1fb2-4fa4-aa08-176ff81c3a91" SourceId="1" SourceUrl="http://evevm.cloudapp.net:64410/eve/relay/ClientRelayService.svc/mex" />
+    <MetadataFile FileName="Eve.API.Services.Common.Modules.Lights.xsd" MetadataType="Schema" ID="4737600d-5803-4ff3-b47e-a689e2e65af1" SourceId="1" SourceUrl="http://evevm.cloudapp.net:64410/eve/relay/ClientRelayService.svc/mex" />
+    <MetadataFile FileName="Eve.API.Services.Common.Modules.Ambiental.xsd" MetadataType="Schema" ID="4e272544-4379-4b81-9a74-9d9d087e7725" SourceId="1" SourceUrl="http://evevm.cloudapp.net:64410/eve/relay/ClientRelayService.svc/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

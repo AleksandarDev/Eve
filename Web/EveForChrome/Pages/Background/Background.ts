@@ -1,6 +1,5 @@
-﻿// Declare Third-Party script classes as dynamic
-declare var $: any;
-declare var chrome: any;
+﻿/// <reference path="../../Scripts/jquery.d.ts" />
+/// <reference path="../../Scripts/chrome.d.ts" />
 
 class RunAt {
 	static Start: string = "document_start";
@@ -15,14 +14,14 @@ class Background {
 
 
 	constructor() {
-		this.InitializeWebSockets();
+		this.InitializeWebSockets(); 
 	}
 	
 	private InitializeWebSockets(): void {
 		// Attach port and create new web socket
 		this.webSocketHost += ":" + this.webSocketPort;
 		this.webSocket = new WebSocket(this.webSocketHost);
-
+		
 		// Web socket handling methods
 		this.webSocket.onmessage = this.WebSocketOnMessage.bind(this);
 		this.webSocket.onopen = this.WebSocketOnOpen.bind(this);
@@ -30,45 +29,29 @@ class Background {
 		this.webSocket.onerror = this.WebSocketOnError.bind(this);
 	}
 
-	private WebSocketOnMessage(event: any): void {
+	private WebSocketOnMessage(message: MessageEvent): void {
 		try {
 			console.log("Got message: ");
-			console.log(event);
+			console.log(message);
 
-			if (event.data == "grooveshark:next-song") {
-				chrome.tabs.query({ url: "http://*.grooveshark.com/*" }, (tab: any) => {
-					this.ExecuteScript(tab[0].id, '$("#play-next").click();');
-				});
-			}
-			else if (event.data == "grooveshark:prev-song") {
-				chrome.tabs.query({ url: "http://*.grooveshark.com/*" }, (tab: any) => {
-					this.ExecuteScript(tab[0].id, '$("#play-prev").click();');
-				});
-			}
-			else if (event.data == "grooveshark:pause-song") {
-				chrome.tabs.query({ url: "http://*.grooveshark.com/*" }, (tab: any) => {
-					this.ExecuteScript(tab[0].id, 'if($("#play-pause").hasClass("playing")) $("#play-pause").click();');
-				});
-			}
-			else if (event.data == "grooveshark:resume-song") {
-				chrome.tabs.query({ url: "http://*.grooveshark.com/*" }, (tab: any) => {
-					this.ExecuteScript(tab[0].id, 'if(!$("#play-pause").hasClass("playing")) $("#play-pause").click();');
-				});
-			}
+			chrome.tabs.query({}, (tabs: chrome.tabs.Tab[]) => {
+				for(var index = 0; index < tabs.length; index++)
+					this.ExecuteScript(tabs[index].id, message.data);
+			});
 		} catch (exception) {
 			console.warn(exception);
 		}
 	}
 
-	private WebSocketOnOpen(event: any): void {
+	private WebSocketOnOpen(event: Event): void {
 		console.log("Socket opened to [" + this.webSocketHost + "]");
 	}
 
-	private WebSocketOnClose(event: any): void {
+	private WebSocketOnClose(event: CloseEvent): void {
 		console.log("Socket closed!");
 	}
 
-	private WebSocketOnError(evet: any): void {
+	private WebSocketOnError(evet: ErrorEvent): void {
 		console.error(event);
 	}
 

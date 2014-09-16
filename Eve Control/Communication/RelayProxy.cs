@@ -16,6 +16,8 @@ namespace EveControl.Communication {
 	/// </summary>
 	public class RelayProxy {
 		// TODO Add firewall exception on initial connection timed out http://msdn.microsoft.com/en-us/library/aa366421(VS.85).aspx
+		// TODO IsSubscribed
+		// TODO LocalProxy
 		protected readonly Log.LogInstance log = new Log.LogInstance(typeof(RelayProxy));
 
 		protected readonly InstanceContext instanceContext;
@@ -71,11 +73,14 @@ namespace EveControl.Communication {
 
 			// OpenAsync connection to relay
 			this.log.Info("Opening connection...");
-			await Task.Run(() => {
-				try {
+			await Task.Run(() =>
+			{
+				try
+				{
 					this.Relay.Open();
 
-					if (this.Relay.State == CommunicationState.Opened) {
+					if (this.Relay.State == CommunicationState.Opened)
+					{
 						this.log.Info("Connection opened");
 						this.IsConnected = true;
 
@@ -83,20 +88,31 @@ namespace EveControl.Communication {
 						this.timer.Start();
 					}
 				}
-				catch (TimeoutException ex) {
+				catch (AddressAlreadyInUseException ex)
+				{
+					this.log.Error<AddressAlreadyInUseException>(ex,
+						"Couldn't open connection to relay because address is already in use on this machine");
+					// NOTE This happenes when multiple applications use same port (eg. skype uses 80 that we wanna use)
+				}
+				catch (TimeoutException ex)
+				{
 					this.log.Error<TimeoutException>(ex,
 						"Unable to open connection to proxy - timed out");
-					this.IsConnected = false;
 					// TODO Activate pooling
 					// NOTE This could be due to firewall
 				}
-				catch (CommunicationObjectAbortedException ex) {
+				catch (CommunicationObjectAbortedException ex)
+				{
 					this.log.Error<CommunicationObjectAbortedException>(ex,
 						"Couldn't open connection because it was aborted already");
-					this.isConnected = false;
-				} catch (Exception ex) {
+				}
+				catch (Exception ex)
+				{
 					this.log.Error<Exception>(ex,
 						"Unknown error occurred while connecting to proxy");
+				}
+				finally
+				{
 					this.IsConnected = false;
 				}
 			});
@@ -209,5 +225,13 @@ namespace EveControl.Communication {
 		}
 
 		#endregion
+
+		public async Task<bool> UnsubscribeAsync(ServiceClient client) {
+			return await this.Relay.UnsibscribeAsync(client);
+		}
+
+		public async Task<bool> SubscribeAsync(ServiceClient client) {
+			return await this.Relay.SubscribeAsync(client);
+		}
 	}
 }

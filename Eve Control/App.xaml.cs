@@ -15,9 +15,6 @@ namespace EveControl {
 	/// Interaction logic for App.xaml
 	/// </summary>
 	public partial class App : Application {
-		private const string EveGreenDictionaryPath =
-			"/Eve.UI;component/Styles/Accents/EveGreen.xaml";
-
 		/// <summary>
 		/// Object constructor
 		/// Runs initialization asynchronously 
@@ -33,18 +30,12 @@ namespace EveControl {
 		/// Initializes all application wide objects
 		/// </summary>
 		private void Initialize() {
-			// Set application theme
-			var eveGreenDictionary = new Uri(EveGreenDictionaryPath,
-											 UriKind.RelativeOrAbsolute);
-			var eveGreenAccent = new Accent("EveGreen", eveGreenDictionary);
-			ThemeManager.ChangeAppTheme(this, "Dark Green");
-
 			// Enable logging
 			Log.Enabled = true;
-			//Log.WriteToDebug = true;
-			//Log.WriteToDebugLevel = Log.LogLevels.All;
+			Log.WriteToDebug = true;
+			Log.WriteToDebugLevel = Log.LogLevels.All;
 
-			this.Dispatcher.InvokeAsync(() => (new LogView()).Show());
+			//this.Dispatcher.InvokeAsync(() => (new LogView()).Show());
 		}
 	}
 }

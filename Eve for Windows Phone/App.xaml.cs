@@ -47,17 +47,19 @@ namespace EveWindowsPhone {
 			InitializePhoneApplication();
 
 			// Change phone color theme to dark
-			ThemeManager.ToDarkTheme();
+			// TODO Optimize all modules and pages for multi color
+			// TODO Remove this after optimization
+			ThemeManager.ToLightTheme();
 
 			// Show graphics profiling information while debugging.
 			if (System.Diagnostics.Debugger.IsAttached) {
 				// Display the current frame rate counters.
-				Application.Current.Host.Settings.EnableFrameRateCounter = true;
+				//Application.Current.Host.Settings.EnableFrameRateCounter = true;
 
 				// Show the areas of the app that are being redrawn in each frame.
 				//Application.Current.Host.Settings.EnableRedrawRegions = true;
 
-				// Enable non-production analysis visualization mode, 
+				// Enable non-production analysis visualization mode, h
 				// which shows areas of a page that are handed off to GPU with a colored overlay.
 				//Application.Current.Host.Settings.EnableCacheVisualization = true;
 
@@ -69,10 +71,29 @@ namespace EveWindowsPhone {
 					IdleDetectionMode.Disabled;
 			}
 
+#if DEBUG
 			// Enable logging
 			Log.Enabled = true;
 			Log.WriteToDebug = true;
 			Log.WriteToDebugLevel = Log.LogLevels.All;
+#endif
+
+			// TODO Tap'n'Hold context menu to enable user to pin their favorite modules to start screen
+			//ShellTile.Create(new Uri("/Pages/Modules/Lights/LightsView.xaml", UriKind.Relative),
+			//				 new StandardTileData() {
+			//					 Title = "Lights",
+			//					 BackgroundImage = new Uri("/Resources/Images/Light Bulb.png", UriKind.Relative)
+			//				 });
+			//ShellTile.Create(new Uri("/Pages/Modules/Play/PlayView.xaml", UriKind.Relative),
+			//				 new StandardTileData() {
+			//					 Title = "Play",
+			//					 BackgroundImage = new Uri("/Resources/Images/IPod.png", UriKind.Relative)
+			//				 });
+			//ShellTile.Create(new Uri("/Pages/Modules/Keyboard/KeyboardView.xaml", UriKind.Relative),
+			//				 new StandardTileData() {
+			//					 Title = "Keyboard",
+			//					 BackgroundImage = new Uri("/Resources/Images/Keyboard.png", UriKind.Relative)
+			//				 });
 		}
 
 		// Code to execute when the application is launching (eg, from Start)
@@ -85,6 +106,7 @@ namespace EveWindowsPhone {
 		private void SetDefaultSettings() {
 			var isolatedStorageServiceFacade = new IsolatedStorageServiceFacade();
 
+			// TODO Settings to seperate class
 			// Client settings
 			isolatedStorageServiceFacade.SetDefault(
 				String.Empty,

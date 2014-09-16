@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Eve.Relay.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

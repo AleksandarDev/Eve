@@ -1,14 +1,7 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-
-<!DOCTYPE grammar PUBLIC "-//W3C//DTD GRAMMAR 1.0//EN"
-									"http://www.w3.org/TR/speech-grammar/grammar.dtd">
- 
-<!-- the default grammar language is US English -->
-<grammar xmlns="http://www.w3.org/2001/06/grammar"
-				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-				 xsi:schemaLocation="http://www.w3.org/2001/06/grammar 
-														 http://www.w3.org/TR/speech-grammar/grammar.xsd"
-				 xml:lang="en-US" version="1.0">
+<?xml version="1.0" encoding="utf-8" ?>
+<grammar version="1.0" xml:lang="en-GB"
+				 xmlns="http://www.w3.org/2001/06/grammar"
+				 tag-format="semantics/1.0" root="Root">
 	<!-- Command to start listening -->
 	<rule id="Root">
 		<one-of>
@@ -58,8 +51,6 @@
 				<one-of>
 					<item> resume song </item>
 					<item> resume </item>
-					<item> play </item>
-					<item> play song </item>
 				</one-of>
 			</item>
 

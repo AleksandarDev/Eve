@@ -1,15 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	
-	<Color x:Key="ThemeColor">#00D000</Color>
-	<Color x:Key="WindowBackgroundColor">#222222</Color>
-	<Color x:Key="HeaderForegroundColor">#FAFAFA</Color>
-	<Color x:Key="ContentForegroundColor">#EAEAEA</Color>
 
-	<SolidColorBrush x:Key="ThemeBrush" Color="{DynamicResource ThemeColor}" />
-	<SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource WindowBackgroundColor}" />
-	<SolidColorBrush x:Key="HeaderForegroundBrush" Color="{DynamicResource HeaderForegroundColor}" />
-	<SolidColorBrush x:Key="ContentForegroundBrush" Color="{DynamicResource ContentForegroundColor}" />
-	<SolidColorBrush x:Key="StatusBarBrush" Color="{DynamicResource AccentColor}" />
 	
 </ResourceDictionary>

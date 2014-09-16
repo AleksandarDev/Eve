@@ -13,6 +13,6 @@
 	<!-- Header -->
 	<StackPanel Orientation="Horizontal" Background="{StaticResource PhoneAccentBrush}">
 		<Image Source="{Binding ImageSourcePath}" Height="64" Margin="10,5,5,5" />
-		<TextBlock Text="{Binding Alias}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeLarge}" VerticalAlignment="Center" />
+		<TextBlock Text="{Binding Alias}" Foreground="White" FontSize="{StaticResource PhoneFontSizeLarge}" VerticalAlignment="Center" />
 	</StackPanel>
 </UserControl>

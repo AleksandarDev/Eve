@@ -106,11 +106,13 @@
     <Reference Include="Funq">
       <HintPath>lib\Funq\Funq.dll</HintPath>
     </Reference>
-    <Reference Include="JeffWilcox.PhoneThemeManager">
+    <Reference Include="JeffWilcox.PhoneThemeManager, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PhoneThemeManager.2.1\lib\windowsphone8\JeffWilcox.PhoneThemeManager.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Phone.Controls.Toolkit">
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -135,6 +137,8 @@
     </Compile>
     <Compile Include="Converters\AmbientalLightToColorConverter.cs" />
     <Compile Include="Converters\AmbientalLightToSolidBrushConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntToLongTimeConverter.cs" />
     <Compile Include="Modules\FavoriteModule.cs" />
     <Compile Include="Modules\FavoriteModules.cs" />
     <Compile Include="Adapters\IIsolatedStorageServiceFacade.cs" />
@@ -149,7 +153,7 @@
     <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageCollection.cs" />
     <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageCollectionEnumerator.cs" />
     <Compile Include="Controllers\ApplicationBarController\ApplicationBarPageEventHandler.cs" />
-    <Compile Include="Modules\Module.cs" />
+    <Compile Include="Modules\ModuleAttribute.cs" />
     <Compile Include="Modules\ModuleModel.cs" />
     <Compile Include="Modules\ModulesLocator.cs" />
     <Compile Include="Pages\AdvancedSettings\AdvancedSettingsView.xaml.cs">
@@ -305,15 +309,6 @@
     <Content Include="Resources\Images\Shopping Bag.png" />
     <Content Include="Resources\Images\TileImage.png" />
     <Content Include="Resources\Images\View.png" />
-    <None Include="Service References\RelayServiceReference\EveWindowsPhone.RelayServiceReference.AmbientalLight.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\RelayServiceReference\EveWindowsPhone.RelayServiceReference.Light.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\RelayServiceReference\EveWindowsPhone.RelayServiceReference.ServiceClient.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\RelayServiceReference\RemoteRelayService.wsdl" />
     <Content Include="Resources\Images\Webcam.png" />
     <Content Include="ServiceReferences.ClientConfig" />

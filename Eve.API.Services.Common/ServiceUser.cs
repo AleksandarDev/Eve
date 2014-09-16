@@ -20,7 +20,6 @@ namespace Eve.API.Services.Common {
 
 		public static void ValidateUser(ServiceUser user) {
 			// TODO Check for password hash and username match
-			user.IsValid = true;
 			user.Token = "TestToken";
 		}
 
@@ -32,9 +31,6 @@ namespace Eve.API.Services.Common {
 
 		[DataMember]
 		public string PasswordHash { get; private set; }
-
-		[DataMember]
-		public bool IsValid { get; private set; }
 
 		[DataMember]
 		public string Token { get; private set; }

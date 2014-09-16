@@ -19,40 +19,40 @@ namespace Eve.API.Services.Contracts {
 		#region Touch implementation
 
 		[OperationContract]
-		bool SendTrackPadMessage(ServiceRequestDetails details, TrackPadMessage message);
+		bool SendTrackPadMessage(string client, TrackPadMessage message);
 
 		[OperationContract]
-		bool SendButtonMessage(ServiceRequestDetails details, ButtonMessage message);
+		bool SendButtonMessage(string client, ButtonMessage message);
 
 		#endregion
 
 		#region DisplayEnhancement implementation
 
 		[OperationContract]
-		bool SetZoom(ServiceRequestDetails details, int zoomValue);
+		bool SetZoom(string client, int zoomValue);
 
 		#endregion
 
 		#region Lights implementation
 
 		[OperationContract]
-		Light[] GetLights(ServiceRequestDetails details);
+		Light[] GetLights(string client);
 
 		[OperationContract]
-		bool SetLightState(ServiceRequestDetails details, int id, bool state);
+		bool SetLightState(string client, int id, bool state);
 
 		#endregion
 
 		#region Ambiental implementation
 
 		[OperationContract]
-		AmbientalLight[] GetAmbientalLights(ServiceRequestDetails details);
+		AmbientalLight[] GetAmbientalLights(string client);
 
 		[OperationContract]
-		bool SetAmbientalLightState(ServiceRequestDetails details, int id, bool state);
+		bool SetAmbientalLightState(string client, int id, bool state);
 
 		[OperationContract]
-		bool SetAmbientalLightColor(ServiceRequestDetails details, int id, byte r, byte g, byte b, byte a);
+		bool SetAmbientalLightColor(string client, int id, byte r, byte g, byte b, byte a);
 
 		#endregion
 	}

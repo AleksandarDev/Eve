@@ -10,8 +10,9 @@ using EveWindowsPhone.ViewModels;
 
 namespace EveWindowsPhone.Pages.Modules.Keyboard {
 	[Module("MKeyboard", "Keyboard", 
-		"/Resources/Images/Keyboard.png", 
-		"/Pages/Modules/Keyboard/KeyboardView.xaml")]
+		"/Resources/Images/Keyboard.png",
+		"/Pages/Modules/Keyboard/KeyboardView.xaml",
+		isInternal: false, isEnabled: false)]
 	public class KeyboardViewModel : NotificationObject {
 		private readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(KeyboardViewModel));

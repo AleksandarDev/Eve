@@ -46,7 +46,7 @@ namespace EveWindowsPhone.Pages.Main {
 					throw new NullReferenceException("Invalid ViewModel");
 
 			// All modules list 
-			GestureService.GetGestureListener(ModulesList).Tap += ModulesListTap;
+			GestureService.GetGestureListener(OwnedModulesList).Tap += ModulesListTap;
 		}
 
 
@@ -85,7 +85,7 @@ namespace EveWindowsPhone.Pages.Main {
 			// Favorite modules page
 			var favoriteModulesPage = new ApplicationBarPage(ApplicationBarMode.Default);
 			favoriteModulesPage.AddIconButton("settings...",
-											  new Uri("/Resources/Images/Settings-02.png", UriKind.Relative), this.ViewModel.AdvancedSettings);
+											  new Uri("/Resources/Images/Settings-02.png", UriKind.Relative), this.ViewModel.AdvancedSettingsFavorites);
 			this.applicationBarController.AddPage("favorite", favoriteModulesPage);
 
 			// All Modules page
@@ -115,7 +115,8 @@ namespace EveWindowsPhone.Pages.Main {
 		#region Favorite modules
 
 		private void LoadFavoriteModules() {
-			if (this.FavoriteModulesGrid.ActualHeight == 0) return;
+			if (Double.IsNaN(this.FavoriteModulesGrid.ActualHeight) ||
+				(int)this.FavoriteModulesGrid.ActualHeight == 0) return;
 
 			// Initial variable values
 			this.tileHeight =
@@ -164,16 +165,19 @@ namespace EveWindowsPhone.Pages.Main {
 
 		private Tile CreateTile(ModuleModel module, double height, double width, double margins) {
 			var tile = new Tile() {
-				Label = module.Module.Name,
+				Label = module.ModuleAttribute.Name,
 				Content = new Image() {
-					Source = new BitmapImage(new Uri(module.Module.Image, UriKind.RelativeOrAbsolute)),
+					Source =
+						new BitmapImage(new Uri(module.ModuleAttribute.Image,
+												UriKind.RelativeOrAbsolute)),
 					Margin = new Thickness(TileImageMargins)
 				},
 				Width = width,
 				Height = height,
-				Margin = new Thickness(margins)
+				Margin = new Thickness(margins),
+				Foreground = new SolidColorBrush(Colors.White)
 			};
-			tile.Tap += (s, e) => this.ViewModel.NavigateTo(module.Module);
+			tile.Tap += (s, e) => this.ViewModel.NavigateTo(module.ModuleAttribute);
 			return tile;
 		}
 
@@ -191,7 +195,7 @@ namespace EveWindowsPhone.Pages.Main {
 			if (sender is ListBox) {
 				var module = (sender as ListBox).SelectedItem as ModuleModel;
 				if (module != null)
-					this.ViewModel.NavigateTo(module.Module);
+					this.ViewModel.NavigateTo(module.ModuleAttribute);
 			}
 		}
 

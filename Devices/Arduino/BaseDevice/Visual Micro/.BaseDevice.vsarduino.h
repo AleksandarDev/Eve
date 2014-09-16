@@ -1,8 +1,10 @@
+#ifndef _VSARDUINO_H_
+#define _VSARDUINO_H_
 //Board = Arduino Mega 2560 or Mega ADK
-#define ARDUINO 101
 #define __AVR_ATmega2560__
-#define F_CPU 16000000L
+#define ARDUINO 152
 #define __AVR__
+#define F_CPU 16000000L
 #define __cplusplus
 #define __attribute__(x)
 #define __inline__
@@ -22,7 +24,7 @@
 #define NOINLINE __attribute__((noinline))
 
 typedef unsigned char byte;
-extern "C" void __cxa_pure_virtual() {}
+extern "C" void __cxa_pure_virtual() {;}
 
 void setup(void);
 void loop(void);
@@ -38,7 +40,8 @@ bool SendCommand(int16_t reciever, unsigned long command, unsigned int dataPacke
 bool SendData(int16_t reciever, byte data[], unsigned int numDataPackets);
 void BlinkOnBoard(unsigned long t);
 
-#include "C:\Program Files\arduino-1.0.1\hardware\arduino\variants\mega\pins_arduino.h" 
-#include "C:\Program Files\arduino-1.0.1\hardware\arduino\cores\arduino\arduino.h"
+#include "C:\Program Files\Arduino 1.5.2\hardware\arduino\avr\variants\mega\pins_arduino.h" 
+#include "C:\Program Files\Arduino 1.5.2\hardware\arduino\avr\cores\arduino\arduino.h"
 #include "C:\Users\Aleksandar\Dropbox\Documents\JustBuild Development\Projects - Software\Project - Eve\Devices\Arduino\BaseDevice\BaseDevice.ino"
 #include "C:\Users\Aleksandar\Dropbox\Documents\JustBuild Development\Projects - Software\Project - Eve\Devices\Arduino\BaseDevice\EveDevice.h"
+#endif
