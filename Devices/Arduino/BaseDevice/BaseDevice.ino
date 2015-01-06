@@ -1,6 +1,5 @@
 #include <Servo.h>
 #include <Wire.h>
-#include <Firmata.h>
 #include <RF24Network.h>
 #include <RF24.h>
 #include <SPI.h>
@@ -9,14 +8,14 @@
 #include "EveDevice.h"
 
 #define		DEBUG // Remove for release
-#define		DeviceID				0
+#define		DeviceID	0
 
 //
 // Pins
 //
 #define		OnBoardLED	8
-#define		RadioCE		10
-#define		RadioCSN	9
+#define		RadioCE		9
+#define		RadioCSN	10
 
 // 
 // Definitions
@@ -74,17 +73,38 @@ struct SetColorMessage {
 	byte r, g, b;
 };
 
+void TestSend() {
+	Serial.print("Sending...");
+	RF24NetworkHeader header(1);
+	SetColorMessage data = { 255, 0, 128 }; 
+	bool success = network.write(header, &data, sizeof(SetColorMessage));
+	if (success) Serial.println("ok");
+	else Serial.println("fail");
+}
+
 void setup(void) {
 	// Initiate serial communication
 	Serial.begin(SerialBaud);
+/*
+        //DigiX trick - since we are on serial over USB wait for character to be entered in serial terminal before continuing 
+        while(!Serial.available()){
+          Serial.println("Enter any key to begin");
+          delay(1000);
+        }
+*/
 	Serial.print("BaseDevice firmware version=");
 	Serial.println(FirmwareVersion, DEC);
 	Serial.println("--------------------");
+        Serial.println("Boot done.");
 
 	// Initiate radio communication
 	SPI.begin();
+	Serial.println("SPI done.");
 	radio.begin();
+        radio.setPALevel(RF24_PA_HIGH);
+	Serial.println("Radio done.");
 	network.begin(CommunicationChannel, DeviceID);
+	Serial.println("Network done.");
 
 	// Setup pins
 	pinMode(OnBoardLED, OUTPUT);
@@ -95,8 +115,11 @@ void setup(void) {
 
 byte pwm = 0;
 void loop(void) {
-	UpdateServices();
-	
+        Serial.println(".");
+        TestSend();
+  
+  	UpdateServices();
+
 	// Read network message if available
 	while(network.available()) {
 		RF24NetworkHeader header;

@@ -11,14 +11,14 @@
 #define		BaseDevice	0
 #define		FirmwareVersion 1
 #define		SerialBaud	57600
-#define		CommunicationChannel 90
+#define		CommunicationChannel 100
 
 //
 // Reserved Pins
 //
 #define		OnBoardLED	8
-#define		RadioCE		10
-#define		RadioCSN	9
+#define		RadioCE		9
+#define		RadioCSN	10
 
 //
 // Custom firmata Commands
@@ -26,8 +26,8 @@
 #define		CommandConnectionRequest		0x0001
 #define		CommandConnectionAccepted		0x0002
 #define		CommandConnectionDeclined		0x0003
-#define		CommandConnectionCheckRequest	0x0004
-#define		CommandConnectionCheckConfirm	0x0005
+#define		CommandConnectionCheckRequest	        0x0004
+#define		CommandConnectionCheckConfirm	        0x0005
 
 
 /*******************************************************************************************
@@ -97,11 +97,15 @@ void setup(void) {
 	SPI.begin();
 	radio.begin();
 	network.begin(CommunicationChannel, DeviceID);
-
+        
 	// Setup pins
 	pinMode(OnBoardLED, OUTPUT);
 
-	timer.every(1, DoFade, (void*)0);
+        pinMode(pinR, OUTPUT);
+        pinMode(pinG, OUTPUT);
+        pinMode(pinB, OUTPUT);
+
+//	timer.every(1, DoFade, 0);
 	//timer.every(1000, TestSend);
 }
 
