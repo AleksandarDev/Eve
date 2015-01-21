@@ -58,8 +58,7 @@ namespace EveWindowsPhone.Pages.Modules.Ambiental {
 				this.Lights.Clear();
 				this.IsLoadingLights = true;
 				// TODO Inform user
-			}
-			else {
+			} else {
 				// Retrieve result
 				this.Lights = e.Result.ToList();
 
@@ -84,7 +83,7 @@ namespace EveWindowsPhone.Pages.Modules.Ambiental {
 		public void RefreshLightsListAsync() {
 			this.relayServiceFacade.Proxy.Relay.GetAmbientalLightsCompleted += RelayGetAmbientalLightsCompleted;
 			this.relayServiceFacade.Proxy.Relay.GetAmbientalLightsAsync(
-				this.relayServiceFacade.Proxy.ActiveDetails);
+				this.relayServiceFacade.Proxy.ActiveClient);
 
 			this.log.Info("Requested for available lights list");
 		}
@@ -108,7 +107,7 @@ namespace EveWindowsPhone.Pages.Modules.Ambiental {
 				light.BValue != b ||
 				light.AValue != a) {
 				this.relayServiceFacade.Proxy.Relay.SetAmbientalLightColorAsync(
-					this.relayServiceFacade.Proxy.ActiveDetails,
+					this.relayServiceFacade.Proxy.ActiveClient,
 					id, r, g, b, a);
 
 				this.log.Info(
@@ -140,7 +139,7 @@ namespace EveWindowsPhone.Pages.Modules.Ambiental {
 			// Check if we need to change state
 			if (light.State != isChecked.Value) {
 				this.relayServiceFacade.Proxy.Relay.SetAmbientalLightStateAsync(
-					this.relayServiceFacade.Proxy.ActiveDetails, id, isChecked.Value);
+					this.relayServiceFacade.Proxy.ActiveClient, id, isChecked.Value);
 
 				this.log.Info("Sending light [{0}] state request [{0}]",
 							  id, isChecked.Value ? "On" : "Off");

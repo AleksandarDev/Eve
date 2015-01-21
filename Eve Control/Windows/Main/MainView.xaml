@@ -5,13 +5,18 @@
 					 xmlns:providersStatus="clr-namespace:EveControl.Controls.ProvidersStatus"
 					 Title="Eve Control" Height="400" Width="700" Icon="/Eve256.ico"
 					 SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}" 
+<<<<<<< HEAD:Eve Control/Windows/Main/MainView.xaml
 					 Loaded="MainWindowOnLoaded" Closing="MainWindowClosing"
 					 DataContext="{Binding Source={StaticResource ViewModelProvider}, Path=MainViewModel}">
 	<mahapps:MetroWindow.WindowCommands>
+=======
+					 Loaded="MainWindowOnLoaded" Closing="MainWindowClosing">
+	<mahapps:MetroWindow.RightWindowCommands>
+>>>>>>> master:Eve Control/MainWindow.xaml
 		<mahapps:WindowCommands>
 			<Button Content="settings" />
 		</mahapps:WindowCommands>
-	</mahapps:MetroWindow.WindowCommands>
+	</mahapps:MetroWindow.RightWindowCommands>
 	
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>

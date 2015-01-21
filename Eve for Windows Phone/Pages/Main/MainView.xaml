@@ -15,14 +15,15 @@
 	SupportedOrientations="Portrait" Orientation="Portrait"
 	shell:SystemTray.IsVisible="True"
 	Loaded="MainViewLoaded">
-
-	<phone:PhoneApplicationPage.Resources>
-		<Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-	</phone:PhoneApplicationPage.Resources>
+	
 	<phone:PhoneApplicationPage.DataContext>
 		<Binding Path="MainViewModel" Source="{StaticResource ViewModelLocator}"/>
 	</phone:PhoneApplicationPage.DataContext>
-	
+
+	<shell:SystemTray.ProgressIndicator>
+		<shell:ProgressIndicator IsVisible="True" IsIndeterminate="{Binding IsConnecting}" />
+	</shell:SystemTray.ProgressIndicator>
+
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar/>
 	</phone:PhoneApplicationPage.ApplicationBar>
@@ -41,7 +42,32 @@
 		
 		<!-- All modules tab -->
 		<controls:PanoramaItem Header="all modules">
+<<<<<<< HEAD
 			<StackPanel Orientation="Vertical">
+=======
+			<ListBox x:Name="OwnedModulesList" IsEnabled="{Binding IsConnected}" ItemsSource="{Binding OwnedModules}" ScrollViewer.ManipulationMode="System">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<CheckBox x:Name="PART_CheckBox" 
+										  IsChecked="{Binding IsFavorite, Mode=TwoWay}" 
+										  Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}" />
+							<Grid Margin="3">
+								<Rectangle Fill="{StaticResource PhoneAccentBrush}" 
+										   Width="84" Height="84"/>
+								<Image Source="{Binding ModuleAttribute.Image}" 
+									   Width="84" Height="84" />
+							</Grid>
+							<TextBlock Text="{Binding ModuleAttribute.Name}" 
+										   FontSize="36" 
+										   VerticalAlignment="Center" 
+										   Margin="10,0,0,0" />
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+			<!--<StackPanel Orientation="Vertical">
+>>>>>>> master
 				<ListBox x:Name="OwnedModulesList" ItemsSource="{Binding OwnedModules}" ScrollViewer.ManipulationMode="System">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
@@ -78,7 +104,11 @@
 						</DataTemplate>
 					</ListBox.ItemTemplate>
 				</ListBox>
+<<<<<<< HEAD
 			</StackPanel>
+=======
+			</StackPanel>-->
+>>>>>>> master
 		</controls:PanoramaItem>
 		
 		<!-- Options tab -->

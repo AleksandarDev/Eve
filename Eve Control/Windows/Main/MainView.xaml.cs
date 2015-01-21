@@ -29,7 +29,10 @@ using Eve.API.Text;
 using Eve.API.Touch;
 using Eve.API.Vision;
 using Eve.API.Chrome;
+<<<<<<< HEAD
 using Eve.Core.Kinect;
+=======
+>>>>>>> master
 using Eve.Diagnostics.Logging;
 using EveControl.Communication;
 using EveControl.RelayServiceReference;
@@ -155,6 +158,16 @@ namespace EveControl {
 			(new ChromeView()).Show();
 		}
 
+<<<<<<< HEAD
+=======
+		private void MainViewOnPreviewMouseMove(object sender, MouseEventArgs e) {
+			if (e.LeftButton == MouseButtonState.Pressed)
+				if (e.OriginalSource is Grid &&
+					(e.OriginalSource as Grid).Parent is MetroContentControl)
+					this.DragMove();
+		}
+
+>>>>>>> master
 		#region Properties
 
 		public MainViewModel ViewModel { get; private set; }

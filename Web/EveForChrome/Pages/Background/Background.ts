@@ -14,7 +14,7 @@ class Background {
 
 
 	constructor() {
-		this.InitializeWebSockets();
+		this.InitializeWebSockets(); 
 	}
 	
 	private InitializeWebSockets(): void {

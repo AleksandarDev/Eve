@@ -1,0 +1,65 @@
+﻿<mahapps:MetroWindow x:Class="EveControl.MainView"
+					 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+					 xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+					 xmlns:providersStatus="clr-namespace:EveControl.Controls.ProvidersStatus"
+					 Title="Eve Control" Height="472" Width="700" Icon="/Eve256.ico"
+					 SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}" 
+					 Loaded="MainWindowOnLoaded" Closing="MainWindowClosing" PreviewMouseMove="MainViewOnPreviewMouseMove"
+					 DataContext="{Binding Source={StaticResource ViewModelProvider}, Path=MainViewModel}">
+	<mahapps:MetroWindow.WindowCommands>
+		<mahapps:WindowCommands>
+			<Button Content="settings" />
+		</mahapps:WindowCommands>
+	</mahapps:MetroWindow.WindowCommands>
+	
+	<Grid x:Name="LayoutRoot" Margin="0,28,0,0">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		
+		<Grid x:Name="WindowContent">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			
+			<TextBox Text="{Binding SpeechMessage}"
+					 IsReadOnly="True" HorizontalContentAlignment="Center" 
+					 FontSize="16" 
+					 Padding="3" Margin="5" />
+			
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				
+				<Button Content="Log" Grid.Column="0" Margin="3" Padding="15,8,15,8" Click="LogViewOnClick"></Button>
+				<Button Content="Vision" Grid.Column="1" Margin="3"  Padding="15,8,15,8" Click="VisionViewOnClick" />
+				<Button Content="Face Controller" Grid.Column="2" Margin="3"  Padding="15,8,15,8" Click="FaceControllerViewOnClick"></Button>
+				<Button Content="Fridge Manager" Grid.Column="3" Margin="3" Padding="15,8,15,8" Click="FridgeManagerViewOnClick" />
+				<Button Content="Chrome" Grid.Column="4" Margin="3" Padding="15,8,15,8" Click="ChromeViewOnClick" />
+			</Grid>
+			
+			<providersStatus:ProvidersStatusView Grid.Row="2" />
+		</Grid>
+		
+		<!-- Status bar -->
+		<StackPanel x:Name="StatusBar" Grid.Row="1">
+			<StackPanel.Style>
+				<Style TargetType="{x:Type StackPanel}">
+					<!--<Setter Property="Background" Value="{StaticResource}" />-->
+				</Style>
+			</StackPanel.Style>
+
+			<Label Content="{Binding StatusMessage}" />
+		</StackPanel>
+	</Grid>
+</mahapps:MetroWindow>

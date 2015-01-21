@@ -49,7 +49,11 @@ namespace EveWindowsPhone {
 			// Change phone color theme to dark
 			// TODO Optimize all modules and pages for multi color
 			// TODO Remove this after optimization
+<<<<<<< HEAD
 			ThemeManager.ToDarkTheme();
+=======
+			ThemeManager.ToLightTheme();
+>>>>>>> master
 
 			// Show graphics profiling information while debugging.
 			if (System.Diagnostics.Debugger.IsAttached) {

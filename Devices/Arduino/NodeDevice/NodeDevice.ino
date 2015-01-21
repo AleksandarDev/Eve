@@ -1,4 +1,4 @@
-﻿#include <RF24Network.h>
+#include <RF24Network.h>
 #include <RF24.h>
 #include <SPI.h>
 #include <Timer.h>
@@ -11,14 +11,14 @@
 #define		BaseDevice	0
 #define		FirmwareVersion 1
 #define		SerialBaud	57600
-#define		CommunicationChannel 90
+#define		CommunicationChannel 100
 
 //
 // Reserved Pins
 //
-#define		OnBoardLED	13
-#define		RadioCE		8
-#define		RadioCSN	9
+#define		OnBoardLED	8
+#define		RadioCE		9
+#define		RadioCSN	10
 
 //
 // Custom firmata Commands
@@ -26,8 +26,8 @@
 #define		CommandConnectionRequest		0x0001
 #define		CommandConnectionAccepted		0x0002
 #define		CommandConnectionDeclined		0x0003
-#define		CommandConnectionCheckRequest	0x0004
-#define		CommandConnectionCheckConfirm	0x0005
+#define		CommandConnectionCheckRequest	        0x0004
+#define		CommandConnectionCheckConfirm	        0x0005
 
 
 /*******************************************************************************************
@@ -97,11 +97,15 @@ void setup(void) {
 	SPI.begin();
 	radio.begin();
 	network.begin(CommunicationChannel, DeviceID);
-
+        
 	// Setup pins
 	pinMode(OnBoardLED, OUTPUT);
 
-	timer.every(1, DoFade);
+        pinMode(pinR, OUTPUT);
+        pinMode(pinG, OUTPUT);
+        pinMode(pinB, OUTPUT);
+
+//	timer.every(1, DoFade, 0);
 	//timer.every(1000, TestSend);
 }
 
@@ -148,7 +152,7 @@ void Solid(byte r, byte g, byte b) {
 //maximum value of fade time = 30 seconds before gradient values
 //get too small for floating point math to work? replace floats
 //with doubles to remedy this?
-void DoFade() {
+void DoFade(void* context) {
 	if (isFading) {
 		fadeCounter++;
 		if (fadeCounter > fadeT) {

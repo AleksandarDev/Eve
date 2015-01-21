@@ -13,7 +13,7 @@ namespace Eve.API.Services.Relay {
 	[AspNetCompatibilityRequirements(
 		RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
 	[ServiceBehavior(
-		InstanceContextMode = InstanceContextMode.Single,
+		InstanceContextMode = InstanceContextMode.PerCall,
 		ConcurrencyMode = ConcurrencyMode.Reentrant, 
 		UseSynchronizationContext = false)]
 	public class ClientRelayService : IClientRelayService {

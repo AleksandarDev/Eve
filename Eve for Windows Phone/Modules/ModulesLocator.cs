@@ -29,9 +29,16 @@ namespace EveWindowsPhone.Modules {
 #if !DEBUG
 						if (!attribute.IsInternal) 
 #endif
+<<<<<<< HEAD
 							if (attribute.IsEnabled)
 								this.OwnedModules.Add(new ModuleModel(attribute));
 							else this.AvailableModules.Add(new ModuleModel(attribute));
+=======
+							//if (attribute.IsEnabled)
+							//	this.OwnedModules.Add(new ModuleModel(attribute));
+							//else this.AvailableModules.Add(new ModuleModel(attribute));
+						this.OwnedModules.Add(new ModuleModel(attribute));
+>>>>>>> master
 					}
 				}
 			}

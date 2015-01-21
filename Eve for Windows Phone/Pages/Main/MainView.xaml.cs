@@ -115,7 +115,8 @@ namespace EveWindowsPhone.Pages.Main {
 		#region Favorite modules
 
 		private void LoadFavoriteModules() {
-			if (this.FavoriteModulesGrid.ActualHeight == 0) return;
+			if (Double.IsNaN(this.FavoriteModulesGrid.ActualHeight) ||
+				(int)this.FavoriteModulesGrid.ActualHeight == 0) return;
 
 			// Initial variable values
 			this.tileHeight =
@@ -166,12 +167,19 @@ namespace EveWindowsPhone.Pages.Main {
 			var tile = new Tile() {
 				Label = module.ModuleAttribute.Name,
 				Content = new Image() {
+<<<<<<< HEAD
 					Source = new BitmapImage(new Uri(module.ModuleAttribute.Image, UriKind.RelativeOrAbsolute)),
+=======
+					Source =
+						new BitmapImage(new Uri(module.ModuleAttribute.Image,
+												UriKind.RelativeOrAbsolute)),
+>>>>>>> master
 					Margin = new Thickness(TileImageMargins)
 				},
 				Width = width,
 				Height = height,
-				Margin = new Thickness(margins)
+				Margin = new Thickness(margins),
+				Foreground = new SolidColorBrush(Colors.White)
 			};
 			tile.Tap += (s, e) => this.ViewModel.NavigateTo(module.ModuleAttribute);
 			return tile;

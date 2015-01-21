@@ -36,12 +36,21 @@ namespace EveControl.Windows.Log {
 		}
 
 		private void ViewModelOnMessageAdded(object sender, EventArgs e) {
+<<<<<<< HEAD
 			if (this.ViewModel.IsAutoScroll && this.MessagesListBox.Items.Count > 0) {
 				this.MessagesListBox.Dispatcher.BeginInvoke(
 					new Action(() => this.MessagesListBox.ScrollIntoView(
 						this.MessagesListBox.Items.GetItemAt(
 							this.MessagesListBox.Items.Count - 1))));
 			}
+=======
+			this.Dispatcher.Invoke(() => {
+				if (this.ViewModel.IsAutoScroll && this.MessagesListBox.Items.Count > 0)
+					this.MessagesListBox.ScrollIntoView(
+						this.MessagesListBox.Items.GetItemAt(
+							this.MessagesListBox.Items.Count - 1));
+			});
+>>>>>>> master
 		}
 
 		void ViewModelOnSelectedTypeAdded(object sender, EventArgs e) {

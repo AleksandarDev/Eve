@@ -1,0 +1,264 @@
+﻿/*****************************************************************************/
+/*                                                                           */
+/* Variables                                                                 */
+/*                                                                           */
+/*****************************************************************************/
+@font-size: 1.1em;
+@font-family: "Segoe UI", Calibri, Arial, Verdana, Helvetica, Sans-Serif;
+@font-family-light: "Segoe UI Light", "Segoe UI", Calibri, Arial, Verdana, Helvetica, Sans-Serif;
+
+/* Layout variables */
+@page-width: 960px;
+@header-height: 80px;
+@footer-height: 80px;
+
+/* Menu variables */
+@menu-font-size: 1.5em;
+@menu-border-size: 6px;
+@menu-item-padding: 15px;
+
+/* Body variables */
+@body-padding: 15px 0;
+
+/*****************************************************************************/
+/*                                                                           */
+/* Color palette                                                             */
+/*                                                                           */
+/*****************************************************************************/
+@accent: #00D000;
+@accent-dark: #222;
+@accent-light: #E2E2E2;
+@header-title: #C2C2C2;
+
+/* Foreground colors */
+@text-foreground-dark: #CCC;
+@text-foreground-light: #333;
+
+/* Account colors */
+@account-background-color: @accent-dark + #111;
+
+/* Menu colors */
+@menu-selection-color: @accent;
+@menu-selection-mask-color: #888;
+@menu-selection-hover-foreground: white;
+
+/* Body section */
+@body-section-background-color: #EFEFEF;
+
+/*****************************************************************************/
+/*                                                                           */
+/* Basic elements                                                            */
+/*                                                                           */
+/*****************************************************************************/
+
+/* Headers */
+.headerStyle {
+	color: #000;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+h1 {
+	.headerStyle;
+	font-size: 2em;
+}
+
+h2 {
+	.headerStyle;
+	font-size: 1.75em;
+}
+
+h3 {
+	.headerStyle;
+	font-size: 1.2em;
+}
+
+h4 {
+	.headerStyle;
+	font-size: 1.1em;
+}
+
+h5, h6 {
+	.headerStyle;
+	font-size: 1em;
+}
+
+/*****************************************************************************/
+/*                                                                           */
+/* Main layout                                                               */
+/*                                                                           */
+/*****************************************************************************/
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+
+	color: @text-foreground-light;
+	background-color: @accent-light;
+
+	font-family: @font-family;
+	font-size: @font-size;
+}
+
+.clear-fix:after {
+	content: ".";
+	clear: both;
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+.centered {
+	margin: 0 auto;
+	max-width: @page-width;
+}
+
+/*****************************************************************************/
+/*                                                                           */
+/* Header elements                                                           */
+/*                                                                           */
+/*****************************************************************************/
+@header-background-color: @accent-dark;
+@header-title-font-size: 2.3em;
+
+header {
+	background-color: @header-background-color;
+
+	width: 100%;
+}
+
+.site-title {
+	color: @header-title;
+	font-family: @font-family-light;
+	font-size: @header-title-font-size;
+	margin: 0;
+
+	a {
+		vertical-align: middle;
+	}
+
+	img {
+		float: left;
+	}
+}
+
+/* Menu */
+ul#menu {
+	font-family: @font-family-light;
+	font-size: @menu-font-size;
+	padding: 0 0 @menu-border-size 0;
+	margin: 0;
+	text-align: right;
+
+	li {
+		display: inline;
+		list-style: none;
+		padding-left: @menu-item-padding;
+
+		a {
+			background: none;
+			color: @text-foreground-dark;
+			text-decoration: none;
+		}
+
+		a.menuSelection {
+			border-bottom: @menu-border-size solid @menu-selection-color;
+		}
+
+		a:hover {
+			color: @menu-selection-hover-foreground;
+			text-decoration: none;
+
+			border-bottom: @menu-border-size solid (@menu-selection-color +	 @menu-selection-mask-color);
+		}
+	}
+}
+
+/* Account */
+@account-container-margin: 0 0 10px 0;
+@account-menu-width: 263px;
+
+#accountContainer {
+	display: block;
+	margin: @account-container-margin;
+
+	#accountBar {
+		float: left;
+		cursor: pointer;
+		position: absolute;
+
+		ul#accountMenu {
+			display: none;
+			margin: 0;
+			float: none;
+			background-color: @account-background-color;
+			width: @account-menu-width;
+			cursor: default;
+			padding: 20px 0;
+
+			li {
+				display: block;
+				padding: 10px 20px;
+
+				a {
+					color: white;
+					text-decoration: none;
+					display: block;
+				}
+
+				a:hover {
+					color: @accent;
+				}
+			}
+		}
+
+		#accountName {
+			font-size: 0.9em;
+			padding: 6px 10px;
+			color: #AAA;
+			text-decoration: none;
+			vertical-align: middle;
+
+			div {
+				display: inline-block;
+				padding: 3px;
+			}
+
+			img {
+				float: left;
+			}
+		}
+	}
+
+	#accountBar:hover {
+		background-color: @account-background-color;
+	}
+}
+
+/*****************************************************************************/
+/*                                                                           */
+/* Page elements                                                             */
+/*                                                                           */
+/*****************************************************************************/
+#body {
+	top: @header-height;
+	bottom: @footer-height;
+	width: 100%;
+
+	background-color: @body-section-background-color;
+	padding: @body-padding;
+}
+
+/*****************************************************************************/
+/*                                                                           */
+/* Footer elements                                                           */
+/*                                                                           */
+/*****************************************************************************/
+footer {
+	height: @footer-height;
+	width: 100%;
+}

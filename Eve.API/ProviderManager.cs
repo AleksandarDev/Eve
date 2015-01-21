@@ -88,8 +88,8 @@ namespace Eve.API {
 									  .GetTypes()
 									  .Where(
 										  t =>
-										  typeof(IProvider).IsAssignableFrom(t) && !t.IsInterface &&
-										  !t.IsAbstract && !t.IsSealed)
+										  typeof(IProvider).IsAssignableFrom(t) && 
+										  !t.IsInterface && !t.IsAbstract && !t.IsSealed)
 									  .Distinct().ToList();
 
 			var providerInstances = new List<IProvider>();

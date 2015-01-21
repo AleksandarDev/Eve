@@ -17,7 +17,6 @@ namespace EveWindowsPhone.Communication {
 			new Log.LogInstance(typeof(RelayProxy));
 
 		protected bool isConnected;
-		private ServiceRequestDetails requestDetails;
 		//protected readonly Timer timer;
 		//protected const int ConnectionCheckInterval = 5000;
 		//protected const string PingRequestContent = "Client";
@@ -38,16 +37,8 @@ namespace EveWindowsPhone.Communication {
 			// Set connection to false (this raises events)
 			this.IsConnected = false;
 
-			// Create request details
-			this.requestDetails = new ServiceRequestDetails();
-
 			// TODO Remove, only for testing
-			this.requestDetails.Client = new ServiceClient() {
-				Alias = "Test alias",
-				ID = "AleksandarPC"
-			};
-			this.requestDetails.User = new ServiceUser();
-			this.ActiveDetails = this.requestDetails;
+			this.ActiveClient = "AleksandarPC";
 
 			// Set periodic connection tests
 			//this.timer = new Timer(ConnectionCheckInterval);
@@ -175,9 +166,9 @@ namespace EveWindowsPhone.Communication {
 		public EveAPIServiceClient Relay { get; private set; }
 
 		/// <summary>
-		/// Gets currently active request details
+		/// Gets currently active client ID
 		/// </summary>
-		public ServiceRequestDetails ActiveDetails { get; private set; }
+		public string ActiveClient { get; private set; }
 
 		/// <summary>
 		/// Gets connection status of relays service proxy

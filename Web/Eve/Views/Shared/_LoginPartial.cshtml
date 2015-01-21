@@ -1,0 +1,23 @@
+﻿@if (Request.IsAuthenticated) {
+	<div id="accountBar">
+		<!-- Account name -->
+		<a id="accountName" href="#">
+			<div>@User.Identity.Name</div>
+			<img src="@Url.Content("~/Images/User-Profile.png")" width="30" height="30" />
+		</a>
+	
+		<!-- Account menu -->
+		<ul id="accountMenu">
+			<!-- Manage account link -->
+			<li>@Html.ActionLink("Manage profile", "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "manage", title = "Manage " + @User.Identity.Name + "'s profile" })</li>
+			
+			<!-- Log off account link -->
+			<li>
+				@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+					@Html.AntiForgeryToken()
+					<a class="logoff" href="javascript:document.getElementById('logoutForm').submit()" title="Log off @User.Identity.Name">Log off</a>
+				}
+			</li>
+		</ul>
+	</div>
+}

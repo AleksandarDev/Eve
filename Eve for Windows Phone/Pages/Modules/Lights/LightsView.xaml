@@ -23,7 +23,7 @@
 	
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default">
-			<shell:ApplicationBarIconButton IconUri="/Resources/Images/Settings-02.png" Text="settings" Click="SettingsClick"/>
+			<shell:ApplicationBarIconButton IconUri="/Resources/Images/Settings-02.png" Text="settings..." Click="SettingsClick"/>
 			<shell:ApplicationBarIconButton IconUri="/Resources/Images/About.png" Text="help" Click="HelpClick" />
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
@@ -36,7 +36,7 @@
 
 		<!-- Header -->
 		<controls:ModuleHeader Alias="Lights" 
-							   ImageSourcePath="/Resources/Images/Light-Bulb.png" />
+							   ImageSourcePath="/Resources/Images/Light Bulb.png" />
 
 		<!-- No lights availablle message -->
 		<TextBlock Text="No lights available" 

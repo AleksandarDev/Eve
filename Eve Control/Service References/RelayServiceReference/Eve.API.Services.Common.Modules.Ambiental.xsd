@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Ambiental" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Ambiental" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" />
+  <xs:complexType name="ArrayOfAmbientalLight">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AmbientalLight" nillable="true" type="tns:AmbientalLight" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAmbientalLight" nillable="true" type="tns:ArrayOfAmbientalLight" />
+  <xs:complexType name="AmbientalLight">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Eve.API.Services.Common.Modules.Lights" base="q1:Light">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AValue" type="xs:unsignedByte" />
+          <xs:element minOccurs="0" name="BValue" type="xs:unsignedByte" />
+          <xs:element minOccurs="0" name="GValue" type="xs:unsignedByte" />
+          <xs:element minOccurs="0" name="RValue" type="xs:unsignedByte" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AmbientalLight" nillable="true" type="tns:AmbientalLight" />
+</xs:schema>
