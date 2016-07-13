@@ -1,12 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Security.Policy;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Windows.Forms.VisualStyles;
-using System.Windows.Navigation;
 using Eve.Diagnostics.Logging;
 using EveControl.RelayServiceReference;
 

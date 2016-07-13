@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Eve.API.Process;
-using Eve.Diagnostics.Logging;
 
 namespace Eve.API.Vision {
 	[ProviderDescription("Display Enhancements Provider", typeof(ProcessProvider))]

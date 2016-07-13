@@ -8,7 +8,6 @@ using System.Speech.AudioFormat;
 using System.Speech.Recognition;
 using System.Speech.Synthesis;
 using Eve.Core.Kinect;
-using Microsoft.Kinect;
 
 namespace Eve.API.Speech {
 	[ProviderDescription("Speech Provider")]

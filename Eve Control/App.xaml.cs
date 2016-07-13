@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
-using System.IO.Ports;
 using Eve.Diagnostics.Logging;
-using EveControl.Windows.Log;
-using MahApps.Metro;
 
 namespace EveControl {
 	/// <summary>

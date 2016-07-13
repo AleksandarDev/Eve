@@ -1,12 +1,8 @@
 ﻿using System;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using Eve.Diagnostics.Logging;
 using Microsoft.CSharp;
 
 namespace Eve.API.Scripting {
