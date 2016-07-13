@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EveControl.Adapters;
-=======
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -15,7 +9,6 @@ using Eve.API;
 using Eve.API.Chrome;
 using EveControl.Adapters;
 using Fleck2.Interfaces;
->>>>>>> master
 using Microsoft.Practices.Prism.ViewModel;
 
 namespace EveControl.Windows.Chrome {
@@ -27,10 +20,6 @@ namespace EveControl.Windows.Chrome {
 				throw new ArgumentNullException("serverServiceFacade");
 
 			this.serverServiceFacade = serverServiceFacade;
-<<<<<<< HEAD
-		}
-
-=======
 
 			this.Clients = new ObservableCollection<IWebSocketConnection>();
 
@@ -67,8 +56,7 @@ namespace EveControl.Windows.Chrome {
 		public ObservableCollection<IWebSocketConnection> Clients { get; private set; }
 
 		#endregion
-
->>>>>>> master
+        
 		#region IDisposable implementation
 
 		private bool isDisposed;

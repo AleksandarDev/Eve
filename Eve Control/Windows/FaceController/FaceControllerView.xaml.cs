@@ -13,11 +13,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using AForge.Controls;
-using AForge.Imaging;
 using Eve.API;
 using MahApps.Metro.Controls;
 using Size = System.Drawing.Size;
+using Accord.Imaging;
+using Accord.Controls;
 
 namespace EveControl.Windows.FaceController {
 	/// <summary>

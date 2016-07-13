@@ -1,167 +1,191 @@
-﻿<phone:PhoneApplicationPage
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-	xmlns:c4fcontrols="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
-	xmlns:modules="clr-namespace:EveWindowsPhone.Modules"
-	xmlns:Converters="clr-namespace:Coding4Fun.Toolkit.Controls.Converters;assembly=Coding4Fun.Toolkit.Controls"
-	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-	x:Class="EveWindowsPhone.Pages.Main.MainView"
-	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
-	SupportedOrientations="Portrait" Orientation="Portrait"
-	shell:SystemTray.IsVisible="True"
-	Loaded="MainViewLoaded">
-	
-	<phone:PhoneApplicationPage.DataContext>
-		<Binding Path="MainViewModel" Source="{StaticResource ViewModelLocator}"/>
-	</phone:PhoneApplicationPage.DataContext>
+﻿<phone:PhoneApplicationPage x:Class="EveWindowsPhone.Pages.Main.MainView"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:Converters="clr-namespace:Coding4Fun.Toolkit.Controls.Converters;assembly=Coding4Fun.Toolkit.Controls"
+                            xmlns:c4fcontrols="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:modules="clr-namespace:EveWindowsPhone.Modules"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            d:DesignHeight="768"
+                            d:DesignWidth="480"
+                            shell:SystemTray.IsVisible="True"
+                            Loaded="MainViewLoaded"
+                            Orientation="Portrait"
+                            SupportedOrientations="Portrait"
+                            mc:Ignorable="d">
 
-	<shell:SystemTray.ProgressIndicator>
-		<shell:ProgressIndicator IsVisible="True" IsIndeterminate="{Binding IsConnecting}" />
-	</shell:SystemTray.ProgressIndicator>
+    <phone:PhoneApplicationPage.DataContext>
+        <Binding Path="MainViewModel" Source="{StaticResource ViewModelLocator}" />
+    </phone:PhoneApplicationPage.DataContext>
 
-	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar/>
-	</phone:PhoneApplicationPage.ApplicationBar>
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsIndeterminate="{Binding IsConnecting}" IsVisible="True" />
+    </shell:SystemTray.ProgressIndicator>
 
-	<controls:Panorama x:Name="LayoutRoot" Title="syncup" SelectionChanged="PanoramaSelectionChanged">
-		
-		<!-- Favorites tab -->
-		<controls:PanoramaItem Header="favorite" Orientation="Horizontal">
-			<Grid x:Name="FavoriteModulesGrid" 
-				  toolkit:TiltEffect.IsTiltEnabled="True" Margin="0,0,0,12">
-				<TextBlock FontSize="{StaticResource PhoneFontSizeLarge}" Foreground="{StaticResource PhoneSubtleBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="{StaticResource PhoneFontFamilyLight}">
-					add favorites from next page
-				</TextBlock>
-			</Grid>
-		</controls:PanoramaItem>
-		
-		<!-- All modules tab -->
-		<controls:PanoramaItem Header="all modules">
-<<<<<<< HEAD
-			<StackPanel Orientation="Vertical">
-=======
-			<ListBox x:Name="OwnedModulesList" IsEnabled="{Binding IsConnected}" ItemsSource="{Binding OwnedModules}" ScrollViewer.ManipulationMode="System">
-				<ListBox.ItemTemplate>
-					<DataTemplate>
-						<StackPanel Orientation="Horizontal">
-							<CheckBox x:Name="PART_CheckBox" 
-										  IsChecked="{Binding IsFavorite, Mode=TwoWay}" 
-										  Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}" />
-							<Grid Margin="3">
-								<Rectangle Fill="{StaticResource PhoneAccentBrush}" 
-										   Width="84" Height="84"/>
-								<Image Source="{Binding ModuleAttribute.Image}" 
-									   Width="84" Height="84" />
-							</Grid>
-							<TextBlock Text="{Binding ModuleAttribute.Name}" 
-										   FontSize="36" 
-										   VerticalAlignment="Center" 
-										   Margin="10,0,0,0" />
-						</StackPanel>
-					</DataTemplate>
-				</ListBox.ItemTemplate>
-			</ListBox>
-			<!--<StackPanel Orientation="Vertical">
->>>>>>> master
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar />
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+    <controls:Panorama x:Name="LayoutRoot"
+                       Title="syncup"
+                       SelectionChanged="PanoramaSelectionChanged">
+
+        <!--  Favorites tab  -->
+        <controls:PanoramaItem Header="favorite" Orientation="Horizontal">
+            <Grid x:Name="FavoriteModulesGrid"
+                  Margin="0,0,0,12"
+                  toolkit:TiltEffect.IsTiltEnabled="True">
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource PhoneFontFamilyLight}"
+                           FontSize="{StaticResource PhoneFontSizeLarge}"
+                           Foreground="{StaticResource PhoneSubtleBrush}">
+                    add favorites from next page
+                </TextBlock>
+            </Grid>
+        </controls:PanoramaItem>
+
+        <!--  All modules tab  -->
+        <controls:PanoramaItem Header="all modules">
+            <ListBox x:Name="OwnedModulesList"
+                     IsEnabled="{Binding IsConnected}"
+                     ItemsSource="{Binding OwnedModules}"
+                     ScrollViewer.ManipulationMode="System">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="PART_CheckBox"
+                                      IsChecked="{Binding IsFavorite,
+                                                          Mode=TwoWay}"
+                                      Visibility="{Binding IsEditing,
+                                                           Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <Grid Margin="3">
+                                <Rectangle Width="84"
+                                           Height="84"
+                                           Fill="{StaticResource PhoneAccentBrush}" />
+                                <Image Width="84"
+                                       Height="84"
+                                       Source="{Binding ModuleAttribute.Image}" />
+                            </Grid>
+                            <TextBlock Margin="10,0,0,0"
+                                       VerticalAlignment="Center"
+                                       FontSize="36"
+                                       Text="{Binding ModuleAttribute.Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <!--<StackPanel Orientation="Vertical">
 				<ListBox x:Name="OwnedModulesList" ItemsSource="{Binding OwnedModules}" ScrollViewer.ManipulationMode="System">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
-								<CheckBox x:Name="PART_CheckBox" 
-										  IsChecked="{Binding IsFavorite, Mode=TwoWay}" 
+								<CheckBox x:Name="PART_CheckBox"
+										  IsChecked="{Binding IsFavorite, Mode=TwoWay}"
 										  Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}" />
-								<Image Source="{Binding ModuleAttribute.Image}" 
+								<Image Source="{Binding ModuleAttribute.Image}"
 									   Width="84" Height="84" />
-								<TextBlock Text="{Binding ModuleAttribute.Name}" 
-										   FontSize="36" 
-										   VerticalAlignment="Center" 
+								<TextBlock Text="{Binding ModuleAttribute.Name}"
+										   FontSize="36"
+										   VerticalAlignment="Center"
 										   Margin="10,0,0,0" />
 							</StackPanel>
 						</DataTemplate>
 					</ListBox.ItemTemplate>
 				</ListBox>
 				
-				<TextBlock Text="in marketplace" 
+				<TextBlock Text="in marketplace"
 						   Margin="12,12,0,0"
-						   FontSize="{StaticResource PhoneFontSizeLarge}" 
+						   FontSize="{StaticResource PhoneFontSizeLarge}"
 						   FontFamily="{StaticResource PhoneFontFamilyLight}" />
 				<ListBox x:Name="AvailableModulesList" ItemsSource="{Binding AvailableModules}">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
-								<Image Source="{Binding ModuleAttribute.Image}" 
+								<Image Source="{Binding ModuleAttribute.Image}"
 									   Width="84" Height="84" />
-								<TextBlock Text="{Binding ModuleAttribute.Name}" 
-										   FontSize="36" 
-										   VerticalAlignment="Center" 
+								<TextBlock Text="{Binding ModuleAttribute.Name}"
+										   FontSize="36"
+										   VerticalAlignment="Center"
 										   Margin="10,0,0,0" />
 							</StackPanel>
 						</DataTemplate>
 					</ListBox.ItemTemplate>
 				</ListBox>
-<<<<<<< HEAD
-			</StackPanel>
-=======
 			</StackPanel>-->
->>>>>>> master
-		</controls:PanoramaItem>
-		
-		<!-- Options tab -->
-		<controls:PanoramaItem Header="options">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="*" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
-				
-				<!-- Client selection -->
-				<!-- TODO Client connected indicator -->
-				<!-- TODO Make this a list not list picker -->
-				<StackPanel Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2">
-					<TextBlock Margin="12,0,12,0" FontSize="{StaticResource PhoneFontSizeMedium}" Foreground="{StaticResource PhoneSubtleBrush}">Client ID</TextBlock>
-					<TextBox x:Name="ClientDeviceIDTextBox" Text="{Binding ClientID, Mode=TwoWay, UpdateSourceTrigger=Default}" />
-					<TextBlock Margin="12,0" FontSize="{StaticResource PhoneFontSizeSmall}" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap">Enter your computer unique ID. You can fins it in application that is runing on targeted computer.</TextBlock>
-				</StackPanel>
-				
-				<!-- Advanced settings -->
-				<Button Click="AdvancedSettingOnClick" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,10">advanced</Button>
-			</Grid>
-		</controls:PanoramaItem>
-		
-	</controls:Panorama>
+        </controls:PanoramaItem>
 
-	<!-- Navigation transitions -->
-	<!-- NOTE http://www.geekchamp.com/articles/windows-phone-7-navigation-transitions-step-by-step-guide -->
-	<toolkit:TransitionService.NavigationInTransition>
-		<toolkit:NavigationInTransition>
-			<toolkit:NavigationInTransition.Backward>
-				<toolkit:TurnstileTransition Mode="BackwardIn"/>
-			</toolkit:NavigationInTransition.Backward>
-			<toolkit:NavigationInTransition.Forward>
-				<toolkit:TurnstileTransition Mode="ForwardIn"/>
-			</toolkit:NavigationInTransition.Forward>
-		</toolkit:NavigationInTransition>
-	</toolkit:TransitionService.NavigationInTransition>
+        <!--  Options tab  -->
+        <controls:PanoramaItem Header="options">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-	<toolkit:TransitionService.NavigationOutTransition>
-		<toolkit:NavigationOutTransition>
-			<toolkit:NavigationOutTransition.Backward>
-				<toolkit:TurnstileTransition Mode="BackwardOut"/>
-			</toolkit:NavigationOutTransition.Backward>
-			<toolkit:NavigationOutTransition.Forward>
-				<toolkit:TurnstileTransition Mode="ForwardOut"/>
-			</toolkit:NavigationOutTransition.Forward>
-		</toolkit:NavigationOutTransition>
-	</toolkit:TransitionService.NavigationOutTransition>
+                <!--  Client selection  -->
+                <!--  TODO Client connected indicator  -->
+                <!--  TODO Make this a list not list picker  -->
+                <StackPanel Grid.Row="0"
+                            Grid.ColumnSpan="2"
+                            Orientation="Vertical">
+                    <TextBlock Margin="12,0,12,0"
+                               FontSize="{StaticResource PhoneFontSizeMedium}"
+                               Foreground="{StaticResource PhoneSubtleBrush}">
+                        Client ID
+                    </TextBlock>
+                    <TextBox x:Name="ClientDeviceIDTextBox" Text="{Binding ClientID, Mode=TwoWay, UpdateSourceTrigger=Default}" />
+                    <TextBlock Margin="12,0"
+                               FontSize="{StaticResource PhoneFontSizeSmall}"
+                               Foreground="{StaticResource PhoneSubtleBrush}"
+                               TextWrapping="Wrap">
+                        Enter your computer unique ID. You can fins it in application that is runing on targeted computer.
+                    </TextBlock>
+                </StackPanel>
+
+                <!--  Advanced settings  -->
+                <Button Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Margin="0,0,0,10"
+                        Click="AdvancedSettingOnClick">
+                    advanced
+                </Button>
+            </Grid>
+        </controls:PanoramaItem>
+
+    </controls:Panorama>
+
+    <!--  Navigation transitions  -->
+    <!--  NOTE http://www.geekchamp.com/articles/windows-phone-7-navigation-transitions-step-by-step-guide  -->
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
 
 </phone:PhoneApplicationPage>

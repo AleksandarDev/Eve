@@ -30,7 +30,7 @@ namespace EveControl.Adapters {
 
 		#region Touch implementation
 
-		public bool SendTrackPadMessage(ServiceRequestDetails details, TrackPadMessage message) {
+		public bool SendTrackPadMessage(string client, TrackPadMessage message) {
 			this.log.Info("Handling Touch TrackPad message: {0}", message);
 
 			if (message.Command == TrackPadMessage.TrackPadCommands.DragDelta)
@@ -45,7 +45,7 @@ namespace EveControl.Adapters {
 			return true;
 		}
 
-		public bool SendButtonMessage(ServiceRequestDetails details, ButtonMessage message) {
+		public bool SendButtonMessage(string client, ButtonMessage message) {
 			this.log.Info("Handling Touch Button message: {0}", message);
 
 			if (message.Command == ButtonMessage.ButtonCommands.Tap)
@@ -64,7 +64,7 @@ namespace EveControl.Adapters {
 
 		#region Display Enhancements implementation
 
-		public bool SetZoom(ServiceRequestDetails details, int zoomValue) {
+		public bool SetZoom(string client, int zoomValue) {
 			this.log.Info("Handling Zoom request. Value: {0}", zoomValue);
 
 			Task.Run(async () =>
@@ -77,7 +77,7 @@ namespace EveControl.Adapters {
 
 		#region Lights implementation
 
-		public Light[] GetLights(ServiceRequestDetails details) {
+		public Light[] GetLights(string client) {
 			this.log.Info("Handling request for list of lights");
 
 			// TODO Implement real list
@@ -99,66 +99,69 @@ namespace EveControl.Adapters {
 			};
 		}
 
-		public bool SetLightState(ServiceRequestDetails details, int id, bool state) {
+		public bool SetLightState(string client, int id, bool state) {
 			this.log.Info("Handling light [{0}] state set request {1}", id, state);
 
 			// TODO Implement
 			return true;
 		}
 
-		#endregion
+        #endregion
 
-		#region AmbientalLights implementation
+        #region AmbientalLights implementation
 
-		public AmbientalLight[] GetAmbientalLights(ServiceRequestDetails details) {
-			this.log.Info("Handling request for list of ambiental lights");
+        public AmbientalLight[] GetAmbientalLights(string client)
+        {
+            this.log.Info("Handling request for list of ambiental lights");
 
-			// TODO Implement real list
-			return new AmbientalLight[] {
-				new AmbientalLight() {
-					ID = 0, Alias = "Living Room Ceiling",
-					RValue = 255, GValue = 0, BValue = 0, AValue = 255,
-					State = true
-				},
-				new AmbientalLight() {
-					ID = 1, Alias = "Bedroom Ceiling",
-					RValue = 0, GValue = 255, BValue = 0, AValue = 255,
-					State = true
-				},
-				new AmbientalLight() {
-					ID = 2, Alias = "Kitchen Ceiling",
-					RValue = 0, GValue = 0, BValue = 255, AValue = 255
-				},
-				new AmbientalLight() {
-					ID = 3, Alias = "TV Backlight",
-					RValue = 0, GValue = 255, BValue = 255, AValue = 255
-				},
-				new AmbientalLight() {
-					ID = 4, Alias = "Workdesk backlight",
-					RValue = 255, GValue = 0, BValue = 255, AValue = 255,
-					State = true
-				}
-			};
-		}
+            // TODO Implement real list
+            return new AmbientalLight[] {
+                new AmbientalLight() {
+                    ID = 0, Alias = "Living Room Ceiling",
+                    RValue = 255, GValue = 0, BValue = 0, AValue = 255,
+                    State = true
+                },
+                new AmbientalLight() {
+                    ID = 1, Alias = "Bedroom Ceiling",
+                    RValue = 0, GValue = 255, BValue = 0, AValue = 255,
+                    State = true
+                },
+                new AmbientalLight() {
+                    ID = 2, Alias = "Kitchen Ceiling",
+                    RValue = 0, GValue = 0, BValue = 255, AValue = 255
+                },
+                new AmbientalLight() {
+                    ID = 3, Alias = "TV Backlight",
+                    RValue = 0, GValue = 255, BValue = 255, AValue = 255
+                },
+                new AmbientalLight() {
+                    ID = 4, Alias = "Workdesk backlight",
+                    RValue = 255, GValue = 0, BValue = 255, AValue = 255,
+                    State = true
+                }
+            };
+        }
 
-		public bool SetAmbientalLightState(ServiceRequestDetails details, int id, bool state) {
-			this.log.Info("Handling ambiental light [{0}] state set request: {1}",
-						  id, state ? "On" : "Off");
+        public bool SetAmbientalLightState(string client, int id, bool state)
+        {
+            this.log.Info("Handling ambiental light [{0}] state set request: {1}",
+                          id, state ? "On" : "Off");
 
-			// TODO Implement
-			return true;
-		}
+            // TODO Implement
+            return true;
+        }
 
-		public bool SetAmbientalLightColor(ServiceRequestDetails details,
-			int id, byte r, byte g, byte b, byte a) {
-			this.log.Info(
-				"Handling ambiental light [{0}] color set request: RGB:{1:X}{2:X}{3:X} A:{4:X}",
-				id, r, g, b, a);
+        public bool SetAmbientalLightColor(string client,
+            int id, byte r, byte g, byte b, byte a)
+        {
+            this.log.Info(
+                "Handling ambiental light [{0}] color set request: RGB:{1:X}{2:X}{3:X} A:{4:X}",
+                id, r, g, b, a);
 
-			// TODO Implement
-			return true;
-		}
+            // TODO Implement
+            return true;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

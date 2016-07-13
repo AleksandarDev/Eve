@@ -12,7 +12,14 @@ namespace Eve.API.Text {
 	/// </summary>
 	[ProviderDescription("Text Provider")]
 	public class TextProvider : ProviderBase<TextProvider> {
-		protected override void Initialize() {}
+	    private KeyboardSimulator keyboardSimulator;
+
+
+	    protected override void Initialize()
+	    {
+	        this.keyboardSimulator = new KeyboardSimulator(new InputSimulator());
+	    }
+
 		protected override void Uninitialize() {}
 
 		/// <summary>
@@ -22,7 +29,7 @@ namespace Eve.API.Text {
 		/// <param name="key">Key to PRESS</param>
 		/// <remarks>This method uses inputsimulator.codeplex.com library</remarks>
 		public void SimulateKeyPress(TextProvider.VirtualKeyCode key) {
-			InputSimulator.SimulateKeyPress((WindowsInput.VirtualKeyCode)key);
+            this.keyboardSimulator.KeyPress((WindowsInput.Native.VirtualKeyCode)key);
 		}
 
 		/// <summary>
@@ -32,7 +39,7 @@ namespace Eve.API.Text {
 		/// <param name="key">Key to set to DOWN</param>
 		/// <remarks>This method uses inputsimulator.codeplex.com library</remarks>
 		public void SimulateKeyDown(TextProvider.VirtualKeyCode key) {
-			InputSimulator.SimulateKeyDown((WindowsInput.VirtualKeyCode)key);
+			this.keyboardSimulator.KeyDown((WindowsInput.Native.VirtualKeyCode)key);
 		}
 
 		/// <summary>
@@ -42,7 +49,7 @@ namespace Eve.API.Text {
 		/// <param name="key">Key to set to DOWN</param>
 		/// <remarks>This method uses inputsimulator.codeplex.com library</remarks>
 		public void SimulateKeyUp(TextProvider.VirtualKeyCode key) {
-			InputSimulator.SimulateKeyUp((WindowsInput.VirtualKeyCode)key);
+			this.keyboardSimulator.KeyUp((WindowsInput.Native.VirtualKeyCode)key);
 		}
 
 		/// <summary>
@@ -56,9 +63,9 @@ namespace Eve.API.Text {
 		public void SimulateModifiedKeyStroke(
 			IEnumerable<TextProvider.VirtualKeyCode> modifierKeys,
 			IEnumerable<TextProvider.VirtualKeyCode> keys) {
-			InputSimulator.SimulateModifiedKeyStroke(
-				modifierKeys.Cast<WindowsInput.VirtualKeyCode>(),
-				keys.Cast<WindowsInput.VirtualKeyCode>());
+			this.keyboardSimulator.ModifiedKeyStroke(
+				modifierKeys.Cast<WindowsInput.Native.VirtualKeyCode>(),
+				keys.Cast<WindowsInput.Native.VirtualKeyCode>());
 		}
 
 		/// <summary>
@@ -67,7 +74,7 @@ namespace Eve.API.Text {
 		/// </summary>
 		/// <param name="text"></param>
 		public void SimulateTextEntry(string text) {
-			InputSimulator.SimulateTextEntry(text);
+			this.keyboardSimulator.TextEntry(text);
 		}
 
 		#region Properties

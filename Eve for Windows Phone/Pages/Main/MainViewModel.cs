@@ -101,12 +101,8 @@ namespace EveWindowsPhone.Pages.Main {
 
 				// Add each module to the favorite list
 				foreach (var module in savedFavorites.Modules) {
-<<<<<<< HEAD
-					var available = this.AvailableModules.First(m => m.ModuleAttribute.ID == module.ID);
-=======
 					//var available = this.AvailableModules.First(m => m.ModuleAttribute.ID == module.ID);
 					var available = this.OwnedModules.First(m => m.ModuleAttribute.ID == module.ID);
->>>>>>> master
 					available.IsFavorite = true;
 					this.FavoriteModules.Add(available);
 				}
@@ -127,12 +123,8 @@ namespace EveWindowsPhone.Pages.Main {
 		public void SaveFavorites() {
 			// Populate favorite modules list
 			var favoriteModules = new FavoriteModules();
-<<<<<<< HEAD
-			foreach (var favorited in this.AvailableModules.Where(m => m.IsFavorite)) {
-=======
 			//foreach (var favorited in this.AvailableModules.Where(m => m.IsFavorite)) {
 			foreach (var favorited in this.OwnedModules.Where(m => m.IsFavorite)) {
->>>>>>> master
 				favoriteModules.Modules.Add(new FavoriteModule() {ID = favorited.ModuleAttribute.ID});
 			}
 

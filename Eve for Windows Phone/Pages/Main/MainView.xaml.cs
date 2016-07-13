@@ -167,13 +167,9 @@ namespace EveWindowsPhone.Pages.Main {
 			var tile = new Tile() {
 				Label = module.ModuleAttribute.Name,
 				Content = new Image() {
-<<<<<<< HEAD
-					Source = new BitmapImage(new Uri(module.ModuleAttribute.Image, UriKind.RelativeOrAbsolute)),
-=======
 					Source =
 						new BitmapImage(new Uri(module.ModuleAttribute.Image,
 												UriKind.RelativeOrAbsolute)),
->>>>>>> master
 					Margin = new Thickness(TileImageMargins)
 				},
 				Width = width,

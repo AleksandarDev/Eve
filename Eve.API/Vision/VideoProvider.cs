@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
-using AForge.Video;
-using AForge.Video.DirectShow;
+using Accord.Video;
+using Accord.Video.DirectShow;
 
 namespace Eve.API.Vision {
 	[ProviderDescription("Video Provider")]
@@ -37,9 +37,7 @@ namespace Eve.API.Vision {
 
 			// Create video source object
 			this.Device = new VideoCaptureDevice(
-				availableVideoSources[0].MonikerString) {
-					DesiredFrameSize = new Size(this.SourceWidth, this.SourceHeight)
-				};
+				availableVideoSources[0].MonikerString);
 
 			// Wait for video source to stop if already running
 			this.StopDevice();

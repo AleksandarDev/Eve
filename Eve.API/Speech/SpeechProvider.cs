@@ -73,11 +73,6 @@ namespace Eve.API.Speech {
 				var g = new Grammar(stream);
 				this.speechRecognizer.LoadGrammar(g);
 			}
-<<<<<<< HEAD
-			//this.speechRecognizer.LoadGrammar(
-			//		new System.Speech.Recognition.DictationGrammar());
-=======
->>>>>>> master
 
 			// Get audio source
 			// TODO Implement kinect selector from KinectProvider

@@ -13,11 +13,7 @@ namespace EveWindowsPhone.Pages.Modules.Lights {
 	[Module("MLights", "Lights", 
 		"/Resources/Images/Light Bulb.png",
 		"/Pages/Modules/Lights/LightsView.xaml", 
-<<<<<<< HEAD
-		isInternal: false, isEnabled: true)]
-=======
 		isInternal: false, isEnabled: false)]
->>>>>>> master
 	public class LightsViewModel : NotificationObject {
 		private readonly Log.LogInstance log =
 			new Log.LogInstance(typeof(LightsViewModel));

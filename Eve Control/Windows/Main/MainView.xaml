@@ -1,62 +1,78 @@
 ﻿<mahapps:MetroWindow x:Class="EveControl.MainView"
-					 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-					 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-					 xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-					 xmlns:providersStatus="clr-namespace:EveControl.Controls.ProvidersStatus"
-					 Title="Eve Control" Height="400" Width="700" Icon="/Eve256.ico"
-					 SaveWindowPosition="True" GlowBrush="{DynamicResource AccentColorBrush}" 
-<<<<<<< HEAD:Eve Control/Windows/Main/MainView.xaml
-					 Loaded="MainWindowOnLoaded" Closing="MainWindowClosing"
-					 DataContext="{Binding Source={StaticResource ViewModelProvider}, Path=MainViewModel}">
-	<mahapps:MetroWindow.WindowCommands>
-=======
-					 Loaded="MainWindowOnLoaded" Closing="MainWindowClosing">
-	<mahapps:MetroWindow.RightWindowCommands>
->>>>>>> master:Eve Control/MainWindow.xaml
-		<mahapps:WindowCommands>
-			<Button Content="settings" />
-		</mahapps:WindowCommands>
-	</mahapps:MetroWindow.RightWindowCommands>
-	
-	<Grid x:Name="LayoutRoot">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
-		
-		<Grid x:Name="WindowContent">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
-			
-			<TextBox Text="{Binding SpeechMessage}"
-					 IsReadOnly="True" HorizontalContentAlignment="Center" 
-					 FontSize="16" 
-					 Padding="3" Margin="5" />
-			
-			<StackPanel Grid.Row="1" Orientation="Horizontal">
-				<Button Content="Log" Margin="3" Padding="15,8,15,8" Click="LogViewOnClick"></Button>
-				<Button Content="Vision" Margin="3"  Padding="15,8,15,8" Click="VisionViewOnClick" />
-				<Button Content="Face Controller" Margin="3"  Padding="15,8,15,8" Click="FaceControllerViewOnClick"></Button>
-				<Button Content="Fridge Manager" Margin="3" Padding="15,8,15,8" Click="FridgeManagerViewOnClick" />
-				<Button Content="Chrome" Margin="3" Padding="15,8,15,8" Click="ChromeViewOnClick" />
-			</StackPanel>
-			
-			<providersStatus:ProvidersStatusView Grid.Row="2" />
-		</Grid>
-		
-		<!-- Status bar -->
-		<StackPanel x:Name="StatusBar" Grid.Row="1">
-			<StackPanel.Style>
-				<Style TargetType="{x:Type StackPanel}">
-					<Setter Property="Background" Value="{DynamicResource StatusBarBrush}" />
-				</Style>
-			</StackPanel.Style>
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                     xmlns:providersStatus="clr-namespace:EveControl.Controls.ProvidersStatus"
+                     Title="Eve Control"
+                     Width="700"
+                     Height="400"
+                     Closing="MainWindowClosing"
+                     GlowBrush="{DynamicResource AccentColorBrush}"
+                     Icon="/Eve256.ico"
+                     Loaded="MainWindowOnLoaded"
+                     SaveWindowPosition="True">
+    <mahapps:MetroWindow.RightWindowCommands>
+        <mahapps:WindowCommands>
+            <Button Content="settings" />
+        </mahapps:WindowCommands>
+    </mahapps:MetroWindow.RightWindowCommands>
 
-			<Label Content="{Binding StatusMessage}" />
-		</StackPanel>
-	</Grid>
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="WindowContent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBox Margin="5"
+                     HorizontalContentAlignment="Center"
+                     FontSize="16"
+                     IsReadOnly="True"
+                     Padding="3"
+                     Text="{Binding SpeechMessage}" />
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Margin="3"
+                        Click="LogViewOnClick"
+                        Content="Log"
+                        Padding="15,8,15,8" />
+                <Button Margin="3"
+                        Click="VisionViewOnClick"
+                        Content="Vision"
+                        Padding="15,8,15,8" />
+                <Button Margin="3"
+                        Click="FaceControllerViewOnClick"
+                        Content="Face Controller"
+                        Padding="15,8,15,8" />
+                <Button Margin="3"
+                        Click="FridgeManagerViewOnClick"
+                        Content="Fridge Manager"
+                        Padding="15,8,15,8" />
+                <Button Margin="3"
+                        Click="ChromeViewOnClick"
+                        Content="Chrome"
+                        Padding="15,8,15,8" />
+            </StackPanel>
+
+            <providersStatus:ProvidersStatusView Grid.Row="2" />
+        </Grid>
+
+        <!--  Status bar  -->
+        <StackPanel x:Name="StatusBar" Grid.Row="1">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Background" Value="{DynamicResource StatusBarBrush}" />
+                </Style>
+            </StackPanel.Style>
+
+            <Label Content="{Binding StatusMessage}" />
+        </StackPanel>
+    </Grid>
 </mahapps:MetroWindow>
